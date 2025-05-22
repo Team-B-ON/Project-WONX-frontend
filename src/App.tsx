@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import MovieDetails from './pages/MovieDetails'
 import NotFound from './pages/NotFound'
+import TestPage from './pages/Test'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/movies/1" element={<MovieDetails />} />
+        <Route path="/test" element={<TestPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
