@@ -80,7 +80,7 @@ const popularMovies: Movie[] = [
   },
 ];
 
-// 박스 오피스 임시 더미
+// 박스 오피스 + 개봉 예정작 임시 더미
 const boxOfficeMovies: Movie[] = [
   {
     id: '1',
@@ -198,6 +198,8 @@ const Home = () => {
       <PopularMovieRow title="WONX 인기 콘텐츠" movies={popularMovies} />
       <PopularMovieRow title="@@@님이 좋아할만한 작품"movies={popularMovies} />
       <BoxOfficeMovieRow title="박스오피스 TOP 10" movies={boxOfficeMovies} />
+      <BoxOfficeMovieRow title="개봉 예정작" movies={boxOfficeMovies} />
+
     </div>
   );
 };
