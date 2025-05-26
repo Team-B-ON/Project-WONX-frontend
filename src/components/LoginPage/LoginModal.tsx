@@ -1,5 +1,5 @@
-// components/LoginModal.tsx
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 const LoginModal = () => {
     return (
@@ -33,9 +33,9 @@ const LoginModal = () => {
             </div>
             <div className="mt-[25px] text-[rgba(255,255,255,0.70)] text-[16px]">
                 넷플릭스 회원이 아닌가요?{' '}
-                <span className="font-semibold text-[16px] cursor-pointer text-white hover:underline">
+                <Link to="/signup" className="font-semibold text-[16px] cursor-pointer text-white hover:underline">
                     지금 가입하세요.
-                </span>
+                </Link>
             </div>
             <div className="mt-[28px] text-[13px] ">
                 <p className="text-[rgba(255,255,255,0.5)]">
