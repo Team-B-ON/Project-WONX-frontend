@@ -1,8 +1,8 @@
-import { HotTalk } from "@/types/HotTalk";
+import { hotTalk } from "@/types/HotTalk";
 
 interface SearchHotTalkGridProps {
   query: string; // 추가!
-  reviews: HotTalk[];
+  reviews: hotTalk[];
 }
 
 export default function SearchHotTalkGrid({ query, reviews }: SearchHotTalkGridProps) {

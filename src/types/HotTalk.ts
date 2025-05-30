@@ -1,4 +1,4 @@
-export interface HotTalk {
+export interface hotTalk {
   id: string;
   movieTitle: string;
   content: string;

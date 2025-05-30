@@ -2,6 +2,7 @@ import SearchHotTalkGrid from "@/components/Search/HotTalk/SearchHotTalkGrid";
 import SearchMovieGrid from "@/components/Search/SearchMovieGrid";
 import SearchRecommendationGrid from "@/components/Search/SearchRecommendationGrid";
 import SearchResultHeader from "@/components/Search/SearchResultHeader";
+import SearchUserGrid from "@/components/Search/SearchUserGrid";
 
 const Search = () => {
   const searchQuery = '라라랜드';
@@ -109,7 +110,21 @@ const hotTalk = [
   },
 ];
 
+  const allUsers = [
+    { id: '1', nickname: '영화덕후123', avatarUrl: 'https://via.placeholder.com/100x100?text=User1' },
+    { id: '2', nickname: '라라랜드팬', avatarUrl: 'https://via.placeholder.com/100x100?text=User2' },
+    { id: '3', nickname: '라라랜드최고', avatarUrl: 'https://via.placeholder.com/100x100?text=User3' },
+    { id: '4', nickname: '인터스텔라광팬', avatarUrl: 'https://via.placeholder.com/100x100?text=User4' },
+      { id: '5', nickname: '라라랜드라광팬', avatarUrl: 'https://via.placeholder.com/100x100?text=User4' },
 
+          { id: '6', nickname: '라라랜드아', avatarUrl: 'https://via.placeholder.com/100x100?text=User4' },
+
+  
+  ];
+
+const userResults = allUsers.filter(user =>
+    user.nickname.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
 
   return (
@@ -123,7 +138,9 @@ const hotTalk = [
             title="이런 건 어떠세요?"
             movies={recommendations}
           />
-      <SearchHotTalkGrid query={searchQuery} reviews={hotTalk} />        </>
+          <SearchHotTalkGrid query={searchQuery} reviews={hotTalk} />
+                <SearchUserGrid query={searchQuery} users={userResults} />
+  </>
       )}
 
       {!hasResults && (
