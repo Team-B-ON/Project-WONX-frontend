@@ -4,6 +4,7 @@ import { Movie } from '@/types/movie';
 import PopularMovieRow from '@/components/Home/PopularMovieRow';
 import BoxOfficeMovieRow from '@/components/Home/BoxOffice/BoxOfficeMovieRow';
 import HotTalkRow from '@/components/Home/HotTalk/HotTalkRow';
+import ReviewCount from '@/components/Home/ReviewCount';
 
 // 인기 콘텐츠 + 사용자 추천 임시 더미
 const popularMovies: Movie[] = [
@@ -201,7 +202,7 @@ const Home = () => {
       <BoxOfficeMovieRow title="박스오피스 TOP 10" movies={boxOfficeMovies} />
       <BoxOfficeMovieRow title="개봉 예정작" movies={boxOfficeMovies} />
       <HotTalkRow title="지금 뜨는 핫톡🔥" movies={popularMovies} />
-
+      <ReviewCount reviewCount={1555555266} />
     </div>
   );
 };
