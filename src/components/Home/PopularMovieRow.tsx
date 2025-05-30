@@ -31,13 +31,22 @@ export default function PopularMovieRow({ title, movies }: Props) {
         </button>
 
         <div
-          ref={rowRef}
-          className="flex space-x-4 overflow-x-scroll scrollbar-hide scroll-smooth"
-        >
-          {movies.map((movie) => (
-            <PopularMovieCard key={movie.id} movie={movie} />
-          ))}
-        </div>
+  ref={rowRef}
+  className="flex space-x-4 overflow-x-scroll scrollbar-hide scroll-smooth"
+>
+  {movies.map((movie) => (
+  <div
+    key={movie.id}
+    className="flex-shrink-0 w-[217.91px] relative group/card"
+  >
+    <div
+      className="relative transition-transform duration-300 group-hover/card:scale-100 hover:scale-110 hover:z-50"
+    >
+      <PopularMovieCard movie={movie} />
+    </div>
+  </div>
+))}
+</div>
 
         <button
           className="absolute right-0 top-0 bottom-0 z-40 hidden group-hover:block bg-black/50 px-2"
