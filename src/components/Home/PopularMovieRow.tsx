@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Movie } from '@/types/movie';
 import PopularMovieCard from './PopularMovieCard';
@@ -10,6 +10,7 @@ interface Props {
 
 export default function PopularMovieRow({ title, movies }: Props) {
   const rowRef = useRef<HTMLDivElement>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const scroll = (dir: 'left' | 'right') => {
     if (!rowRef.current) return;
@@ -30,23 +31,37 @@ export default function PopularMovieRow({ title, movies }: Props) {
           <ChevronLeft className="w-6 h-6 text-white" />
         </button>
 
-        <div
-  ref={rowRef}
-  className="flex space-x-4 overflow-x-scroll scrollbar-hide scroll-smooth"
->
-  {movies.map((movie) => (
-  <div
-    key={movie.id}
-    className="flex-shrink-0 w-[217.91px] relative group/card"
-  >
-    <div
-      className="relative transition-transform duration-300 group-hover/card:scale-100 hover:scale-110 hover:z-50"
-    >
-      <PopularMovieCard movie={movie} />
-    </div>
-  </div>
-))}
-</div>
+        {/* ⭐️ 스크롤바 숨김용 래퍼 */}
+        <div className="relative overflow-hidden">
+          <div
+            ref={rowRef}
+            className="flex space-x-4 overflow-x-auto scrollbar-hide scroll-smooth"
+          >
+            {movies.map((movie, index) => {
+              const start = 0; // 만약 페이지 단위로 관리할 거면 currentPage * cardsPerPage 적용 가능
+              const end = movies.length; // 지금은 전체 표시
+
+              const hoverable = index >= start && index < end;
+
+              return (
+                <div
+                  key={movie.id}
+                  className={`flex-shrink-0 w-[217.91px] relative ${hoverable ? '' : 'pointer-events-none'}`}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  <div
+                    className={`relative transition-transform duration-300 ${
+                      hoveredIndex === index ? 'scale-[1.15] z-50' : 'scale-100 z-0'
+                    }`}
+                  >
+                    <PopularMovieCard movie={movie} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
         <button
           className="absolute right-0 top-0 bottom-0 z-40 hidden group-hover:block bg-black/50 px-2"
