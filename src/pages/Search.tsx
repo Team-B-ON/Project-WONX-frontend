@@ -1,3 +1,4 @@
+import SearchHotTalkGrid from "@/components/Search/HotTalk/SearchHotTalkGrid";
 import SearchMovieGrid from "@/components/Search/SearchMovieGrid";
 import SearchRecommendationGrid from "@/components/Search/SearchRecommendationGrid";
 import SearchResultHeader from "@/components/Search/SearchResultHeader";
@@ -5,7 +6,7 @@ import SearchResultHeader from "@/components/Search/SearchResultHeader";
 const Search = () => {
   const searchQuery = '라라랜드';
 
-  // ⭐️ 임시 더미 데이터 → 결과 있음 상태로 만들기
+  // 임시 더미 데이터 → 결과 있음 상태로 만들기
   const searchResults = [
     {
       id: '1',
@@ -77,6 +78,40 @@ const Search = () => {
 
   const hasResults = searchResults.length > 0;
 
+const hotTalk = [
+  {
+    id: '1',
+    movieTitle: '라라랜드',
+    content: '정말 감동적이었어요! 음악이 최고였음.',
+    author: '유저123',
+    rating: 5,
+  },
+  {
+    id: '2',
+    movieTitle: '라라랜드',
+    content: '비주얼도 훌륭하고 배우들도 좋았어요!',
+    author: '유저456',
+    rating: 4,
+  },
+  {
+    id: '2',
+    movieTitle: '라라랜드',
+    content: '비주얼도 훌륭하고 배우들도 좋았어요!',
+    author: '유저456',
+    rating: 4,
+  },
+  {
+    id: '2',
+    movieTitle: '라라랜드',
+    content: '비주얼도 훌륭하고 배우들도 좋았어요!',
+    author: '유저456',
+    rating: 4,
+  },
+];
+
+
+
+
   return (
     <div className="bg-black min-h-screen px-6 sm:px-10 lg:px-20 py-10 space-y-12">
       <SearchResultHeader query={searchQuery} />
@@ -88,7 +123,7 @@ const Search = () => {
             title="이런 건 어떠세요?"
             movies={recommendations}
           />
-        </>
+      <SearchHotTalkGrid query={searchQuery} reviews={hotTalk} />        </>
       )}
 
       {!hasResults && (
