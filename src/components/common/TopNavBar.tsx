@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Bell, Search, Users } from 'lucide-react'
 
+{/* 하드코딩한 부분들 추후 수정 */}
+
 import Logo from '../../assets/common/images/logo.svg'
 
 const SCROLL_THRESHOLD = 2
@@ -52,7 +54,7 @@ const TopNaviBar: React.FC = () => {
               </a>
             </li>
             <li>
-              <a href="/movies" className="hover:text-gray-300">
+              <a href="/movies/list" className="hover:text-gray-300">
                 영화
               </a>
             </li>
@@ -66,7 +68,7 @@ const TopNaviBar: React.FC = () => {
           <button aria-label="알림" className="mr-5">
             <Bell size={24} />
           </button>
-          <a href="/profile" className="mr-9">
+          <a href="/mypage" className="mr-9">
             <img
               src={DEFAULT_AVATAR}
               alt="User avatar"
