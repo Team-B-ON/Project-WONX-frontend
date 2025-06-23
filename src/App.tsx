@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound'
 import SignUp from './pages/SignUp'
 import TestPage from './pages/Test'
 import Tag from './pages/Tag'
+import TopNavBar from './components/common/TopNavBar'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/movies/list" element={<TestPage />} />
         <Route path="/movies/tag" element={<Tag />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/navbar" element={<TopNavBar />} />
       </Routes>
     </BrowserRouter>
   )
