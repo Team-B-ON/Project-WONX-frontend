@@ -5,6 +5,7 @@ import HotTalkRow from '@/components/Home/HotTalk/HotTalkRow';
 import ReviewCount from '@/components/Home/ReviewCount';
 import { popularMovies, boxOfficeMovies } from '@/mocks/mockMovies';
 import PopularMovie from '@/components/Home/PopularMovie';
+import TopNaviBar from '@/components/common/TopNavBar';
 
 const Home = () => {
   const handlePlay = () => {
@@ -18,7 +19,9 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-black">
+    <div className="bg-black min-h-screen">
+      <TopNaviBar />
+
       <Banner
         title="아바타: 물의 길"
         rankText="오늘 시리즈 순위 2위"
