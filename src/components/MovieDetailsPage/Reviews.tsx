@@ -1,20 +1,28 @@
 import React, { useRef, useState, useEffect } from 'react';
 import RatingStars from '@/components/MovieDetailsPage/RatingStars';
+import ReviewItem from './ReviewItem';
+import { userReview } from '@/types/userReview';
 
-const reviews = [  // 임시 데이터터
+const reviews: userReview[] = [
   {
-    id: 1,
-    nickname: "movieFan01",
-    createdAt: "2025.05.05. 17:50",
+    id: "1",
+    userId: "u1",
+    videoId: "v1",
     rating: 7.5,
-    content: "정말 감동적인 영화였어요.",
+    content: "우리만의 따뜻한 불 영원한 꿈 영혼과 삶 난 난 오늘 떠날 거라고 생각했어 날 미워하지 마 no pain no where 음악이 없는 세상 no where no fear 바다 같은 색깔 no cap no cry 이미 죽은 사람 아냐 사실 태양에 맡겨뒀던 가족과 모든 분들의 사랑 물안개 짙어진 뒤 훔치려고 모인 자경단",
+    isAnonymous: false,
+    createdAt: new Date("2025-05-05T17:50:00"),
+    nickname: "movieFan01",
   },
   {
-    id: 2,
-    nickname: "filmLover",
-    createdAt: "2025.05.06. 09:20",
+    id: "2",
+    userId: "u2",
+    videoId: "v1",
     rating: 9,
     content: "연출이 아주 훌륭했어요!",
+    isAnonymous: false,
+    createdAt: new Date("2025-05-06T09:20:00"),
+    nickname: "filmLover",
   },
 ];
 
@@ -90,21 +98,9 @@ const Reviews = () => {
                         별점 낮은 순
                     </p>
                     {/* 리뷰 리스트 */}
-                    <div>
-                        {reviews.map((review) => (
-                            <div 
-                                key={review.id}
-                                className="bg-[#2f2f2f] w-full h-[138px] text-white pt-[14px] pl-[30px] border-t"
-                            >
-                                <div className="flex flex-row justify-between pb-[5px]">
-                                    <p className="text-[16px] font-medium">{review.nickname}</p>
-                                    <p className="text-[14px] pr-[30px] text-[#636363]">{review.createdAt}</p>
-                                </div>
-                                <RatingStars rating={rating} readOnly size={16} />
-                                <div className="w-[598px] h-[50px] pt-[14px] pb-[19px]">{review.content}</div>
-                            </div>
-                        ))}                        
-                    </div>
+                    {reviews.map((review) => (
+                        <ReviewItem key={review.id} review={review} />
+                    ))}
                 </div>
             </div>
         </>
