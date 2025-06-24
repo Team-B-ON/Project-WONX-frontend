@@ -6,6 +6,7 @@ export interface Movie {
     durationMinutes?: number,
     releaseDate?: string,
     posterUrl?: string,
+    mainImg?: string,
     ageRating?: string,
     ageRatingReason?: string,
     genre?: string[]
