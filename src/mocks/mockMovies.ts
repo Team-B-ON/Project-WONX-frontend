@@ -79,13 +79,13 @@ export const popularMovies: Movie[] = [
 // 박스 오피스 + 개봉 예정작 임시 더미
 export const boxOfficeMovies: Movie[] = [
   {
-    id: '1',
-    title: '범죄도시4',
-    posterUrl: 'https://via.placeholder.com/300x450?text=범죄도시4',
-    releaseDate: '2024-04-15',
-    durationMinutes: 120,
-    genre: ['액션', '범죄'],
-  },
+  id: '1',
+  title: '범죄도시4',
+  posterUrl: 'https://image.tmdb.org/t/p/w500/kPYC8fYbF7MphG3XQtP4m7PC1YB.jpg', // ✅ TMDb 공식 포스터
+  releaseDate: '2024-04-15',
+  durationMinutes: 109,
+  genre: ['액션', '범죄'],
+},
   {
     id: '2',
     title: '쿵푸팬더4',
@@ -105,7 +105,7 @@ export const boxOfficeMovies: Movie[] = [
   {
     id: '4',
     title: '파묘',
-    posterUrl: 'https://via.placeholder.com/300x450?text=파묘',
+    posterUrl: 'https://via.placeholder.com/300x450?text=쿵푸팬더4',
     releaseDate: '2024-02-22',
     durationMinutes: 110,
     genre: ['공포', '미스터리'],

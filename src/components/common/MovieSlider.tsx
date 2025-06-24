@@ -9,6 +9,7 @@ type MovieSliderProps = {
 const MovieSlider = ({ movies }: MovieSliderProps) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const cardsPerPage = 6;
   const cardWidth = 217.91;
@@ -21,15 +22,8 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
     sliderRef.current.scrollTo({ left: scrollLeft, behavior: "smooth" });
   };
 
-  const handleNext = () => {
-    const nextPage = Math.min(currentPage + 1, totalPages - 1);
-    setCurrentPage(nextPage);
-  };
-
-  const handlePrev = () => {
-    const prevPage = Math.max(currentPage - 1, 0);
-    setCurrentPage(prevPage);
-  };
+  const handleNext = () => setCurrentPage(Math.min(currentPage + 1, totalPages - 1));
+  const handlePrev = () => setCurrentPage(Math.max(currentPage - 1, 0));
 
   useEffect(() => {
     scrollToPage(currentPage);
@@ -41,44 +35,43 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       {currentPage > 0 && (
         <button
           onClick={handlePrev}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-30
-            bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded transition"
+          className="absolute left-0 top-0 bottom-0 z-[1000] bg-black/50 hover:bg-opacity-70 text-white p-2"
         >
           ◀
         </button>
       )}
 
-      {/* 카드 리스트 */}
-      <div
-        ref={sliderRef}
-        className="flex gap-x-4 overflow-x-auto scroll-smooth px-6 sm:px-8 md:px-12 [&::-webkit-scrollbar]:hidden"
-      >
-        {movies.map((movie, idx) => {
-          const start = currentPage * cardsPerPage;
-          const end = start + cardsPerPage;
-          const hoverable = idx >= start && idx < end;
+      {/* 슬라이더 래퍼 */}
+      <div className="relative overflow-visible">
+        <div
+          ref={sliderRef}
+          className="flex gap-x-4 overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden"
+        >
+          {movies.map((movie, index) => {
 
-          return (
-            <div
-              key={movie.id}
-              className={`flex-shrink-0 w-[217.91px] relative transition-all duration-300 ${
-                hoverable ? "" : "pointer-events-none"
-              }`}
-            >
-              <div className="relative z-0 hover:z-[999] transition-all duration-300">
-                <MovieCard movie={movie} />
+            return (
+              <div
+                key={movie.id}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className={`flex-shrink-0 w-[217.91px] transition-transform duration-300 ${
+                  hoveredIndex === index ? 'scale-[1.15] z-10' : 'scale-100 z-0'
+                }`}
+              >
+                <div className="relative">
+                  <MovieCard movie={movie} />
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       {/* 오른쪽 버튼 */}
       {currentPage < totalPages - 1 && (
         <button
           onClick={handleNext}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-30
-            bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded transition"
+          className="absolute right-0 top-0 bottom-0 z-[1000] bg-black/50 hover:bg-opacity-70 text-white p-2"
         >
           ▶
         </button>

@@ -14,7 +14,7 @@ const Home = () => {
   };
 
   const handleInfo = () => {
-    console.log('상세 정보 버튼 클릭됨!');
+    console.log('상세 정보 버튼 클릭');
     // 상세 페이지 이동 or 모달 띄우기
   };
 
