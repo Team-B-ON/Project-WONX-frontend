@@ -9,12 +9,12 @@ import TopNaviBar from '@/components/common/TopNavBar';
 
 const Home = () => {
   const handlePlay = () => {
-    console.log('🔁 재생 버튼 클릭됨!');
+    console.log('재생 버튼 클릭');
     // 실제 재생 로직 또는 이동 구현
   };
 
   const handleInfo = () => {
-    console.log('ℹ️ 상세 정보 버튼 클릭됨!');
+    console.log('상세 정보 버튼 클릭됨!');
     // 상세 페이지 이동 or 모달 띄우기
   };
 
