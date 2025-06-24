@@ -6,7 +6,8 @@ import MovieDetails from './pages/MovieDetails'
 import NotFound from './pages/NotFound'
 import SignUp from './pages/SignUp'
 import Search from './pages/Search'
-
+import TopNavBar from './components/common/TopNavBar'
+import MyPage from './pages/MyPage'
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/movies/1" element={<MovieDetails />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/navbar" element={<TopNavBar />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </BrowserRouter>
   )

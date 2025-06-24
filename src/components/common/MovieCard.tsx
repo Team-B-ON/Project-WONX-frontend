@@ -1,8 +1,14 @@
+import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import type { Movie } from "@/types/movie";
-import playButton from '@/assets/common/buttons/play-button.svg'
-import addButton from '@/assets/common/buttons/add-button.svg'
-import thumbUpButton from '@/assets/common/buttons/thumbup-button.svg'
-import detailsButton from '@/assets/common/buttons/arrowdown-button.svg'
+import playButton from '@/assets/common/buttons/play-button.svg';
+import addButton from '@/assets/common/buttons/add-button.svg';
+import thumbUpButton from '@/assets/common/buttons/thumbup-button.svg';
+import detailsButton from '@/assets/common/buttons/arrowdown-button.svg';
+import playHoveredButton from '@/assets/common/buttons-hovered/play-btn-hover.svg'
+import addHoveredButton from '@/assets/common/buttons-hovered/add-btn.svg';
+import thumbUpHoveredButton from '@/assets/common/buttons-hovered/thumbup-btn.svg';
+import detailsHoveredButton from '@/assets/common/buttons-hovered/arrowdown-btn.svg';
 import ageRating15 from '@/assets/common/15-age-rating.png'
 import { formatDuration } from "@/utils/timeFormat";
 
@@ -11,6 +17,20 @@ type MovieCardProps = {
 };
 
 const MovieCard = ({movie}: MovieCardProps) => {
+    const [isPlayHovered, setIsPlayHovered] = useState(false);
+    const [isAddHovered, setIsAddHovered] = useState(false);
+    const [isThumbHovered, setIsThumbHovered] = useState(false);
+    const [isDetailsHovered, setIsDetailsHovered] = useState(false);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleClick = () => {
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.set('id', movie.id);
+        navigate(`${location.pathname}?${searchParams.toString()}`)
+    };
+
     return (
         <div className="
             group relative flex-shrink-0 overflow-hidden
@@ -38,11 +58,32 @@ const MovieCard = ({movie}: MovieCardProps) => {
                 <div className="p-4 flex flex-col gap-y-[13px]">
                     <div className="flex justify-between items-center w-full">
                         <div className="flex items-center gap-x-2">
-                            <img src={playButton} className="cursor-pointer"/>
-                            <img src={addButton} className="cursor-pointer"/>
-                            <img src={thumbUpButton} className="cursor-pointer"/>
+                            <img 
+                                src={isPlayHovered ? playHoveredButton : playButton} 
+                                className="cursor-pointer w-[40px] h-[40px]"
+                                onMouseEnter={() => setIsPlayHovered(true)}
+                                onMouseLeave={() => setIsPlayHovered(false)}
+                            />
+                            <img 
+                                src={isAddHovered ? addHoveredButton : addButton} 
+                                className="cursor-pointer w-[40px] h-[40px]"
+                                onMouseEnter={() => setIsAddHovered(true)}
+                                onMouseLeave={() => setIsAddHovered(false)}
+                            />
+                            <img 
+                                src={isThumbHovered ? thumbUpHoveredButton : thumbUpButton} 
+                                className="cursor-pointer w-[40px] h-[40px]"
+                                onMouseEnter={() => setIsThumbHovered(true)}
+                                onMouseLeave={() => setIsThumbHovered(false)}
+                            />
                         </div>
-                        <img src={detailsButton} className="cursor-pointer"/>
+                        <img 
+                            src={isDetailsHovered ? detailsHoveredButton : detailsButton} 
+                            className="cursor-pointer w-[40px] h-[40px]"
+                            onMouseEnter={() => setIsDetailsHovered(true)}
+                            onMouseLeave={() => setIsDetailsHovered(false)}
+                            onClick={handleClick}
+                        />
                     </div>
                     <div className="flex flex-col gap-y-[13px] text-[16px]">
                         <div className="flex flex-row gap-x-1 items-center">
