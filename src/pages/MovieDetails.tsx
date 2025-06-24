@@ -8,10 +8,11 @@ import thumbUpButton from '@/assets/common/buttons/thumbup-button.svg'
 import addHoveredButton from '@/assets/common/buttons-hovered/add-btn.svg';
 import thumbUpHoveredButton from '@/assets/common/buttons-hovered/thumbup-btn.svg';
 import playIcon from '@/assets/common/buttons/play.svg';
-import ageRating15 from '@/assets/common/15-age-rating.png';
+import ageRating15 from '@/assets/MovieDetailsPage/15-age-rating.png';
 import { formatDuration } from '@/utils/timeFormat';
 import { getYearFromDate } from '@/utils/getYearFromDate';
 import RelatedMovieCard from '@/components/MovieDetailsPage/RelatedMovieCard';
+import Reviews from '@/components/MovieDetailsPage/Reviews';
 
 const movie: Movie = {  // 임시 데이터
   id: '1',
@@ -51,13 +52,10 @@ const MovieDetails = () => {
   //   [selectedId]
   // );
 
-  // const showModal = selectedId === movie.id;
-
   const closeModal = () => {
     searchParams.delete('id');
     navigate(`${location.pathname}?${searchParams.toString()}`)
   };
-
 
   // 모달 열고 닫기 애니메이션
   useEffect(() => {
@@ -115,15 +113,16 @@ const MovieDetails = () => {
             {/* 모달 박스 */}
             <div className="bg-[rgb(20,20,20)] rounded-[6px]">
             <div className="relative text-white w-full h-[479.34px]">
+
               {/* 대표 이미지 섹션*/}
               <img
                 src={movie.mainImg}
                 alt={movie.title}
                 className="absolute top-0 left-0 w-full h-full object-cover rounded-[6px]"
               />
+
               {/* 그라데이션 오버레이 */}
               <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t from-[rgb(20,20,20)] to-transparent z-10" />
-
               <img
                 src={closeButton}
                 onClick={closeModal}
@@ -186,6 +185,7 @@ const MovieDetails = () => {
               </div>
 
               {/* 리뷰란 */}
+              <Reviews />
 
               {/* 영화 상세 정보 */}
               <div className="pt-[48px] pb-[65px] text-white">

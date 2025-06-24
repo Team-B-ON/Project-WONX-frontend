@@ -9,7 +9,7 @@ import playHoveredButton from '@/assets/common/buttons-hovered/play-btn-hover.sv
 import addHoveredButton from '@/assets/common/buttons-hovered/add-btn.svg';
 import thumbUpHoveredButton from '@/assets/common/buttons-hovered/thumbup-btn.svg';
 import detailsHoveredButton from '@/assets/common/buttons-hovered/arrowdown-btn.svg';
-import ageRating15 from '@/assets/common/15-age-rating.png'
+import ageRating15 from '@/assets/MovieDetailsPage/15-age-rating.png';
 import { formatDuration } from "@/utils/timeFormat";
 
 type MovieCardProps = {
