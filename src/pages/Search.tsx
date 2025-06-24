@@ -2,11 +2,10 @@ import React from "react";
 import { useSearchParams } from "react-router-dom";
 
 import TopNaviBar from "@/components/common/TopNavBar";
-import SearchHotTalkGrid from "@/components/Search/HotTalk/SearchHotTalkGrid";
 import SearchMovieGrid from "@/components/Search/SearchMovieGrid";
-import SearchRecommendationGrid from "@/components/Search/SearchRecommendationGrid";
 import SearchResultHeader from "@/components/Search/SearchResultHeader";
 import SearchUserGrid from "@/components/Search/SearchUserGrid";
+import SearchHotTalkGrid from "@/components/Search/SearchHotTalkGrid";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
@@ -73,9 +72,11 @@ const Search = () => {
 
         {hasResults ? (
           <>
-            {filteredMovies.length > 0 && <SearchMovieGrid movies={filteredMovies} />}
+            {filteredMovies.length > 0 && (
+              <SearchMovieGrid title="영화 검색 결과" movies={filteredMovies} />
+            )}
             {recommendations.length > 0 && (
-              <SearchRecommendationGrid title="이런 건 어떠세요?" movies={recommendations} />
+              <SearchMovieGrid title="이런 건 어떠세요?" movies={recommendations} />
             )}
             {filteredHotTalk.length > 0 && (
               <SearchHotTalkGrid query={searchQuery} reviews={filteredHotTalk} />
@@ -87,7 +88,7 @@ const Search = () => {
         ) : (
           <>
             <p className="text-white text-lg font-bold">검색 결과가 없습니다.</p>
-            <SearchRecommendationGrid title="혹시 이런 걸 찾으셨나요?" movies={similarSuggestions} />
+            <SearchMovieGrid title="혹시 이런 걸 찾으셨나요?" movies={similarSuggestions} />
           </>
         )}
       </div>
