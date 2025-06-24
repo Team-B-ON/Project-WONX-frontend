@@ -36,11 +36,12 @@ const Reviews = () => {
     
     return(
         <>
-            <p className="pt-[58px] pb-[21px] text-[24px] font-semibold">감상평</p>
+            <p className="pt-[78px] pb-[21px] text-[24px] font-semibold">감상평</p>
 
             <div className="flex flex-col items-center">
+                <div className="mt-[10px] w-[754px] h-[1px] bg-white"></div>
                 {/* 리뷰 등록란 */}
-                <div className="w-[657px] h-[165px] flex flex-col items-center">
+                <div className="w-[657px] flex flex-col items-center">
                     <p className="text-[22px] font-medium pt-[20px] pb-[6px]">평가하기</p>
                     <RatingStars rating={rating} onChange={(r) => setRating(r)} />
                     <div className="w-[568px] mt-[23px] border rounded-[5px] flex">
@@ -49,7 +50,7 @@ const Reviews = () => {
                             value={value}
                             onChange={(e) => setValue(e.target.value)}
                             placeholder="감상평을 남겨주세요."
-                            className="pl-[17px] pt-[14px] max-h-[150px] overflow-y-auto
+                            className="pl-[17px] pt-[14px] max-h-[250px] overflow-y-auto
                                         w-full resize-none focus:outline-none leading-[1.5] bg-transparent
                                         placeholder-[#707070] placeholder:text-[14px]"
                             style={{ height: "53px" }}
@@ -57,7 +58,7 @@ const Reviews = () => {
                         <div className="bg-white text-black w-[75px] text-[14px] flex items-center justify-center rounded-r-[3px] cursor-pointer">등록</div>
                     </div>
                 </div>
-                <div className="mt-[30px] w-[657px] h-[1px] bg-white"></div>
+                <div className="my-[30px] w-[754px] h-[1px] bg-white"></div>
 
                 {/* 리뷰 통계 */}
                 <div className="pt-[20px] flex flex-row justify-center gap-[72px]">
@@ -81,7 +82,13 @@ const Reviews = () => {
 
                 {/* 리뷰 목록 보기 */}
                 <div className="w-[657px] pt-[16px]">
-                    <p className="text-right pb-[6px] text-[14px]">최신순 | 별점 높은 순 | 별점 낮은 순</p>
+                    <p className="text-right pb-[6px] text-[14px] cursor-pointer">
+                        최신순 
+                        <span className="text-[#636363] px-[6px] cursor-default">|</span> 
+                        별점 높은 순 
+                        <span className="text-[#636363] px-[6px] cursor-default">|</span> 
+                        별점 낮은 순
+                    </p>
                     {/* 리뷰 리스트 */}
                     <div>
                         {reviews.map((review) => (
@@ -96,11 +103,8 @@ const Reviews = () => {
                                 <RatingStars rating={rating} readOnly size={16} />
                                 <div className="w-[598px] h-[50px] pt-[14px] pb-[19px]">{review.content}</div>
                             </div>
-                        ))}
-
-                        
+                        ))}                        
                     </div>
-
                 </div>
             </div>
         </>

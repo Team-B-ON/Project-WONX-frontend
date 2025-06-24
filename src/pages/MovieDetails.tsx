@@ -188,15 +188,26 @@ const MovieDetails = () => {
               <Reviews />
 
               {/* 영화 상세 정보 */}
-              <div className="pt-[48px] pb-[65px] text-white">
+              <div className="pt-[92px] pb-[65px]">
                 <p className="text-[24px] font-medium pb-[20px]">{movie.title} 상세 정보</p>
                 <div className="text-[#777] text-[14px] leading-[20px] break-words">
-                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">감독: </p>
-                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">출연: </p>
-                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">각본: </p>
-                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">장르: </p>
-                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">영화 특징: </p>
-                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">관람등급: </p>
+                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">감독: 
+                    <span className="text-white pl-[4px]">아아아</span>
+                  </p>
+                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">출연: 
+                    <span className="text-white pl-[4px]">아아아</span>
+                  </p>
+                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">각본: 
+                    <span className="text-white pl-[4px]">아아아</span>
+                  </p>
+                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">장르: 
+                    <span className="text-white pl-[4px]">{movie.genre?.join(', ') ?? '정보 없음'}</span>
+                  </p>
+                  <div className="mt-[7px] mr-[7px] mb-[7px] ml-0 flex items-start">
+                    <span>관람등급:</span>
+                    <img src={ageRating15} className="ml-[14px] mr-[19.6px] w-[28px] h-[28px]"/>
+                    <span className="text-white pt-[3px]">{movie.ageRating}</span>
+                  </div>
                 </div>
               </div>
 
