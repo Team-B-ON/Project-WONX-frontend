@@ -1,3 +1,6 @@
+import { Genre } from "./genre";
+import { Person } from "./person";
+
 export interface Movie {
     id: string,
     title: string,
@@ -9,5 +12,10 @@ export interface Movie {
     mainImg?: string,
     ageRating?: string,
     ageRatingReason?: string,
-    genre?: string[]
+
+    genres?: Genre[],
+    people?: {
+        person: Person,
+        role: 'director' | 'screenwriter' | 'actor';
+    }[];
 }
