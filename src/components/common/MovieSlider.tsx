@@ -9,16 +9,15 @@ type MovieSliderProps = {
 const MovieSlider = ({ movies }: MovieSliderProps) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const [isCardHovered, setIsCardHovered] = useState(false);
 
   const cardsPerPage = 6;
+  const cardWidth = 217.91;
+  const gap = 16;
   const totalPages = Math.ceil(movies.length / cardsPerPage);
 
   const scrollToPage = (page: number) => {
     if (!sliderRef.current) return;
-
-    const cardWidth = 217.91 + 16; // 카드 너비 + gap (px 단위 조정 가능)
-    const scrollLeft = cardWidth * cardsPerPage * page;
+    const scrollLeft = (cardWidth + gap) * cardsPerPage * page;
     sliderRef.current.scrollTo({ left: scrollLeft, behavior: "smooth" });
   };
 
@@ -42,12 +41,8 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       {currentPage > 0 && (
         <button
           onClick={handlePrev}
-          className={`absolute left-4 top-[35px] z-20
-           bg-black bg-opacity-50
-           text-white p-2
-           transition-opacity duration-100 ${
-             isCardHovered ? "opacity-0" : "opacity-100"
-           }`}
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-30
+            bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded transition"
         >
           ◀
         </button>
@@ -56,20 +51,21 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       {/* 카드 리스트 */}
       <div
         ref={sliderRef}
-        className="flex gap-x-4 overflow-x-auto scroll-smooth px-19 [&::-webkit-scrollbar]:hidden"
+        className="flex gap-x-4 overflow-x-auto scroll-smooth px-6 sm:px-8 md:px-12 [&::-webkit-scrollbar]:hidden"
       >
         {movies.map((movie, idx) => {
           const start = currentPage * cardsPerPage;
           const end = start + cardsPerPage;
           const hoverable = idx >= start && idx < end;
+
           return (
             <div
               key={movie.id}
-              className={`flex-shrink-0 w-[217.91px] relative ${hoverable ? "" : "pointer-events-none"}`}
-              onMouseEnter={() => setIsCardHovered(true)}
-              onMouseLeave={() => setIsCardHovered(false)}
+              className={`flex-shrink-0 w-[217.91px] relative transition-all duration-300 ${
+                hoverable ? "" : "pointer-events-none"
+              }`}
             >
-              <div className="hover:z-50 relative transition-all duration-300 hover:delay-0 delay-300">
+              <div className="relative z-0 hover:z-[999] transition-all duration-300">
                 <MovieCard movie={movie} />
               </div>
             </div>
@@ -81,12 +77,8 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       {currentPage < totalPages - 1 && (
         <button
           onClick={handleNext}
-          className={`absolute right-4 top-[35px] z-20
-           bg-black bg-opacity-50
-           text-white p-2
-           transition-opacity duration-100 ${
-             isCardHovered ? "opacity-0" : "opacity-100"
-           }`}
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-30
+            bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded transition"
         >
           ▶
         </button>

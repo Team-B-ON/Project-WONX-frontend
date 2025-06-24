@@ -31,7 +31,7 @@ export default function PopularMovieRow({ title, movies }: Props) {
           <ChevronLeft className="w-6 h-6 text-white" />
         </button>
 
-        {/* ⭐️ 스크롤바 숨김용 래퍼 */}
+        {/* 스크롤바 숨김용 래퍼 */}
         <div className="relative overflow-hidden">
           <div
             ref={rowRef}
@@ -51,9 +51,8 @@ export default function PopularMovieRow({ title, movies }: Props) {
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <div
-                    className={`relative transition-transform duration-300 ${
-                      hoveredIndex === index ? 'scale-[1.15] z-50' : 'scale-100 z-0'
-                    }`}
+                    className={`relative transition-transform duration-300 ${hoveredIndex === index ? 'scale-[1.15] z-50' : 'scale-100 z-0'
+                      }`}
                   >
                     <PopularMovieCard movie={movie} />
                   </div>

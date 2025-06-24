@@ -1,10 +1,10 @@
 import React from 'react';
 import Banner from '@/components/Home/Banner';
-import PopularMovieRow from '@/components/Home/PopularMovieRow';
 import BoxOfficeMovieRow from '@/components/Home/BoxOffice/BoxOfficeMovieRow';
 import HotTalkRow from '@/components/Home/HotTalk/HotTalkRow';
 import ReviewCount from '@/components/Home/ReviewCount';
 import { popularMovies, boxOfficeMovies } from '@/mocks/mockMovies';
+import PopularMovie from '@/components/Home/PopularMovie';
 
 const Home = () => {
   const handlePlay = () => {
@@ -31,10 +31,8 @@ const Home = () => {
         onInfo={handleInfo}
       />
 
-      <PopularMovieRow title="WONX 인기 콘텐츠" movies={popularMovies} />
-
-      {/* TODO: 실제 사용자 맞춤 추천이 들어오면 해당 데이터로 교체 */}
-      <PopularMovieRow title="@@@님이 좋아할만한 작품" movies={popularMovies} />
+      <PopularMovie title="WONX 인기 콘텐츠" movies={popularMovies} />
+      <PopularMovie title="@@@님이 좋아할만한 작품" movies={popularMovies} />
 
       <BoxOfficeMovieRow title="박스오피스 TOP 10" movies={boxOfficeMovies} />
       <BoxOfficeMovieRow title="개봉 예정작" movies={boxOfficeMovies} />
