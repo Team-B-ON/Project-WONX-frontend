@@ -8,10 +8,11 @@ import thumbUpButton from '@/assets/common/buttons/thumbup-button.svg'
 import addHoveredButton from '@/assets/common/buttons-hovered/add-btn.svg';
 import thumbUpHoveredButton from '@/assets/common/buttons-hovered/thumbup-btn.svg';
 import playIcon from '@/assets/common/buttons/play.svg';
-import ageRating15 from '@/assets/common/15-age-rating.png';
+import ageRating15 from '@/assets/MovieDetailsPage/15-age-rating.png';
 import { formatDuration } from '@/utils/timeFormat';
 import { getYearFromDate } from '@/utils/getYearFromDate';
 import RelatedMovieCard from '@/components/MovieDetailsPage/RelatedMovieCard';
+import Reviews from '@/components/MovieDetailsPage/Reviews';
 
 const movie: Movie = {  // 임시 데이터
   id: '1',
@@ -22,7 +23,33 @@ const movie: Movie = {  // 임시 데이터
   posterUrl: 'https://occ-0-1361-1360.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABfrALyW4q-DVLqTxd1qWZIZfPhfvw6guHYjIOSvqRay5m2Il44bXxdI7UAsvyT81k9c6ICW5W4N6_HGPLxKAH_bASxaledc-szU.webp?r=e3c',
   mainImg: 'https://occ-0-1361-1360.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABcKDNGSwWwb7my_KdhpHkufJnvx2whSRQfcr2N-caISV2HjYJTQ9lJx1jKp5VJzJbVIAffekOk0f6WUK3XGBaGfwz-ZsD9rnWLPJ.webp?r=b05',
   ageRating: '15세 이상 관람가',
-  genre: ['긴박감 넘치는', '유쾌발랄', 'SF 드라마 장르']
+  genres: [
+    { id: 'g1', name: '긴박감 넘치는' },
+    { id: 'g2', name: '유쾌발랄' },
+    { id: 'g3', name: 'SF 드라마 장르' }
+  ],
+  people: [
+    {
+      person: { id: 'p1', name: '다니엘 콴' },
+      role: 'director'
+    },
+    {
+      person: { id: 'p2', name: '다니엘 샤이너트' },
+      role: 'director'
+    },
+    {
+      person: { id: 'p3', name: '양자경' },
+      role: 'actor'
+    },
+    {
+      person: { id: 'p4', name: '키 호이 콴' },
+      role: 'actor'
+    },
+    {
+      person: { id: 'p5', name: '다니엘 콴' },
+      role: 'screenwriter'
+    }
+  ]
 };
 
 const relatedMovie: Movie = {  // 임시 데이터
@@ -51,13 +78,10 @@ const MovieDetails = () => {
   //   [selectedId]
   // );
 
-  // const showModal = selectedId === movie.id;
-
   const closeModal = () => {
     searchParams.delete('id');
     navigate(`${location.pathname}?${searchParams.toString()}`)
   };
-
 
   // 모달 열고 닫기 애니메이션
   useEffect(() => {
@@ -84,6 +108,11 @@ const MovieDetails = () => {
 
   const insetTopClass = atTop   ? 'top-[30px]' : 'top-0';
   const insetBottomClass = atBottom ? 'bottom-[30px]' : 'bottom-0';
+
+  // 감독/각본/출연 목록
+  const directors = movie.people?.filter(p => p.role === 'director').map(p => p.person.name);
+  const screenwriters = movie.people?.filter(p => p.role === 'screenwriter').map(p => p.person.name);
+  const actors = movie.people?.filter(p => p.role === 'actor').map(p => p.person.name);
 
 
   return(
@@ -115,15 +144,16 @@ const MovieDetails = () => {
             {/* 모달 박스 */}
             <div className="bg-[rgb(20,20,20)] rounded-[6px]">
             <div className="relative text-white w-full h-[479.34px]">
+
               {/* 대표 이미지 섹션*/}
               <img
                 src={movie.mainImg}
                 alt={movie.title}
                 className="absolute top-0 left-0 w-full h-full object-cover rounded-[6px]"
               />
+
               {/* 그라데이션 오버레이 */}
               <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t from-[rgb(20,20,20)] to-transparent z-10" />
-
               <img
                 src={closeButton}
                 onClick={closeModal}
@@ -159,19 +189,39 @@ const MovieDetails = () => {
             <div className="px-[48px] text-white">
               
               {/* 기본 정보 */}
-              <div className="flex flex-row">
+              <div className="flex flex-row justify-between">
                 <div className="flex flex-col">
                   <div className="flex flex-row gap-[8px] text-[rgb(188,188,188)]">
                     <p>{getYearFromDate(movie?.releaseDate)}</p>
                     <p>{formatDuration(movie.durationMinutes ?? 0)}</p>
                   </div>
                   <img src={ageRating15} className="w-[32px] h-[32px] mt-[1px]"/>
-                  <p className="pt-[28.8px] pb-[11.27px] w-[481.33px] text-[14px]">{movie?.description}</p>
+                  <p className="pt-[28.8px] pb-[11.27px] w-[471.33px] text-[16px] leading-[26px]">{movie?.description}</p>
                 </div>
                 {/* 출연/장르 */}
-                <div className="flex flex-col text-[rgb(119,119,119)] text-[14px] gap-[14px]">
-                  <p>출연: </p>
-                  <p>장르: </p>
+                <div className="flex flex-col text-[rgb(119,119,119)] text-[14px] gap-[14px] w-[240px]">
+                  <p>출연: 
+                    {actors.slice(0, 3).map((name, index) => (
+                      <span
+                        key={index}
+                        className="text-white pl-[4px] hover:underline cursor-pointer"
+                      >
+                        {name}
+                        {index < actors.length - 1 && ','}
+                      </span>
+                    ))}
+                  </p>
+                  <p>장르: 
+                    {movie.genres.map((genre, index) => (
+                      <span
+                        key={genre.id}
+                        className="text-white pl-[4px] hover:underline cursor-pointer"
+                      >
+                        {genre.name}
+                        {index < movie.genres.length - 1 && ','}
+                      </span>
+                    ))}
+                  </p>
                 </div>
               </div>
 
@@ -186,17 +236,29 @@ const MovieDetails = () => {
               </div>
 
               {/* 리뷰란 */}
+              <Reviews />
 
               {/* 영화 상세 정보 */}
-              <div className="pt-[48px] pb-[65px] text-white">
+              <div className="pt-[92px] pb-[65px]">
                 <p className="text-[24px] font-medium pb-[20px]">{movie.title} 상세 정보</p>
                 <div className="text-[#777] text-[14px] leading-[20px] break-words">
-                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">감독: </p>
-                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">출연: </p>
-                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">각본: </p>
-                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">장르: </p>
-                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">영화 특징: </p>
-                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">관람등급: </p>
+                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">감독: 
+                    <span className="text-white pl-[4px]">{directors?.join(', ') ?? '정보 없음'}</span>
+                  </p>
+                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">출연: 
+                    <span className="text-white pl-[4px]">{actors?.join(', ') ?? '정보 없음'}</span>
+                  </p>
+                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">각본: 
+                    <span className="text-white pl-[4px]">{screenwriters?.join(', ') ?? '정보 없음'}</span>
+                  </p>
+                  <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">장르: 
+                    <span className="text-white pl-[4px]">{movie.genres?.map(g => g.name).join(', ') ?? '정보 없음'}</span>
+                  </p>
+                  <div className="mt-[7px] mr-[7px] mb-[7px] ml-0 flex items-start">
+                    <span>관람등급:</span>
+                    <img src={ageRating15} className="ml-[14px] mr-[19.6px] w-[28px] h-[28px]"/>
+                    <span className="text-white pt-[3px]">{movie.ageRating}</span>
+                  </div>
                 </div>
               </div>
 

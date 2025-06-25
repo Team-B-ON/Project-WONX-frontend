@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Movie } from "@/types/movie";
-import ageRating15 from '@/assets/common/15-age-rating.png';
+import ageRating15 from '@/assets/MovieDetailsPage/15-age-rating.png';
 import addButton from '@/assets/common/buttons/add-button.svg';
 import addHoveredButton from '@/assets/common/buttons-hovered/add-btn.svg';
 import playButton from '@/assets/common/buttons/play-btn-on-video.svg'
