@@ -49,19 +49,18 @@ const Search = () => {
     review.movieTitle.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const similarSuggestions = allMovies
-    .filter((movie) => !filteredMovies.includes(movie))
-    .slice(0, 3);
+  const recommendations = filteredMovies.length > 0
+    ? allMovies
+        .filter((movie) => !filteredMovies.includes(movie))
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3)
+    : [];
 
-  const recommendations = allMovies
-    .filter((movie) => !filteredMovies.includes(movie))
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 3);
-
-  const hasResults =
-    filteredMovies.length > 0 ||
-    filteredUsers.length > 0 ||
-    filteredHotTalk.length > 0;
+  const similarSuggestions = filteredMovies.length === 0
+    ? allMovies
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3)
+    : [];
 
   return (
     <div className="bg-black min-h-screen">
@@ -70,26 +69,25 @@ const Search = () => {
       <div className="px-6 sm:px-10 lg:px-25.5 py-10 space-y-12">
         <SearchResultHeader query={searchQuery} />
 
-        {hasResults ? (
+        {filteredMovies.length > 0 ? (
           <>
-            {filteredMovies.length > 0 && (
-              <SearchMovieGrid title="영화 검색 결과" movies={filteredMovies} />
-            )}
-            {recommendations.length > 0 && (
-              <SearchMovieGrid title="이런 건 어떠세요?" movies={recommendations} />
-            )}
-            {filteredHotTalk.length > 0 && (
-              <SearchHotTalkGrid query={searchQuery} reviews={filteredHotTalk} />
-            )}
-            {filteredUsers.length > 0 && (
-              <SearchUserGrid query={searchQuery} users={filteredUsers} />
-            )}
+            <SearchMovieGrid title="영화 검색 결과" movies={filteredMovies} />
+
+            <SearchMovieGrid title="이런 건 어떠세요?" movies={recommendations} />
           </>
         ) : (
           <>
             <p className="text-white text-lg font-bold">검색 결과가 없습니다.</p>
             <SearchMovieGrid title="혹시 이런 걸 찾으셨나요?" movies={similarSuggestions} />
           </>
+        )}
+
+        {filteredHotTalk.length > 0 && (
+          <SearchHotTalkGrid query={searchQuery} reviews={filteredHotTalk} />
+        )}
+
+        {filteredUsers.length > 0 && (
+          <SearchUserGrid query={searchQuery} users={filteredUsers} />
         )}
       </div>
     </div>
