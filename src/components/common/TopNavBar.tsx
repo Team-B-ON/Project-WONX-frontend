@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Bell, Search } from 'lucide-react'
 
+{/* 하드코딩한 부분들 추후 수정 */}
+
 // 하드코딩한 로고 및 프사 추후 변경
 import Logo from '../../assets/common/images/logo.svg'
 

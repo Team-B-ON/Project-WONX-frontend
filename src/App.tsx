@@ -5,8 +5,7 @@ import Login from './pages/Login'
 import MovieDetails from './pages/MovieDetails'
 import NotFound from './pages/NotFound'
 import SignUp from './pages/SignUp'
-import TestPage from './pages/Test'
-import Tag from './pages/Tag'
+import Search from './pages/Search'
 import TopNavBar from './components/common/TopNavBar'
 import MyPage from './pages/MyPage'
 
@@ -17,9 +16,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/movies/1" element={<MovieDetails />} />
-        <Route path="/movies/list" element={<TestPage />} />
-        <Route path="/movies/tag" element={<Tag />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/navbar" element={<TopNavBar />} />
         <Route path="/mypage" element={<MyPage />} />
