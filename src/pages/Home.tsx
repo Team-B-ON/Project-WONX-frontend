@@ -4,18 +4,17 @@ import BoxOfficeMovieRow from '@/components/Home/BoxOffice/BoxOfficeMovieRow';
 import HotTalkRow from '@/components/Home/HotTalk/HotTalkRow';
 import ReviewCount from '@/components/Home/ReviewCount';
 import { popularMovies, boxOfficeMovies } from '@/mocks/mockMovies';
-import PopularMovie from '@/components/Home/PopularMovie';
 import TopNaviBar from '@/components/common/TopNavBar';
+import BoxOfficeMovieCard from '@/components/Home/BoxOffice/BoxOfficeMovieCard';
+import MovieListRow from '@/components/Home/MovieList';
 
 const Home = () => {
   const handlePlay = () => {
     console.log('재생 버튼 클릭');
-    // 실제 재생 로직 또는 이동 구현
   };
 
   const handleInfo = () => {
     console.log('상세 정보 버튼 클릭');
-    // 상세 페이지 이동 or 모달 띄우기
   };
 
   return (
@@ -34,11 +33,20 @@ const Home = () => {
         onInfo={handleInfo}
       />
 
-      <PopularMovie title="WONX 인기 콘텐츠" movies={popularMovies} />
-      <PopularMovie title="@@@님이 좋아할만한 작품" movies={popularMovies} />
+      <MovieListRow title="WONX 인기 콘텐츠" movies={popularMovies} useCustomSlider />
+<MovieListRow title="@@@님이 좋아할만한 작품" movies={popularMovies} useCustomSlider />
 
-      <BoxOfficeMovieRow title="박스오피스 TOP 10" movies={boxOfficeMovies} />
-      <BoxOfficeMovieRow title="개봉 예정작" movies={boxOfficeMovies} />
+
+      <BoxOfficeMovieRow
+        title="박스오피스 TOP 10"
+        movies={boxOfficeMovies}
+        renderItem={(movie) => <BoxOfficeMovieCard key={movie.id} movie={movie} />}
+      />
+      <BoxOfficeMovieRow
+        title="개봉 예정작"
+        movies={boxOfficeMovies}
+        renderItem={(movie) => <BoxOfficeMovieCard key={movie.id} movie={movie} />}
+      />
 
       <HotTalkRow title="지금 뜨는 핫톡🔥" movies={popularMovies} />
 
