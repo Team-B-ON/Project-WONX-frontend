@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Bell, Search, Users } from 'lucide-react'
+import { Bell, Search } from 'lucide-react'
 
 {/* 하드코딩한 부분들 추후 수정 */}
 
