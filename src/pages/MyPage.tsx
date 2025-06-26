@@ -25,12 +25,12 @@ const watched      = dummyMovies
 const liked        = dummyMovies.slice(0, 12)
 const reviewMovies = dummyMovies.slice(6)
 
-function MyPage() {
-  const [username, setUsername] = useState('닉네임')
-  const [isEditModalOpen, setEditModalOpen] = useState(false)
-  const [tempName, setTempName] = useState('')
-  const [tempAvatar, setTempAvatar] = useState<File | null>(null)
-  const [previewAvatar, setPreviewAvatar] = useState<string | null>(null)
+const MyPage: React.FC = () => {
+    const [username, setUsername] = useState('닉네임')
+    const [isEditModalOpen, setEditModalOpen] = useState(false)
+    const [tempName, setTempName] = useState('')
+    const [tempAvatar, setTempAvatar] = useState<File | null>(null)
+    const [previewAvatar, setPreviewAvatar] = useState<string | null>(null)
 
   const genreCounts = useMemo(() => {
       const counts: Record<string, number> = {}
@@ -38,7 +38,7 @@ function MyPage() {
         genre.forEach((g) => (counts[g] = (counts[g] ?? 0) + 1)),
       )
       return counts
-    }, []);
+    }, [])
 
   const handleEditProfile = () => {
     setTempName(username)
