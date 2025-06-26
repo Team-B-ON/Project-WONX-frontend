@@ -25,14 +25,14 @@ const Banner = ({
       <img
         src={backdropUrl}
         alt={title}
-        className="absolute inset-0 object-cover w-full h-full z-[-1]"
+        className="absolute inset-0 object-cover w-full h-full z-0"
       />
 
       {/* 오버레이 */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
 
       {/* 콘텐츠 */}
-      <div className="absolute top-[16%] sm:top-[20%] md:top-[28%] left-4 right-0 px-4 sm:px-6 md:px-12 lg:px-20 max-w-[90%] md:max-w-2xl space-y-3 sm:space-y-4 md:space-y-6 text-white">
+      <div className="absolute top-[16%] sm:top-[20%] md:top-[28%] left-4 right-0 px-4 sm:px-6 md:px-12 lg:px-20 max-w-[90%] md:max-w-3xl space-y-3 sm:space-y-4 md:space-y-6 text-white">
         {/* 제목 */}
         <h2 className="text-2xl sm:text-4xl md:text-6xl font-bold leading-tight">
           {title}
@@ -50,7 +50,7 @@ const Banner = ({
         )}
 
         {/* 설명 */}
-        <p className="text-xs sm:text-sm md:text-lg whitespace-pre-line line-clamp-3">
+        <p className="text-xs sm:text-sm md:text-lg whitespace-pre-line line-clamp-4">
           {overview}
         </p>
 

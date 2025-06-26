@@ -10,19 +10,22 @@ export default function BoxOfficeMovieCard({ movie }: BoxOfficeMovieCardProps) {
     ? new Date(movie.releaseDate).getFullYear()
     : 'N/A';
 
+  const posterUrl =
+    movie.posterUrl?.trim() ||
+    'https://via.placeholder.com/300x450?text=Movie';
+
   return (
     <Link
       to={`/movies/${movie.id}`}
-      className="w-[200px] flex-shrink-0 transition-transform duration-200 hover:scale-105"
+      className="w-full flex-shrink-0 transition-transform duration-200 hover:scale-105"
     >
       <div className="relative aspect-[2/3] rounded-md overflow-hidden shadow-lg">
         <img
-          src={movie.posterUrl || '/fallback.jpg'}
+          src={posterUrl}
           alt={movie.title}
           className="w-full h-full object-cover"
           loading="lazy"
         />
-        {/* hover 시 등장하는 정보 오버레이 */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
           <div className="absolute bottom-0 p-4">
             <h3 className="text-sm font-semibold text-white line-clamp-2">{movie.title}</h3>

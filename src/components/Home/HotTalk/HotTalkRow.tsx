@@ -19,36 +19,48 @@ export default function HotTalkRow({ title, movies }: Props) {
   };
 
   return (
-    <div className="space-y-2 px-6 sm:px-10 lg:px-20 py-10 relative min-h-[250px]">
+    <div className="space-y-2 px-6 sm:px-10 lg:px-20 py-10 relative">
       <h2 className="text-white text-2xl font-bold">{title}</h2>
 
       <div className="group relative">
+        {/* 왼쪽 화살표 */}
         <button
-          className="absolute left-0 top-0 bottom-0 z-40 hidden group-hover:block bg-black/50 px-2"
+          className="absolute left-0 top-0 bottom-0 z-50 hidden group-hover:block bg-black/50 px-2"
           onClick={() => scroll('left')}
         >
           <ChevronLeft className="w-6 h-6 text-white" />
         </button>
 
+        {/* 카드 슬라이더 */}
         <div
-  ref={rowRef}
-  className="flex space-x-4 overflow-x-scroll scrollbar-hide scroll-smooth"
->
-  {movies.map((movie) => (
-    <div
-      key={movie.id}
-      style={{
-        flex: '0 0 calc((100% - (16px * 2)) / 3)', // 3등분
-      }}
-      className="relative transition-transform duration-300 hover:scale-105 z-0"
-    >
-      <HotTalkCard movie={movie} />
-    </div>
-  ))}
-</div>
+          ref={rowRef}
+          className="flex overflow-x-scroll scrollbar-hide scroll-smooth snap-x snap-mandatory pr-8"
+        >
+          {movies.map((movie, index) => (
+            <div
+              key={movie.id}
+              className={`
+                snap-start 
+                px-0 
+                flex-shrink-0 
+                min-w-full 
+                sm:min-w-[50%] 
+                md:min-w-[33.3333%] 
+                relative 
+                z-10 
+                ${index === movies.length - 1 ? 'mr-0' : 'mr-4'}
+              `}
+            >
+              <div className="transition-transform duration-300 hover:scale-105 hover:z-50 relative">
+                <HotTalkCard movie={movie} />
+              </div>
+            </div>
+          ))}
+        </div>
 
+        {/* 오른쪽 화살표 */}
         <button
-          className="absolute right-0 top-0 bottom-0 z-40 hidden group-hover:block bg-black/50 px-2"
+          className="absolute right-0 top-0 bottom-0 z-50 hidden group-hover:block bg-black/50 px-2"
           onClick={() => scroll('right')}
         >
           <ChevronRight className="w-6 h-6 text-white" />
