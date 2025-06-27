@@ -201,13 +201,15 @@ const MovieDetails = () => {
                   </p>
                   <p>장르: 
                     {movie.genres.map((genre, index) => (
-                      <span
+                      <Link
                         key={genre.id}
+                        to={`/genre/${genre.id}`}
+                        state={{ backgroundLocation: location }}
                         className="text-white pl-[4px] hover:underline cursor-pointer"
                       >
                         {genre.name}
                         {index < movie.genres.length - 1 && ','}
-                      </span>
+                      </Link>
                     ))}
                   </p>
                 </div>
@@ -282,7 +284,21 @@ const MovieDetails = () => {
                     </span>
                   </p>
                   <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">장르: 
-                    <span className="text-white pl-[4px]">{movie.genres?.map(g => g.name).join(', ') ?? '정보 없음'}</span>
+                    {movie.genres.length > 0 ? (
+                      movie.genres.map((genre, idx) => (
+                        <Link
+                          key={genre.id}
+                          to={`/genre/${genre.id}`}
+                          state={{ backgroundLocation: location }}
+                          className="text-white pl-[4px] hover:underline cursor-pointer"
+                        >
+                          {genre.name}
+                          {idx < movie.genres.length - 1 && ', '}
+                        </Link>
+                      ))
+                    ) : (
+                      <span className="text-white pl-[4px]">정보 없음</span>
+                    )}
                   </p>
                   <div className="mt-[7px] mr-[7px] mb-[7px] ml-0 flex items-start">
                     <span>관람등급:</span>
