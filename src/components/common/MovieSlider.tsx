@@ -39,7 +39,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
         </button>
       )}
 
-      {/* 슬라이더 래퍼 (overflow-visible 유지) */}
+      {/* 슬라이더 래퍼 */}
       <div className="relative overflow-visible">
         <div
           className="flex gap-x-4 transition-transform duration-500 ease-in-out will-change-transform"

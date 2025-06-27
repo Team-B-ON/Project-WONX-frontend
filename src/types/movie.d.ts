@@ -1,3 +1,6 @@
+import { Genre } from "./genre";
+import { Person } from "./person";
+
 export interface Movie {
     id: string,
     title: string,
@@ -9,5 +12,9 @@ export interface Movie {
     mainImg?: string,
     ageRating?: string,
     ageRatingReason?: string,
-    genre?: string[]
+
+    genres?: Genre[],
+    actors?: Person[],
+    directors?: Person[],
+    screenwriters?: Person[],
 }
