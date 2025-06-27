@@ -17,10 +17,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/movies/1" element={<MovieDetails />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/movie" element={<MovieDetails />} />
         <Route path="/navbar" element={<TopNavBar />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
