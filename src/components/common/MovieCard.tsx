@@ -33,7 +33,7 @@ const MovieCard = ({movie}: MovieCardProps) => {
 
     return (
         <div className="
-            group relative z-0 flex-shrink-0 overflow-visible
+            group relative hover:z-50 flex-shrink-0 overflow-visible
             w-[217.91px] h-[117.609px]
         ">
             <div className="
