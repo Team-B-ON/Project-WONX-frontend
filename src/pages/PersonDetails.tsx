@@ -6,7 +6,7 @@ import backBtn from '@/assets/PersonDetailsPage/back-arrow.svg';
 import MovieCard from "@/components/common/MovieCard";
 
 const person: PersonDetailsResponse = {  // 임시 데이터
-  personId: '3',
+  personId: 3,
   name: '양자경',
   role: ['director', 'screenwriter'],
   movies: [
@@ -67,7 +67,8 @@ const PersonDetails = () => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [atTop, setAtTop] = useState(true);
 
-    const { id: selectedId } = useParams();
+    const { id } = useParams();
+    const selectedId = Number(id);
     const navigate = useNavigate();
     
     // 모달 열고 닫기 애니메이션

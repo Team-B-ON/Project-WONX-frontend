@@ -1,5 +1,5 @@
 export interface PersonDetailsResponse {
-  personId: string;
+  personId: number;
   name: string;
   role: ('director' | 'screenwriter' | 'actor')[];
   movies: {
