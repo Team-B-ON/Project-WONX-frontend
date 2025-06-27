@@ -37,12 +37,16 @@ const MovieCard = ({movie}: MovieCardProps) => {
             w-[217.91px] h-[117.609px]
         ">
             <div className="
-                relative
+                absolute left-1/2 top-1/2
+                w-[217.91px] h-[117.609px]
                 rounded-[3.2px]
                 overflow-hidden
-                transition-all duration-250 ease-in-out origin-center
-                group-hover:absolute group-hover:top-0 group-hover:left-0
-                group-hover:w-[336px] group-hover:h-[350.828px]
+                transform -translate-x-1/2 -translate-y-1/2
+                transition-[width,height,max-height] duration-400 ease-in-out origin-center
+
+                group-hover:w-[336px] group-hover:h-auto
+                group-hover:min-h-[350.828px]
+                group-hover:max-h-[394.028px]
                 group-hover:rounded-[6px]
                 group-hover:z-50
             ">
@@ -51,14 +55,15 @@ const MovieCard = ({movie}: MovieCardProps) => {
                     alt={movie.title}
                     className="
                         w-full h-[117.609px] object-cover
-                        transition-all duration-300 ease-in-out
+                        transition-all duration-400 ease-in-out
                         group-hover:h-[189.477px]
                     "
                 />
                 <div className="
-                    h-0 group-hover:h-[161.351px]
+                    h-0 group-hover:h-auto
+                    group-hover:min-h-[161.351px] group-hover:max-h-[203.429px]
                     overflow-hidden
-                    transition-all duration-300 ease-in-out
+                    transition-all ease-in-out
                     bg-[#181818] bg-opacity-75
                     "
                 >
