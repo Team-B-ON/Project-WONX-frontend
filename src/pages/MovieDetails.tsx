@@ -1,5 +1,5 @@
 import React, { useRef, useState, UIEvent, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import MovieCard from '@/components/common/MovieCard';
 import type { Movie } from '@/types/movie';
 import closeButton from '@/assets/common/buttons/close-button.svg';
@@ -24,31 +24,20 @@ const movie: Movie = {  // 임시 데이터
   mainImg: 'https://occ-0-1361-1360.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABcKDNGSwWwb7my_KdhpHkufJnvx2whSRQfcr2N-caISV2HjYJTQ9lJx1jKp5VJzJbVIAffekOk0f6WUK3XGBaGfwz-ZsD9rnWLPJ.webp?r=b05',
   ageRating: '15세 이상 관람가',
   genres: [
-    { id: 'g1', name: '긴박감 넘치는' },
-    { id: 'g2', name: '유쾌발랄' },
-    { id: 'g3', name: 'SF 드라마 장르' }
+    { id: '1', name: '긴박감 넘치는' },
+    { id: '2', name: '유쾌발랄' },
+    { id: '3', name: 'SF 드라마 장르' }
   ],
-  people: [
-    {
-      person: { id: 'p1', name: '다니엘 콴' },
-      role: 'director'
-    },
-    {
-      person: { id: 'p2', name: '다니엘 샤이너트' },
-      role: 'director'
-    },
-    {
-      person: { id: 'p3', name: '양자경' },
-      role: 'actor'
-    },
-    {
-      person: { id: 'p4', name: '키 호이 콴' },
-      role: 'actor'
-    },
-    {
-      person: { id: 'p5', name: '다니엘 콴' },
-      role: 'screenwriter'
-    }
+  directors: [
+    { id: '1', name: '다니엘 콴' },
+    { id: '2', name: '다니엘 샤이너트' }
+  ],
+  screenwriters: [
+    { id: '5', name: '다니엘 콴' }
+  ],
+  actors: [
+    { id: '3', name: '양자경' },
+    { id: '4', name: '키 호이 콴' }
   ]
 };
 
@@ -106,21 +95,18 @@ const MovieDetails = () => {
     setAtBottom(t.scrollHeight - t.scrollTop === t.clientHeight);
   };
 
-  const insetTopClass = atTop   ? 'top-[30px]' : 'top-0';
+  const insetTopClass = atTop ? 'top-[30px]' : 'top-0';
   const insetBottomClass = atBottom ? 'bottom-[30px]' : 'bottom-0';
 
   // 감독/각본/출연 목록
-  const directors = movie.people?.filter(p => p.role === 'director').map(p => p.person.name);
-  const screenwriters = movie.people?.filter(p => p.role === 'screenwriter').map(p => p.person.name);
-  const actors = movie.people?.filter(p => p.role === 'actor').map(p => p.person.name);
+  const directors = movie.directors ?? [];
+  const screenwriters = movie.screenwriters ?? [];
+  const actors = movie.actors ?? [];
 
 
   return(
     <div className="relative">
       <div className="grid grid-cols-4 gap-6">
-        {/* {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))} */}
         <MovieCard key={movie.id} movie={movie}/>
       </div>
 
@@ -201,25 +187,29 @@ const MovieDetails = () => {
                 {/* 출연/장르 */}
                 <div className="flex flex-col text-[rgb(119,119,119)] text-[14px] gap-[14px] w-[240px]">
                   <p>출연: 
-                    {actors.slice(0, 3).map((name, index) => (
-                      <span
-                        key={index}
-                        className="text-white pl-[4px] hover:underline cursor-pointer"
-                      >
-                        {name}
-                        {index < actors.length - 1 && ','}
-                      </span>
+                    {actors.slice(0, 3).map((actor, index) => (
+                      <Link key={actor.id} to={`/person/${actor.id}`} state={{ backgroundLocation: location }}>
+                        <span
+                          key={index}
+                          className="text-white pl-[4px] hover:underline cursor-pointer"
+                        >
+                          {actor.name}
+                          {index < actors.length - 1 && ','}
+                        </span>
+                      </Link>
                     ))}
                   </p>
                   <p>장르: 
                     {movie.genres.map((genre, index) => (
-                      <span
+                      <Link
                         key={genre.id}
+                        to={`/genre/${genre.id}`}
+                        state={{ backgroundLocation: location }}
                         className="text-white pl-[4px] hover:underline cursor-pointer"
                       >
                         {genre.name}
                         {index < movie.genres.length - 1 && ','}
-                      </span>
+                      </Link>
                     ))}
                   </p>
                 </div>
@@ -243,16 +233,72 @@ const MovieDetails = () => {
                 <p className="text-[24px] font-medium pb-[20px]">{movie.title} 상세 정보</p>
                 <div className="text-[#777] text-[14px] leading-[20px] break-words">
                   <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">감독: 
-                    <span className="text-white pl-[4px]">{directors?.join(', ') ?? '정보 없음'}</span>
+                    <span className="text-white pl-[4px]">
+                      {directors.length > 0
+                        ? directors?.map((person, index) => (
+                          <Link
+                            key={person.id}
+                            to={`/person/${person.id}`}
+                            state={{ backgroundLocation: location }}
+                            className="hover:underline cursor-pointer"
+                          >
+                            {person.name}
+                            {index < directors.length - 1 && ', '}
+                          </Link>
+                        ))
+                      : '정보 없음'}
+                    </span>
                   </p>
                   <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">출연: 
-                    <span className="text-white pl-[4px]">{actors?.join(', ') ?? '정보 없음'}</span>
+                    <span className="text-white pl-[4px]">
+                      {actors.length > 0
+                        ? actors.map((person, index) => (
+                          <Link
+                            key={person.id}
+                            to={`/person/${person.id}`}
+                            state={{ backgroundLocation: location }}
+                            className="hover:underline cursor-pointer"
+                          >
+                            {person.name}
+                            {index < actors.length - 1 && ', '}
+                          </Link>
+                        ))
+                      : '정보 없음'}
+                    </span>
                   </p>
                   <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">각본: 
-                    <span className="text-white pl-[4px]">{screenwriters?.join(', ') ?? '정보 없음'}</span>
+                    <span className="text-white pl-[4px]">
+                      {screenwriters.length > 0
+                        ? screenwriters.map((person, index) => (
+                          <Link
+                            key={person.id}
+                            to={`/person/${person.id}`}
+                            state={{ backgroundLocation: location }}
+                            className="hover:underline cursor-pointer"
+                          >
+                            {person.name}
+                            {index < screenwriters.length - 1 && ', '}
+                          </Link>
+                        ))
+                      : '정보 없음'}
+                    </span>
                   </p>
                   <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">장르: 
-                    <span className="text-white pl-[4px]">{movie.genres?.map(g => g.name).join(', ') ?? '정보 없음'}</span>
+                    {movie.genres.length > 0 ? (
+                      movie.genres.map((genre, idx) => (
+                        <Link
+                          key={genre.id}
+                          to={`/genre/${genre.id}`}
+                          state={{ backgroundLocation: location }}
+                          className="text-white pl-[4px] hover:underline cursor-pointer"
+                        >
+                          {genre.name}
+                          {idx < movie.genres.length - 1 && ', '}
+                        </Link>
+                      ))
+                    ) : (
+                      <span className="text-white pl-[4px]">정보 없음</span>
+                    )}
                   </p>
                   <div className="mt-[7px] mr-[7px] mb-[7px] ml-0 flex items-start">
                     <span>관람등급:</span>

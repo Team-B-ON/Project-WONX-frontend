@@ -45,7 +45,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       <div className="relative overflow-visible">
         <div
           ref={sliderRef}
-          className="flex gap-x-4 overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden"
+          className="flex gap-x-4 scroll-smooth [&::-webkit-scrollbar]:hidden"
         >
           {movies.map((movie, index) => {
 

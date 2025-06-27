@@ -20,7 +20,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 }) => {
   return (
     <section className="bg-black py-8 px-12 justify-center mx-auto">
-      {/* 1) 아바타 + 텍스트 묶음 */}
       <div className="flex justify-center items-center space-x-12 mb-8">
         <div className="flex-shrink-0">
           <img
@@ -44,13 +43,12 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         </div>
       </div>
 
-      {/* 2) 버튼 그룹 (프로필 수정/공유) */}
       <div className="flex justify-center space-x-4">
         <button
           onClick={onEditProfile}
           aria-label="프로필 수정"
           className="w-40 max-w-xs flex items-center justify-center space-x-2
-                     px-4 py-2 bg-white/20 hover:bg-white/30 border border-white/40
+                     px-4 py-2 bg-red/20 hover:bg-white/30 border border-white/40
                      rounded-none text-white text-sm font-medium transition-colors"
         >
           <Edit2 size={16} />
@@ -60,7 +58,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           onClick={onShareProfile}
           aria-label="프로필 공유"
           className="w-40 max-w-xs flex items-center justify-center space-x-2
-                     px-4 py-2 bg-white/20 hover:bg-white/30 border border-white/40
+                     px-4 py-2 bg-red/20 hover:bg-white/30 border border-white/40
                      rounded-none text-white text-sm font-medium transition-colors"
         >
           <Share2 size={16} />

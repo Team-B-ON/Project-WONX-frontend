@@ -14,8 +14,7 @@ export interface Movie {
     ageRatingReason?: string,
 
     genres?: Genre[],
-    people?: {
-        person: Person,
-        role: 'director' | 'screenwriter' | 'actor';
-    }[];
+    actors?: Person[],
+    directors?: Person[],
+    screenwriters?: Person[],
 }

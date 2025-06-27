@@ -21,7 +21,7 @@ export default function MovieListRow({ title, movies, useCustomSlider }: MovieLi
           <MovieSlider movies={movies} />
         ) : (
           // 기본 수평 스크롤 방식
-          <div className="flex overflow-x-auto gap-4 scroll-smooth scrollbar-hide">
+          <div className="flex gap-4 scroll-smooth scrollbar-hide">
             {movies.map((movie) => (
               <div key={movie.id} className="flex-shrink-0 w-[220px]">
                 <MovieCard movie={movie} />

@@ -33,68 +33,81 @@ const MovieCard = ({movie}: MovieCardProps) => {
 
     return (
         <div className="
-            group relative flex-shrink-0 overflow-hidden
-            w-[217.91px] h-auto
-            rounded-[2.88px]
-            transition-all duration-250 ease-in-out
-            hover:w-[336px] hover:h-[350.828px] hover:rounded-[6px]
+            group relative hover:z-50 flex-shrink-0 overflow-visible
+            w-[217.91px] h-[117.609px]
         ">
-            <img 
-                src={movie.posterUrl}
-                alt={movie.title}
-                className="
-                    w-full h-[117.609px] object-cover
-                    transition-all duration-300 ease-in-out
-                    group-hover:h-[189.477px]
-                "
-            />
             <div className="
-                h-0 group-hover:h-[161.351px]
+                absolute left-1/2 top-1/2
+                w-[217.91px] h-[117.609px]
+                rounded-[3.2px]
                 overflow-hidden
-                transition-all duration-300 ease-in-out
-                bg-[#181818] bg-opacity-75
-                "
-            >
-                <div className="p-4 flex flex-col gap-y-[13px]">
-                    <div className="flex justify-between items-center w-full">
-                        <div className="flex items-center gap-x-2">
+                transform -translate-x-1/2 -translate-y-1/2
+                transition-[width,height,max-height] duration-400 ease-in-out origin-center
+
+                group-hover:w-[336px] group-hover:h-auto
+                group-hover:min-h-[350.828px]
+                group-hover:max-h-[394.028px]
+                group-hover:rounded-[6px]
+                group-hover:z-50
+            ">
+                <img 
+                    src={movie.posterUrl}
+                    alt={movie.title}
+                    className="
+                        w-full h-[117.609px] object-cover
+                        transition-all duration-400 ease-in-out
+                        group-hover:h-[189.477px]
+                    "
+                />
+                <div className="
+                    h-0 group-hover:h-auto
+                    group-hover:min-h-[161.351px] group-hover:max-h-[203.429px]
+                    overflow-hidden
+                    transition-all ease-in-out
+                    bg-[#181818] bg-opacity-75
+                    "
+                >
+                    <div className="p-4 flex flex-col gap-y-[13px]">
+                        <div className="flex justify-between items-center w-full">
+                            <div className="flex items-center gap-x-2">
+                                <img 
+                                    src={isPlayHovered ? playHoveredButton : playButton} 
+                                    className="cursor-pointer w-[40px] h-[40px]"
+                                    onMouseEnter={() => setIsPlayHovered(true)}
+                                    onMouseLeave={() => setIsPlayHovered(false)}
+                                />
+                                <img 
+                                    src={isAddHovered ? addHoveredButton : addButton} 
+                                    className="cursor-pointer w-[40px] h-[40px]"
+                                    onMouseEnter={() => setIsAddHovered(true)}
+                                    onMouseLeave={() => setIsAddHovered(false)}
+                                />
+                                <img 
+                                    src={isThumbHovered ? thumbUpHoveredButton : thumbUpButton} 
+                                    className="cursor-pointer w-[40px] h-[40px]"
+                                    onMouseEnter={() => setIsThumbHovered(true)}
+                                    onMouseLeave={() => setIsThumbHovered(false)}
+                                />
+                            </div>
                             <img 
-                                src={isPlayHovered ? playHoveredButton : playButton} 
+                                src={isDetailsHovered ? detailsHoveredButton : detailsButton} 
                                 className="cursor-pointer w-[40px] h-[40px]"
-                                onMouseEnter={() => setIsPlayHovered(true)}
-                                onMouseLeave={() => setIsPlayHovered(false)}
-                            />
-                            <img 
-                                src={isAddHovered ? addHoveredButton : addButton} 
-                                className="cursor-pointer w-[40px] h-[40px]"
-                                onMouseEnter={() => setIsAddHovered(true)}
-                                onMouseLeave={() => setIsAddHovered(false)}
-                            />
-                            <img 
-                                src={isThumbHovered ? thumbUpHoveredButton : thumbUpButton} 
-                                className="cursor-pointer w-[40px] h-[40px]"
-                                onMouseEnter={() => setIsThumbHovered(true)}
-                                onMouseLeave={() => setIsThumbHovered(false)}
+                                onMouseEnter={() => setIsDetailsHovered(true)}
+                                onMouseLeave={() => setIsDetailsHovered(false)}
+                                onClick={handleClick}
                             />
                         </div>
-                        <img 
-                            src={isDetailsHovered ? detailsHoveredButton : detailsButton} 
-                            className="cursor-pointer w-[40px] h-[40px]"
-                            onMouseEnter={() => setIsDetailsHovered(true)}
-                            onMouseLeave={() => setIsDetailsHovered(false)}
-                            onClick={handleClick}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-y-[13px] text-[16px]">
-                        <div className="flex flex-row gap-x-1 items-center">
-                            <img src={ageRating15} className="w-[32px] h-[32px]"/>
-                            <p className="text-[#bcbcbc] pl-[14.4px]">
-                                {formatDuration(movie.durationMinutes ?? 0)}
+                        <div className="flex flex-col gap-y-[13px] text-[16px]">
+                            <div className="flex flex-row gap-x-1 items-center">
+                                <img src={ageRating15} className="w-[32px] h-[32px]"/>
+                                <p className="text-[#bcbcbc] pl-[14.4px]">
+                                    {formatDuration(movie.durationMinutes ?? 0)}
+                                </p>
+                            </div>
+                            <p className="text-white">
+                                {movie.genres?.map(g => g.name).join(' · ') ?? '정보 없음'}
                             </p>
                         </div>
-                        <p className="text-white">
-                            {movie.genre?.join(' · ') ?? '정보 없음'}
-                        </p>
                     </div>
                 </div>
             </div>
