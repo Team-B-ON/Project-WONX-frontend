@@ -1,14 +1,23 @@
 import { JSX, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Movie } from '@/types/movie';
+import MovieTag from '@/components/common/MovieTag';
 
 interface Props {
   title: string;
   movies: Movie[];
   renderItem: (movie: Movie) => JSX.Element;
+  onClickMore?: () => void; // 추가
+  showMore?: boolean;       // 추가(선택)
 }
 
-export default function BoxOfficeMovieRow({ title, movies, renderItem }: Props) {
+export default function BoxOfficeMovieRow({
+  title,
+  movies,
+  renderItem,
+  onClickMore,
+  showMore = true,
+}: Props) {
   const rowRef = useRef<HTMLDivElement>(null);
 
   const scroll = (dir: 'left' | 'right') => {
@@ -20,7 +29,7 @@ export default function BoxOfficeMovieRow({ title, movies, renderItem }: Props) 
 
   return (
     <div className="space-y-2 px-6 sm:px-10 lg:px-20 py-10 relative min-h-[360px]">
-      <h2 className="text-white text-2xl font-bold">{title}</h2>
+      <MovieTag title={title} onClickMore={onClickMore} showMore={showMore} />
 
       <div className="group relative">
         {/* 왼쪽 화살표 */}

@@ -3,11 +3,10 @@ import Banner from '@/components/Home/Banner';
 import BoxOfficeMovieRow from '@/components/Home/BoxOffice/BoxOfficeMovieRow';
 import HotTalkRow from '@/components/Home/HotTalk/HotTalkRow';
 import ReviewCount from '@/components/Home/ReviewCount';
-import { popularMovies, boxOfficeMovies } from '@/mocks/mockMovies';
+import { boxOfficeMovies } from '@/mocks/mockMovies';
 import TopNaviBar from '@/components/common/TopNavBar';
 import BoxOfficeMovieCard from '@/components/Home/BoxOffice/BoxOfficeMovieCard';
 import MovieList from '@/components/Home/MovieList';
-// import MovieSlider from '@/components/common/MovieSlider';
 import { Movie } from '@/types/movie';
 
 
@@ -48,22 +47,28 @@ const Home = () => {
         onInfo={handleInfo}
       />
 
-      <MovieList title="WONX 인기 콘텐츠" movies={dummyMovies} useCustomSlider />
-      <MovieList title="@@@님이 좋아할만한 작품" movies={dummyMovies} useCustomSlider />
+      <MovieList title="WONX 인기 콘텐츠" movies={dummyMovies.slice(0, 6)} useCustomSlider />
+      <MovieList title="박스오피스" movies={dummyMovies.slice(0, 6)} useCustomSlider />
 
 
       <BoxOfficeMovieRow
-        title="박스오피스 TOP 10"
-        movies={boxOfficeMovies}
-        renderItem={(movie) => <BoxOfficeMovieCard key={movie.id} movie={movie} />}
-      />
+      title="박스오피스 TOP 10"
+      movies={boxOfficeMovies}
+      renderItem={(movie) => <BoxOfficeMovieCard key={movie.id} movie={movie} />}
+      onClickMore={() => { /* 전체 박스오피스 페이지 이동 등 */ }}
+/>
+
       <BoxOfficeMovieRow
         title="개봉 예정작"
         movies={boxOfficeMovies}
         renderItem={(movie) => <BoxOfficeMovieCard key={movie.id} movie={movie} />}
       />
 
-      <HotTalkRow title="지금 뜨는 핫톡🔥" movies={popularMovies} />
+      <HotTalkRow
+        title="지금 뜨는 핫톡🔥"
+        movies={dummyMovies}
+        onClickMore={() => { /* 전체 핫톡 페이지로 이동 등 */ }}
+      />
 
       <ReviewCount reviewCount={1555555266} />
     </div>
