@@ -6,7 +6,8 @@ import ReviewCount from '@/components/Home/ReviewCount';
 import { popularMovies, boxOfficeMovies } from '@/mocks/mockMovies';
 import TopNaviBar from '@/components/common/TopNavBar';
 import BoxOfficeMovieCard from '@/components/Home/BoxOffice/BoxOfficeMovieCard';
-import MovieListRow from '@/components/Home/MovieList';
+import MovieList from '@/components/Home/MovieList';
+// import MovieSlider from '@/components/common/MovieSlider';
 import { Movie } from '@/types/movie';
 
 
@@ -47,8 +48,8 @@ const Home = () => {
         onInfo={handleInfo}
       />
 
-      <MovieListRow title="WONX 인기 콘텐츠" movies={dummyMovies} useCustomSlider />
-      <MovieListRow title="@@@님이 좋아할만한 작품" movies={dummyMovies} useCustomSlider />
+      <MovieList title="WONX 인기 콘텐츠" movies={dummyMovies} useCustomSlider />
+      <MovieList title="@@@님이 좋아할만한 작품" movies={dummyMovies} useCustomSlider />
 
 
       <BoxOfficeMovieRow

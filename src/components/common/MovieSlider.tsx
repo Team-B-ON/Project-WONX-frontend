@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Movie } from "@/types/movie";
 import MovieCard from "./MovieCard";
 
@@ -7,32 +7,30 @@ type MovieSliderProps = {
 };
 
 const MovieSlider = ({ movies }: MovieSliderProps) => {
-  const sliderRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const cardsPerPage = 6;
   const cardWidth = 217.91;
   const gap = 16;
   const totalPages = Math.ceil(movies.length / cardsPerPage);
 
-  const scrollToPage = (page: number) => {
-    if (!sliderRef.current) return;
-    const scrollLeft = (cardWidth + gap) * cardsPerPage * page;
-    sliderRef.current.scrollTo({ left: scrollLeft, behavior: "smooth" });
-  };
+  const offsetX = (cardWidth + gap) * cardsPerPage * currentPage;
 
-  const handleNext = () => setCurrentPage(Math.min(currentPage + 1, totalPages - 1));
-  const handlePrev = () => setCurrentPage(Math.max(currentPage - 1, 0));
-
-  useEffect(() => {
-    scrollToPage(currentPage);
-  }, [currentPage]);
+  const handleNext = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
+  const handlePrev = () =>
+    setCurrentPage((prev) => Math.max(prev - 1, 0));
 
   return (
-    <div className="relative w-full">
+    <div
+      className="relative w-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* 왼쪽 버튼 */}
-      {currentPage > 0 && (
+      {currentPage > 0 && isHovered && (
         <button
           onClick={handlePrev}
           className="absolute left-0 top-0 bottom-0 z-[1000] bg-black/50 hover:bg-opacity-70 text-white p-2"
@@ -41,34 +39,31 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
         </button>
       )}
 
-      {/* 슬라이더 래퍼 */}
+      {/* 슬라이더 래퍼 (overflow-visible 유지) */}
       <div className="relative overflow-visible">
         <div
-          ref={sliderRef}
-          className="flex gap-x-4 overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden"
+          className="flex gap-x-4 transition-transform duration-500 ease-in-out will-change-transform"
+          style={{ transform: `translateX(-${offsetX}px)` }}
         >
-          {movies.map((movie, index) => {
-
-            return (
-              <div
-                key={movie.id}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
-                className={`flex-shrink-0 w-[217.91px] transition-transform duration-300 ${
-                  hoveredIndex === index ? 'scale-[1.15] z-10' : 'scale-100 z-0'
-                }`}
-              >
-                <div className="relative">
-                  <MovieCard movie={movie} />
-                </div>
+          {movies.map((movie, index) => (
+            <div
+              key={movie.id}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className={`flex-shrink-0 w-[217.91px] transition-transform duration-300 ${
+                hoveredIndex === index ? "scale-[1.15] z-10" : "scale-100 z-0"
+              }`}
+            >
+              <div className="relative">
+                <MovieCard movie={movie} />
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
 
       {/* 오른쪽 버튼 */}
-      {currentPage < totalPages - 1 && (
+      {currentPage < totalPages - 1 && isHovered && (
         <button
           onClick={handleNext}
           className="absolute right-0 top-0 bottom-0 z-[1000] bg-black/50 hover:bg-opacity-70 text-white p-2"
