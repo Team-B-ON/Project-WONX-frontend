@@ -53,7 +53,7 @@ const Search = () => {
     ? allMovies
         .filter((movie) => !filteredMovies.includes(movie))
         .sort(() => Math.random() - 0.5)
-        .slice(0, 3)
+        .slice(0, 6)
     : [];
 
   const similarSuggestions = filteredMovies.length === 0

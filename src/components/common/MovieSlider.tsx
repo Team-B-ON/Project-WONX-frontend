@@ -78,7 +78,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
               key={movie.id}
               onMouseEnter={() => setHoveredIndex(idx)} // 호버 시 현재 인덱스 기록
               onMouseLeave={() => setHoveredIndex(null)} // 호버 해제 시 초기화
-              className={`flex-shrink-0 w-[217.91px] transition-transform duration-300 ${ // 호버된 카드만 확대 & z-index 높임
+              className={`flex-shrink-0 w-[217.91px]${ // 호버된 카드만 확대 & z-index 높임
                 hoveredIndex === idx ? 'scale-[1.15] z-1000' : 'scale-100 z-0' // 아니면 기본 크기
                 }`}
               >
