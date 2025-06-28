@@ -1,11 +1,13 @@
 import { useState } from "react";
 import type { Movie } from "@/types/movie";
+import { formatDuration } from "@/utils/timeFormat";
+import { getYearFromDate } from "@/utils/getYearFromDate";
 import ageRating15 from '@/assets/MovieDetailsPage/15-age-rating.png';
 import addButton from '@/assets/common/buttons/add-button.svg';
 import addHoveredButton from '@/assets/common/buttons-hovered/add-btn.svg';
-import playButton from '@/assets/common/buttons/play-btn-on-video.svg'
-import { formatDuration } from "@/utils/timeFormat";
-import { getYearFromDate } from "@/utils/getYearFromDate";
+import bookmarkButton from '@/assets/MovieDetailsPage/bookmark-check-btn.svg';
+import bookmarkHoveredButton from '@/assets/MovieDetailsPage/bookmark-check-hovered.svg';
+import playButton from '@/assets/common/buttons/play-btn-on-video.svg';
 
 type RelatedMovieCardProps = {
     movie: Movie;
@@ -13,6 +15,7 @@ type RelatedMovieCardProps = {
 
 const RelatedMovieCard = ({movie}: RelatedMovieCardProps) => {
     const [isAddHovered, setIsAddHovered] = useState(false);
+    const [isBookmarked, setIsBookmarked] = useState(false);
 
     return (
         <div className="group w-[237.48px] h-[363.6px] bg-[#2f2f2f] rounded-[4px] overflow-hidden text-white cursor-pointer">
@@ -48,10 +51,16 @@ const RelatedMovieCard = ({movie}: RelatedMovieCardProps) => {
                 <span className="text-[#bcbcbc]">{getYearFromDate(movie?.releaseDate)}</span>
             </div>
             <img
-                src={isAddHovered ? addHoveredButton : addButton} 
+                src={
+                    isBookmarked
+                    ? (isAddHovered ? bookmarkHoveredButton : bookmarkButton)
+                    : (isAddHovered ? addHoveredButton : addButton)
+                } 
                 className="cursor-pointer w-[40px] h-[40px] bg-[#2f2f2f]"
                 onMouseEnter={() => setIsAddHovered(true)}
-                onMouseLeave={() => setIsAddHovered(false)} />
+                onMouseLeave={() => setIsAddHovered(false)} 
+                onClick={() => setIsBookmarked(prev => !prev)}
+            />
         </div>
             <p className="px-[14px] pb-[14px] text-[#d2d2d2] text-[14px] whitespace-pre-wrap">
                 {movie.description}
