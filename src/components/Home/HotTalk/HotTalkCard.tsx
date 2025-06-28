@@ -12,7 +12,7 @@ export default function HotTalkCard({ movie }: HotTalkCardProps) {
 
   return (
     <Link
-      to={`/movies/${movie.id}`}
+      to={`/hot-talk/${movie.id}`}
       className="w-full h-[220px] sm:h-[230px] md:h-[240px] flex-shrink-0 transition-transform duration-200 hover:scale-105 rounded-lg overflow-hidden shadow-md bg-zinc-900 relative"
     >
       {/* 왼쪽 이미지 */}

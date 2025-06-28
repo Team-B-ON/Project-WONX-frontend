@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Movie } from "@/types/movie";
 import MovieCard from "./MovieCard";
 import { motion, AnimatePresence } from "framer-motion"; // 슬라이드 효과 구현을 위해
-
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // 영화 리스트를 슬라이드처럼 페이지별로 보여줌
 type MovieSliderProps = {
@@ -54,14 +54,14 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       {currentPage > 0 && isHovered &&(
         <button
           onClick={handlePrev}
-          className="absolute left-0 top-0 bottom-0 z-[1000] bg-black/50 hover:bg-opacity-70 text-white p-2"
+          className="absolute left-0 top-0 bottom-0 z-[100] bg-black/50 hover:bg-opacity-70 text-white p-2"
         >
-          ◀
+          <ChevronLeft className="w-7 h-7" />
         </button>
       )}
 
       {/* 카드 슬라이드 영역 - 한 페이지 분량만 보임 */}
-      <div className="flex gap-x-3.5 justify-center min-h-[120px]">
+      <div className="flex gap-x-3 justify-center min-h-[120px]">
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={currentPage}
@@ -69,8 +69,8 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
             initial={{ x: direction > 0 ? 400 : -400, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: direction > 0 ? -400 : 400, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 400, damping: 40, duration: 0.33 }}
-            className="flex gap-x-3.5 justify-center w-full"
+            transition={{ type: "spring", stiffness: 400, damping: 40, duration: 0.83 }}
+            className="flex gap-x-3 justify-center w-full"
             style={{ position: "absolute" }}
           >
             {currentMovies.map((movie, idx) => (
@@ -79,7 +79,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
               onMouseEnter={() => setHoveredIndex(idx)} // 호버 시 현재 인덱스 기록
               onMouseLeave={() => setHoveredIndex(null)} // 호버 해제 시 초기화
               className={`flex-shrink-0 w-[217.91px] transition-transform duration-300 ${ // 호버된 카드만 확대 & z-index 높임
-                hoveredIndex === idx ? 'scale-[1.15] z-10' : 'scale-100 z-0' // 아니면 기본 크기
+                hoveredIndex === idx ? 'scale-[1.15] z-1000' : 'scale-100 z-0' // 아니면 기본 크기
                 }`}
               >
                 {/* 카드 실제 컨텐츠 */}
@@ -96,9 +96,9 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       {currentPage < totalPages - 1 && isHovered &&(
         <button
           onClick={handleNext}
-          className="absolute right-0 top-0 bottom-0 z-[1000] bg-black/50 hover:bg-opacity-70 text-white p-2"
+          className="absolute right-0 top-0 bottom-0 z-[10] bg-black/50 hover:bg-opacity-70 text-white p-2"
         >
-          ▶
+          <ChevronRight className="w-7 h-7" />
         </button>
       )}
     </div>

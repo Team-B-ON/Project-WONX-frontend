@@ -16,7 +16,7 @@ export default function BoxOfficeMovieCard({ movie }: BoxOfficeMovieCardProps) {
 
   return (
     <Link
-      to={`/movies/${movie.id}`}
+      to={`/boxoffice/${movie.id}`}
       className="w-full flex-shrink-0 transition-transform duration-200 hover:scale-105"
     >
       <div className="relative aspect-[2/3] rounded-md overflow-hidden shadow-lg">

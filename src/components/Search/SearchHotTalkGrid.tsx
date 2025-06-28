@@ -1,29 +1,32 @@
-import { hotTalk } from "@/types/HotTalk";
+import { User } from '@/types/user';
 
-interface SearchHotTalkGridProps {
-  query: string; // 추가!
-  reviews: hotTalk[];
+interface SearchUserGridProps {
+  query: string;
+  users: User[];
 }
 
-export default function SearchHotTalkGrid({ query, reviews }: SearchHotTalkGridProps) {
+export default function SearchUserGrid({ query, users }: SearchUserGridProps) {
   return (
     <div className="space-y-4">
       <h3 className="text-white text-xl font-bold">
-        @{query} 에 대한 리뷰
+        @{query} 님과 관련된 유저
       </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {reviews.map((review) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        {users.map((user) => (
           <div
-            key={review.id}
-            className="bg-zinc-800 rounded p-4 shadow hover:shadow-lg transition"
+            key={user.id}
+            className="w-full bg-zinc-800 rounded p-4 shadow hover:shadow-lg transition flex items-center space-x-4"
           >
-            <h4 className="text-white text-lg font-bold mb-1">{review.movieTitle}</h4>
-            <p className="text-gray-300 text-sm mb-2 line-clamp-3">
-              {review.content}
-            </p>
-            <div className="flex items-center justify-between text-sm text-gray-400">
-              <span>작성자: {review.author}</span>
-              <span>⭐ {review.rating}/5</span>
+            <img
+              src={user.avatarUrl || '/default-avatar.png'}
+              alt={user.nickname}
+              className="w-12 h-12 rounded-full object-cover"
+            />
+            <div className="flex-1">
+              <p className="text-white text-lg font-bold">{user.nickname}</p>
+              <button className="mt-1 text-sm text-pink-500 hover:underline">
+                프로필 보기
+              </button>
             </div>
           </div>
         ))}
