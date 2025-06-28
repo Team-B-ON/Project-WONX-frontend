@@ -12,8 +12,6 @@ const MovieTag = ({ title, onClickMore, showMore = true }: MovieTagProps) => {
       <h2 className="text-[rgb(229,229,229)] group-hover:text-white text-[22px] font-bold">
         {title}
       </h2>
-    <div className="flex items-center group space-x-2">
-      <h2 className="text-white text-[22px] font-bold">{title}</h2>
       {showMore && (
         <button
           onClick={onClickMore}
