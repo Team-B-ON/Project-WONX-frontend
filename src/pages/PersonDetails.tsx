@@ -102,7 +102,7 @@ const PersonDetails = () => {
     return (
         <div className="relative z-[100]">
             <div 
-            className={`fixed inset-0 z-100 bg-black/60 transition-opacity duration-200 ease-in-out
+            className={`fixed inset-0 z-[100] bg-black/60 transition-opacity duration-200 ease-in-out
                         ${animateModal ? 'opacity-100' : 'opacity-0'}`}
             onClick={handleClose}
             >
@@ -122,7 +122,7 @@ const PersonDetails = () => {
                     <div className="bg-[#161616] rounded-[6px]">
                         <div className="relative text-white w-full h-screen">
 
-                            {/* 버튼들 */}
+                            {/* 상단 버튼들 */}
                             <div className="flex flex-row justify-between px-[28.8px] pt-[28.8px]">
                                 <img src={backBtn} 
                                     className="w-[18px] h-[18px] cursor-pointer"
@@ -134,7 +134,7 @@ const PersonDetails = () => {
                                 />
                             </div>
 
-                            {/* 이름 */}
+                            {/* 인물 이름 */}
                             <p className="flex justify-center text-[48px] font-black pt-[26px] pb-[113.6px]">{person.name}</p>
 
                             {/* 영화 리스트 */}
