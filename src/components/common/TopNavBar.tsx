@@ -77,7 +77,7 @@ const TopNavBar: React.FC = () => {
               </a>
             </li>
             <li>
-              <a href="/movies/list" className="hover:text-gray-300">
+              <a href="/movie" className="hover:text-gray-300">
                 영화
               </a>
             </li>
