@@ -8,6 +8,8 @@ export type ProfileHeaderProps = {
   followersCount: number
   onEditProfile: () => void
   onShareProfile: () => void
+  onClickFollowing: () => void
+  onClickFollowers: () => void
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
@@ -17,6 +19,8 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   followersCount,
   onEditProfile,
   onShareProfile,
+    onClickFollowing,
+    onClickFollowers,
 }) => {
   return (
     <section className="bg-black py-8 px-12 justify-center mx-auto">
@@ -31,11 +35,17 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         <div className="text-white">
           <h1 className="text-xl font-semibold mb-4">{username}</h1>
           <div className="flex space-x-7">
-            <div>
+            <div
+                onClick={onClickFollowing}
+                className="cursor-pointer"
+            >
               <p className="text-sm text-gray-400">팔로잉</p>
               <p className="text-lg font-medium">{followingCount}</p>
             </div>
-            <div>
+            <div
+                onClick={onClickFollowers}
+                className="cursor-pointer"
+            >
               <p className="text-sm text-gray-400">팔로워</p>
               <p className="text-lg font-medium">{followersCount}</p>
             </div>
