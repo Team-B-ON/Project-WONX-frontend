@@ -39,7 +39,7 @@ const ReviewItem = ({ review }: ReviewItemProps) => {
                         {review.content}
                     </p>
                 ) : (
-                    <p className="cursor-pointer">
+                    <p>
                         {isLong ? `${previewText}...` : review.content}
                         {isLong && (
                             <button
