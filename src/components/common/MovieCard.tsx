@@ -42,20 +42,21 @@ const MovieCard = ({movie}: MovieCardProps) => {
                 rounded-[3.2px]
                 overflow-hidden
                 transform -translate-x-1/2 -translate-y-1/2
-                transition-[width,height,max-height] duration-400 ease-in-out origin-center
+                transition-[width,height,max-height] duration-200 ease-in-out origin-center
 
                 group-hover:w-[336px] group-hover:h-auto
                 group-hover:min-h-[350.828px]
                 group-hover:max-h-[394.028px]
                 group-hover:rounded-[6px]
                 group-hover:z-50
+                group-hover:shadow-[0_4px_20px_rgba(0,0,0,0.75)]
             ">
                 <img 
                     src={movie.posterUrl}
                     alt={movie.title}
                     className="
                         w-full h-[117.609px] object-cover
-                        transition-all duration-400 ease-in-out
+                        transition-all duration-200 ease-in-out
                         group-hover:h-[189.477px]
                     "
                 />
