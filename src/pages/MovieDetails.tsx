@@ -2,17 +2,21 @@ import React, { useRef, useState, UIEvent, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import MovieCard from '@/components/common/MovieCard';
 import type { Movie } from '@/types/movie';
+import { formatDuration } from '@/utils/timeFormat';
+import { getYearFromDate } from '@/utils/getYearFromDate';
+import RelatedMovieCard from '@/components/MovieDetailsPage/RelatedMovieCard';
+import Reviews from '@/components/MovieDetailsPage/Reviews';
+import PlayVideoBtn from '@/components/common/PlayVideoBtn';
 import closeButton from '@/assets/common/buttons/close-button.svg';
 import addButton from '@/assets/common/buttons/add-button.svg'
 import thumbUpButton from '@/assets/common/buttons/thumbup-button.svg'
 import addHoveredButton from '@/assets/common/buttons-hovered/add-btn.svg';
 import thumbUpHoveredButton from '@/assets/common/buttons-hovered/thumbup-btn.svg';
-import playIcon from '@/assets/common/buttons/play.svg';
+import bookmarkButton from '@/assets/MovieDetailsPage/bookmark-check-btn.svg';
+import bookmarkHoveredButton from '@/assets/MovieDetailsPage/bookmark-check-hovered.svg';
+import likeButton from '@/assets/MovieDetailsPage/thumbup-fill-btn.svg';
+import likeHoveredButton from '@/assets/MovieDetailsPage/thumbup-fill-hovered.svg';
 import ageRating15 from '@/assets/MovieDetailsPage/15-age-rating.png';
-import { formatDuration } from '@/utils/timeFormat';
-import { getYearFromDate } from '@/utils/getYearFromDate';
-import RelatedMovieCard from '@/components/MovieDetailsPage/RelatedMovieCard';
-import Reviews from '@/components/MovieDetailsPage/Reviews';
 
 const movie: Movie = {  // 임시 데이터
   id: '1',
@@ -56,6 +60,9 @@ const MovieDetails = () => {
   const [isThumbHovered, setIsThumbHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [animateModal, setAnimateModal] = useState(false);
+
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   
   const navigate = useNavigate();
   const location = useLocation();
@@ -149,24 +156,28 @@ const MovieDetails = () => {
               <h2 className="absolute bottom-[131px] left-[48px] z-10 text-2xl font-extrabold mb-2">{movie?.title}</h2>
               {/* 버튼 */}
               <div className="absolute bottom-[64px] left-[48px] z-10 flex flex-row gap-[8px]">
-                <div className="w-[116.02px] h-[43.19px] rounded-[4px] 
-                              bg-white text-black hover:bg-[rgb(230,230,230)]
-                                flex items-center justify-center flex-row gap-[10px]
-                                font-medium text-[19.2px] cursor-pointer">
-                  <img src={playIcon} className="w-[29px] h-[29px]" alt="재생 버튼"/>
-                  재생
-                </div>
+                <PlayVideoBtn />
                 <img 
-                  src={isAddHovered ? addHoveredButton : addButton} 
+                  src={
+                    isBookmarked
+                    ? (isAddHovered ? bookmarkHoveredButton : bookmarkButton)
+                    : (isAddHovered ? addHoveredButton : addButton)
+                  } 
                   className="w-[40.7px] h-[40.7px] cursor-pointer"
                   onMouseEnter={() => setIsAddHovered(true)}
                   onMouseLeave={() => setIsAddHovered(false)}
+                  onClick={() => setIsBookmarked(prev => !prev)}
                 />
                 <img 
-                  src={isThumbHovered ? thumbUpHoveredButton : thumbUpButton} 
+                  src={
+                    isLiked
+                    ? (isThumbHovered ? likeHoveredButton : likeButton)
+                    : (isThumbHovered ? thumbUpHoveredButton : thumbUpButton)
+                  } 
                   className="w-[40.7px] h-[40.7px] cursor-pointer"
                   onMouseEnter={() => setIsThumbHovered(true)}
                   onMouseLeave={() => setIsThumbHovered(false)}
+                  onClick={() => setIsLiked(prev => !prev)}
                 />
               </div>
             </div>

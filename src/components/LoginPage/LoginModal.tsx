@@ -21,6 +21,7 @@ const LoginModal = () => {
                     </span>
             </button>
             <div className="mt-[42px] flex items-center space-x-[12px] text-[16px]">
+                <div className="relative w-[18px] h-[18px] flex-shrink-0">
                 <input 
                     type="checkbox" 
                     id="remember"
@@ -29,6 +30,18 @@ const LoginModal = () => {
                                 hover:border-white transition-colors duration-200 ease-in-out
                                 checked:bg-white"
                      />
+                     <span
+                        className="
+                            absolute inset-0
+                            hidden peer-checked:flex
+                            items-center justify-center
+                            text-black text-[12px] font-extrabold
+                            pointer-events-none
+                        "
+                    >
+                        ✓
+                    </span>
+                </div>
                 <label htmlFor="remember" className="select-none">로그인 정보 저장</label>
             </div>
             <div className="mt-[25px] text-[rgba(255,255,255,0.70)] text-[16px]">
