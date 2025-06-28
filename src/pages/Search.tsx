@@ -12,23 +12,23 @@ const Search = () => {
   const searchQuery = searchParams.get("query") || "";
 
   const allMovies = [
-    { id: "1", title: "라라랜드", posterUrl: "https://via.placeholder.com/300x450?text=라라랜드" },
-    { id: "2", title: "위대한 쇼맨", posterUrl: "https://via.placeholder.com/300x450?text=위대한쇼맨" },
-    { id: "3", title: "레미제라블", posterUrl: "https://via.placeholder.com/300x450?text=레미제라블" },
-    { id: "4", title: "스타 이즈 본", posterUrl: "https://via.placeholder.com/300x450?text=스타이즈본" },
-    { id: "5", title: "인셉션", posterUrl: "https://via.placeholder.com/300x450?text=인셉션" },
-    { id: "6", title: "인터스텔라", posterUrl: "https://via.placeholder.com/300x450?text=인터스텔라" },
-    { id: "7", title: "테넷", posterUrl: "https://via.placeholder.com/300x450?text=테넷" },
-    { id: "8", title: "덩케르크", posterUrl: "https://via.placeholder.com/300x450?text=덩케르크" },
+    { id: "1", title: "라라랜드", posterUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABV4CF2PBJ2cLwMao0g2JGonHwyfwofN3t5ue5E8BN8RsgEyzeD09PV4jr5QcmlTdksokq_-yHM9FeNw6e7jhdJZ0ys0ypDsnSpw.webp?r=35c" },
+    { id: "2", title: "위대한 쇼맨", posterUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABV4CF2PBJ2cLwMao0g2JGonHwyfwofN3t5ue5E8BN8RsgEyzeD09PV4jr5QcmlTdksokq_-yHM9FeNw6e7jhdJZ0ys0ypDsnSpw.webp?r=35c" },
+    { id: "3", title: "레미제라블", posterUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABV4CF2PBJ2cLwMao0g2JGonHwyfwofN3t5ue5E8BN8RsgEyzeD09PV4jr5QcmlTdksokq_-yHM9FeNw6e7jhdJZ0ys0ypDsnSpw.webp?r=35c" },
+    { id: "4", title: "스타 이즈 본", posterUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABV4CF2PBJ2cLwMao0g2JGonHwyfwofN3t5ue5E8BN8RsgEyzeD09PV4jr5QcmlTdksokq_-yHM9FeNw6e7jhdJZ0ys0ypDsnSpw.webp?r=35c" },
+    { id: "5", title: "인셉션", posterUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABV4CF2PBJ2cLwMao0g2JGonHwyfwofN3t5ue5E8BN8RsgEyzeD09PV4jr5QcmlTdksokq_-yHM9FeNw6e7jhdJZ0ys0ypDsnSpw.webp?r=35c" },
+    { id: "6", title: "인터스텔라", posterUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABV4CF2PBJ2cLwMao0g2JGonHwyfwofN3t5ue5E8BN8RsgEyzeD09PV4jr5QcmlTdksokq_-yHM9FeNw6e7jhdJZ0ys0ypDsnSpw.webp?r=35c" },
+    { id: "7", title: "테넷", posterUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABV4CF2PBJ2cLwMao0g2JGonHwyfwofN3t5ue5E8BN8RsgEyzeD09PV4jr5QcmlTdksokq_-yHM9FeNw6e7jhdJZ0ys0ypDsnSpw.webp?r=35c" },
+    { id: "8", title: "덩케르크", posterUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABV4CF2PBJ2cLwMao0g2JGonHwyfwofN3t5ue5E8BN8RsgEyzeD09PV4jr5QcmlTdksokq_-yHM9FeNw6e7jhdJZ0ys0ypDsnSpw.webp?r=35c" },
   ];
 
   const allUsers = [
-    { id: "1", nickname: "영화덕후123", avatarUrl: "https://via.placeholder.com/100x100?text=User1" },
-    { id: "2", nickname: "라라랜드팬", avatarUrl: "https://via.placeholder.com/100x100?text=User2" },
-    { id: "3", nickname: "라라랜드최고", avatarUrl: "https://via.placeholder.com/100x100?text=User3" },
-    { id: "4", nickname: "인터스텔라광팬", avatarUrl: "https://via.placeholder.com/100x100?text=User4" },
-    { id: "5", nickname: "라라랜드라광팬", avatarUrl: "https://via.placeholder.com/100x100?text=User5" },
-    { id: "6", nickname: "라라랜드아", avatarUrl: "https://via.placeholder.com/100x100?text=User6" },
+    { id: "1", nickname: "영화덕후123", avatarUrl: "https://via.placeholder.com/100x100?text=User1https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABVy2_XUhT73OmjpVmwUCEHzqmQPr4KCzW2BDHesl4hzaFniV_jmE73qjSMbBnOCtq46IAH4q-QnoeR7k09shYfPQkWoSRfVpxWOA.png?r=962" },
+    { id: "2", nickname: "라라랜드팬", avatarUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABVy2_XUhT73OmjpVmwUCEHzqmQPr4KCzW2BDHesl4hzaFniV_jmE73qjSMbBnOCtq46IAH4q-QnoeR7k09shYfPQkWoSRfVpxWOA.png?r=962" },
+    { id: "3", nickname: "라라랜드최고", avatarUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABVy2_XUhT73OmjpVmwUCEHzqmQPr4KCzW2BDHesl4hzaFniV_jmE73qjSMbBnOCtq46IAH4q-QnoeR7k09shYfPQkWoSRfVpxWOA.png?r=962" },
+    { id: "4", nickname: "인터스텔라광팬", avatarUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABVy2_XUhT73OmjpVmwUCEHzqmQPr4KCzW2BDHesl4hzaFniV_jmE73qjSMbBnOCtq46IAH4q-QnoeR7k09shYfPQkWoSRfVpxWOA.png?r=962" },
+    { id: "5", nickname: "라라랜드라광팬", avatarUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABVy2_XUhT73OmjpVmwUCEHzqmQPr4KCzW2BDHesl4hzaFniV_jmE73qjSMbBnOCtq46IAH4q-QnoeR7k09shYfPQkWoSRfVpxWOA.png?r=962" },
+    { id: "6", nickname: "라라랜드아", avatarUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABVy2_XUhT73OmjpVmwUCEHzqmQPr4KCzW2BDHesl4hzaFniV_jmE73qjSMbBnOCtq46IAH4q-QnoeR7k09shYfPQkWoSRfVpxWOA.png?r=962" },
   ];
 
   const allHotTalk = [
