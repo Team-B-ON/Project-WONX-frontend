@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { User } from '@/types/user';
 
 interface SearchUserGridProps {
@@ -24,9 +25,12 @@ export default function SearchUserGrid({ query, users }: SearchUserGridProps) {
             />
             <div className="flex-1">
               <p className="text-white text-lg font-bold">{user.nickname}</p>
-              <button className="mt-1 text-sm text-pink-500 hover:underline">
+              <Link
+                to={`/user/${encodeURIComponent(user.nickname)}`}
+                className="mt-1 text-sm text-pink-500 hover:underline inline-block"
+              >
                 프로필 보기
-              </button>
+              </Link>
             </div>
           </div>
         ))}

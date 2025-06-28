@@ -1,17 +1,25 @@
 import { JSX, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Movie } from '@/types/movie';
+import MovieTag from '@/components/common/MovieTag';
 
 interface Props {
-  title: string;                     // 섹션 제목
-  movies: Movie[];                  // 표시할 영화 리스트
-  renderItem: (movie: Movie) => JSX.Element; // 각 영화마다 렌더링할 카드 컴포넌트
+  title: string;
+  movies: Movie[];
+  renderItem: (movie: Movie) => JSX.Element;
+  onClickMore?: () => void; // 추가
+  showMore?: boolean;       // 추가(선택)
 }
 
-export default function BoxOfficeMovieRow({ title, movies, renderItem }: Props) {
+export default function BoxOfficeMovieRow({
+  title,
+  movies,
+  renderItem,
+  onClickMore,
+  showMore = true,
+}: Props) {
   const rowRef = useRef<HTMLDivElement>(null);
 
-  // 좌우 스크롤 함수
   const scroll = (dir: 'left' | 'right') => {
     if (!rowRef.current) return;
     const { scrollLeft, clientWidth } = rowRef.current;
@@ -21,10 +29,8 @@ export default function BoxOfficeMovieRow({ title, movies, renderItem }: Props) 
 
   return (
     <div className="space-y-2 px-6 sm:px-10 lg:px-20 py-10 relative min-h-[360px]">
-      {/* 제목 */}
-      <h2 className="text-white text-2xl font-bold">{title}</h2>
+      <MovieTag title={title} onClickMore={onClickMore} showMore={showMore} />
 
-      {/* 슬라이드 영역 */}
       <div className="group relative">
         {/* 왼쪽 화살표 */}
         <button
@@ -34,12 +40,24 @@ export default function BoxOfficeMovieRow({ title, movies, renderItem }: Props) 
           <ChevronLeft className="w-6 h-6 text-white" />
         </button>
 
-        {/* 영화 카드 리스트 */}
+        {/* 카드 슬라이더 */}
         <div
           ref={rowRef}
-          className="flex space-x-4 overflow-x-scroll scrollbar-hide scroll-smooth items-start relative min-h-[360px]"
+          className="flex overflow-x-scroll scrollbar-hide scroll-smooth items-start space-x-4 "
         >
-          {movies.map((movie) => renderItem(movie))}
+          {movies.map((movie) => (
+            <div
+              key={movie.id}
+              className="
+                flex-shrink-0
+                w-[calc((100%-1rem)/2)]
+                sm:w-[calc((100%-2rem)/3)]
+                lg:w-[calc((100%-5rem)/6)]
+              "
+            >
+              {renderItem(movie)}
+            </div>
+          ))}
         </div>
 
         {/* 오른쪽 화살표 */}
