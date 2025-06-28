@@ -24,7 +24,7 @@ function AppRoutes() {
         <Route path="/search" element={<Search />} />
         <Route path="/movie" element={<MovieDetails />} />
         <Route path="/person/:id" element={<PersonDetails />} />
-        <Route path="/genre/1" element={<GenreDetails />} />
+        <Route path="/genre/:id" element={<GenreDetails />} />
         <Route path="/navbar" element={<TopNavBar />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="*" element={<NotFound />} />
@@ -33,6 +33,7 @@ function AppRoutes() {
       {state?.backgroundLocation && (
         <Routes>
           <Route path="/person/:id" element={<PersonDetails />} />
+          <Route path="/genre/:id" element={<GenreDetails />} />
         </Routes>
       )}
     </>
