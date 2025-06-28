@@ -75,6 +75,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
           >
             {currentMovies.map((movie, idx) => {
               const globalIndex = currentPage * cardsPerPage + idx;
+              const isFirst = globalIndex % cardsPerPage === 0;
               const isLast = (globalIndex + 1) % cardsPerPage === 0;
               return (
                 <div
@@ -89,7 +90,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
                 <div className="relative">
                   <MovieCard 
                     movie={movie} 
-                    isFirst={idx === 0}
+                    isFirst={isFirst}
                     isLast={isLast}
                   />
                 </div>
