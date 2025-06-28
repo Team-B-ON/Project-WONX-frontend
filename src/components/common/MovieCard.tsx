@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { Movie } from "@/types/movie";
+import { formatDuration } from "@/utils/timeFormat";
 import playButton from '@/assets/common/buttons/play-button.svg';
 import addButton from '@/assets/common/buttons/add-button.svg';
 import thumbUpButton from '@/assets/common/buttons/thumbup-button.svg';
@@ -9,8 +10,11 @@ import playHoveredButton from '@/assets/common/buttons-hovered/play-btn-hover.sv
 import addHoveredButton from '@/assets/common/buttons-hovered/add-btn.svg';
 import thumbUpHoveredButton from '@/assets/common/buttons-hovered/thumbup-btn.svg';
 import detailsHoveredButton from '@/assets/common/buttons-hovered/arrowdown-btn.svg';
+import bookmarkButton from '@/assets/MovieDetailsPage/bookmark-check-btn.svg';
+import bookmarkHoveredButton from '@/assets/MovieDetailsPage/bookmark-check-hovered.svg';
+import likeButton from '@/assets/MovieDetailsPage/thumbup-fill-btn.svg';
+import likeHoveredButton from '@/assets/MovieDetailsPage/thumbup-fill-hovered.svg';
 import ageRating15 from '@/assets/MovieDetailsPage/15-age-rating.png';
-import { formatDuration } from "@/utils/timeFormat";
 
 type MovieCardProps = {
     movie: Movie;
@@ -21,6 +25,9 @@ const MovieCard = ({movie}: MovieCardProps) => {
     const [isAddHovered, setIsAddHovered] = useState(false);
     const [isThumbHovered, setIsThumbHovered] = useState(false);
     const [isDetailsHovered, setIsDetailsHovered] = useState(false);
+
+    const [isBookmarked, setIsBookmarked] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -78,16 +85,26 @@ const MovieCard = ({movie}: MovieCardProps) => {
                                     onMouseLeave={() => setIsPlayHovered(false)}
                                 />
                                 <img 
-                                    src={isAddHovered ? addHoveredButton : addButton} 
+                                    src={
+                                        isBookmarked
+                                        ? (isAddHovered ? bookmarkHoveredButton : bookmarkButton)
+                                        : (isAddHovered ? addHoveredButton : addButton)
+                                    } 
                                     className="cursor-pointer w-[40px] h-[40px]"
                                     onMouseEnter={() => setIsAddHovered(true)}
                                     onMouseLeave={() => setIsAddHovered(false)}
+                                    onClick={() => setIsBookmarked(prev => !prev)}
                                 />
                                 <img 
-                                    src={isThumbHovered ? thumbUpHoveredButton : thumbUpButton} 
+                                    src={
+                                        isLiked
+                                        ? (isThumbHovered ? likeHoveredButton : likeButton)
+                                        : (isThumbHovered ? thumbUpHoveredButton : thumbUpButton)
+                                    } 
                                     className="cursor-pointer w-[40px] h-[40px]"
                                     onMouseEnter={() => setIsThumbHovered(true)}
                                     onMouseLeave={() => setIsThumbHovered(false)}
+                                    onClick={() => setIsLiked(prev => !prev)}
                                 />
                             </div>
                             <img 
