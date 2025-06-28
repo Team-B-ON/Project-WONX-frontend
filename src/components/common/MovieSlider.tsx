@@ -73,21 +73,29 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
             className="flex gap-x-3 justify-center w-full"
             style={{ position: "absolute" }}
           >
-            {currentMovies.map((movie, idx) => (
-              <div
-              key={movie.id}
-              onMouseEnter={() => setHoveredIndex(idx)} // 호버 시 현재 인덱스 기록
-              onMouseLeave={() => setHoveredIndex(null)} // 호버 해제 시 초기화
-              className={`flex-shrink-0 w-[217.91px]${ // 호버된 카드만 확대 & z-index 높임
-                hoveredIndex === idx ? 'scale-[1.15] z-1000' : 'scale-100 z-0' // 아니면 기본 크기
-                }`}
-              >
-                {/* 카드 실제 컨텐츠 */}
-              <div className="relative">
-                <MovieCard movie={movie} />
+            {currentMovies.map((movie, idx) => {
+              const globalIndex = currentPage * cardsPerPage + idx;
+              const isLast = (globalIndex + 1) % cardsPerPage === 0;
+              return (
+                <div
+                key={movie.id}
+                onMouseEnter={() => setHoveredIndex(idx)} // 호버 시 현재 인덱스 기록
+                onMouseLeave={() => setHoveredIndex(null)} // 호버 해제 시 초기화
+                className={`flex-shrink-0 w-[217.91px]${ // 호버된 카드만 확대 & z-index 높임
+                  hoveredIndex === idx ? 'scale-[1.15] z-1000' : 'scale-100 z-0' // 아니면 기본 크기
+                  }`}
+                >
+                  {/* 카드 실제 컨텐츠 */}
+                <div className="relative">
+                  <MovieCard 
+                    movie={movie} 
+                    isFirst={idx === 0}
+                    isLast={isLast}
+                  />
+                </div>
               </div>
-            </div>
-            ))}
+              );
+            })}
           </motion.div>
         </AnimatePresence>
       </div>

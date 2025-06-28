@@ -18,9 +18,11 @@ import ageRating15 from '@/assets/MovieDetailsPage/15-age-rating.png';
 
 type MovieCardProps = {
     movie: Movie;
+    isFirst?: boolean;
+    isLast?: boolean;
 };
 
-const MovieCard = ({movie}: MovieCardProps) => {
+const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) => {
     const [isPlayHovered, setIsPlayHovered] = useState(false);
     const [isAddHovered, setIsAddHovered] = useState(false);
     const [isThumbHovered, setIsThumbHovered] = useState(false);
@@ -43,12 +45,13 @@ const MovieCard = ({movie}: MovieCardProps) => {
             group relative hover:z-50 flex-shrink-0 overflow-visible
             w-[217.91px] h-[117.609px]
         ">
-            <div className="
+            <div className={`
                 absolute left-1/2 top-1/2
                 w-[217.91px] h-[117.609px]
                 rounded-[3.2px]
                 overflow-hidden
-                transform -translate-x-1/2 -translate-y-1/2
+                transform 
+                -translate-x-1/2 -translate-y-1/2
                 transition-[width,height,max-height] duration-200 ease-in-out origin-center
 
                 group-hover:w-[336px] group-hover:h-auto
@@ -57,7 +60,20 @@ const MovieCard = ({movie}: MovieCardProps) => {
                 group-hover:rounded-[6px]
                 group-hover:z-50
                 group-hover:shadow-[0_4px_20px_rgba(0,0,0,0.75)]
-            ">
+                
+                // MovieSlider의 첫 번째 카드인 경우
+                ${isFirst
+                    ? "group-hover:left-0 group-hover:-translate-x-0 group-hover:origin-left"
+                    : ""
+                }
+
+                // MovieSlider의 마지막 카드인 경우
+                ${isLast
+                    ? "group-hover:left-auto group-hover:right-0 group-hover:translate-x-0 group-hover:origin-right"
+                    : ""
+                }
+                `}
+            >
                 <img 
                     src={movie.posterUrl}
                     alt={movie.title}
