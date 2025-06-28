@@ -47,8 +47,8 @@ const Home = () => {
         onInfo={handleInfo}
       />
 
-      <MovieList title="WONX 인기 콘텐츠" movies={dummyMovies.slice(0, 6)} useCustomSlider />
-      <MovieList title="박스오피스" movies={dummyMovies.slice(0, 6)} useCustomSlider />
+      <MovieList title="WONX 인기 콘텐츠" movies={dummyMovies} useCustomSlider />
+      <MovieList title="박스오피스" movies={dummyMovies} useCustomSlider />
 
 
       <BoxOfficeMovieRow

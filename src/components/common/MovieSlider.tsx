@@ -1,37 +1,37 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Movie } from "@/types/movie";
 import MovieCard from "./MovieCard";
 
+// 영화 리스트를 슬라이드처럼 페이지별로 보여줌
 type MovieSliderProps = {
   movies: Movie[];
 };
 
 const MovieSlider = ({ movies }: MovieSliderProps) => {
-  const sliderRef = useRef<HTMLDivElement>(null);
+  // 현재 페이지 번호 (0부터 시작)
   const [currentPage, setCurrentPage] = useState(0);
+  // 마우스 올린 카드 인덱스 (호버된 카드만 커지도록)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
+  // 한 페이지에 보여줄 카드 수 (여기선 6장)
   const cardsPerPage = 6;
-  const cardWidth = 217.91;
-  const gap = 16;
+  // 전체 페이지 수 (영화 수에 따라 자동 계산)
   const totalPages = Math.ceil(movies.length / cardsPerPage);
 
-  const scrollToPage = (page: number) => {
-    if (!sliderRef.current) return;
-    const scrollLeft = (cardWidth + gap) * cardsPerPage * page;
-    sliderRef.current.scrollTo({ left: scrollLeft, behavior: "smooth" });
-  };
+  // 현재 페이지에 보여줄 영화만 잘라내기 (0-5, 6-11 이런식으로)
+  const currentMovies = movies.slice(
+    currentPage * cardsPerPage,
+    (currentPage + 1) * cardsPerPage
+  );
 
+  // 오른쪽(다음) 버튼 눌렀을 때 - 마지막 페이지를 넘지 않게
   const handleNext = () => setCurrentPage(Math.min(currentPage + 1, totalPages - 1));
+  // 왼쪽(이전) 버튼 눌렀을 때 - 0페이지보다 더 앞으로 못 가게
   const handlePrev = () => setCurrentPage(Math.max(currentPage - 1, 0));
-
-  useEffect(() => {
-    scrollToPage(currentPage);
-  }, [currentPage]);
 
   return (
     <div className="relative w-full">
-      {/* 왼쪽 버튼 */}
+      {/* 왼쪽(이전) 버튼 - 첫 페이지(0)일 땐 숨김 */}
       {currentPage > 0 && (
         <button
           onClick={handlePrev}
@@ -41,33 +41,26 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
         </button>
       )}
 
-      {/* 슬라이더 래퍼 */}
-      <div className="relative overflow-visible">
-        <div
-          ref={sliderRef}
-          className="flex gap-x-4 scroll-smooth [&::-webkit-scrollbar]:hidden"
-        >
-          {movies.map((movie, index) => {
-
-            return (
-              <div
-                key={movie.id}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
-                className={`flex-shrink-0 w-[217.91px] transition-transform duration-300 ${
-                  hoveredIndex === index ? 'scale-[1.15] z-10' : 'scale-100 z-0'
-                }`}
-              >
-                <div className="relative">
-                  <MovieCard movie={movie} />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+      {/* 카드 슬라이드 영역 - 한 페이지 분량만 보임 */}
+      <div className="flex gap-x-3.5 justify-center">
+        {currentMovies.map((movie, idx) => (
+          <div
+            key={movie.id}
+            onMouseEnter={() => setHoveredIndex(idx)} // 호버 시 현재 인덱스 기록
+            onMouseLeave={() => setHoveredIndex(null)} // 호버 해제 시 초기화
+            className={`flex-shrink-0 w-[217.91px] transition-transform duration-300 ${ // 호버된 카드만 확대 & z-index 높임
+              hoveredIndex === idx ? 'scale-[1.15] z-10' : 'scale-100 z-0' // 아니면 기본 크기
+            }`}
+          >
+            {/* 카드 실제 컨텐츠 */}
+            <div className="relative">
+              <MovieCard movie={movie} />
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* 오른쪽 버튼 */}
+      {/* 오른쪽(다음) 버튼 - 마지막 페이지면 숨김 */}
       {currentPage < totalPages - 1 && (
         <button
           onClick={handleNext}
