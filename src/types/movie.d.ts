@@ -11,10 +11,12 @@ export interface Movie {
     posterUrl?: string,
     mainImg?: string,
     ageRating?: string,
-    ageRatingReason?: string,
 
     genres?: Genre[],
     actors?: Person[],
     directors?: Person[],
     screenwriters?: Person[],
+
+    isBookmarked?: boolean;
+    isLiked?: boolean;
 }
