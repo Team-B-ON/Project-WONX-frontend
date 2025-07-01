@@ -73,7 +73,7 @@ const SignUp = () => {
                                         transition-colors duration-200 ease-in-out hover:bg-[rgb(193,17,25)]
                                         text-white font-medium text-[24px] leading-none
                                         flex items-center justify-center gap-2
-                                        ${loading ? 'cursor-wait' : 'cursor-pointer'}
+                                        ${loading ? 'cursor-default' : 'cursor-pointer'}
                                         `}
                         >
                             {loading ? (
