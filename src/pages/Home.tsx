@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Banner from '@/components/Home/Banner';
 import BoxOfficeMovieRow from '@/components/Home/BoxOffice/BoxOfficeMovieRow';
 import HotTalkRow from '@/components/Home/HotTalk/HotTalkRow';
@@ -8,6 +8,7 @@ import TopNaviBar from '@/components/common/TopNavBar';
 import BoxOfficeMovieCard from '@/components/Home/BoxOffice/BoxOfficeMovieCard';
 import MovieList from '@/components/Home/MovieList';
 import { Movie } from '@/types/movie';
+import { getMainBanner } from '@/services/Home/homeApi';
 
 
 const dummyMovies: Movie[] = Array.from({ length: 18 }, (_, idx) => ({
@@ -23,6 +24,16 @@ const dummyMovies: Movie[] = Array.from({ length: 18 }, (_, idx) => ({
 }))
 
 const Home = () => {
+
+  const [bannerMovie, setBannerMovie] = useState<Movie | null>(null);
+
+  useEffect(() => {
+    console.log("API BASE:", import.meta.env.VITE_API_BASE_URL);
+    getMainBanner()
+      .then((data) => setBannerMovie(data))
+      .catch(console.error);
+  }, []);
+
   const handlePlay = () => {
     console.log('재생 버튼 클릭');
   };
@@ -35,17 +46,16 @@ const Home = () => {
     <div className="bg-black min-h-screen">
       <TopNaviBar />
 
+      {bannerMovie && (
       <Banner
-        title="드래곤 길들이기"
+        title={bannerMovie.title}
         rankText="오늘 시리즈 순위 2위"
-        overview={`바이킹과 드래곤의 싸운이 끊이지 않는 버크섬,
-                   바이킹 족장의 아들 히컵은 다친 드래곤 투슬리스를 구해준다.
-                  그를 몰래 돌봐주며 드래곤들과 가까워진 히컵은 그들의 위험한 비밀을 알게 된다.
-                  `}
-        backdropUrl="https://an2-img.amz.wtchn.net/image/v2/N4Le6hDc4riRJ8sBDumrfQ.webp?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk1USTRNSGczTWpCeE9EQWlYU3dpY0NJNklpOTJNaTl6ZEc5eVpTOXBiV0ZuWlM4eE1qRTVPREl4TlRFeU16STRNVEkxSW4wLlc0MDd3czNfUmNmaFZhNXpWLWVUcE9XSlBSaS16emc1ODlGd0N1cWhaVk0="
+        overview={bannerMovie.description}
+        backdropUrl={bannerMovie.posterUrl}
         onPlay={handlePlay}
         onInfo={handleInfo}
       />
+      )}
 
       <MovieList title="WONX 인기 콘텐츠" movies={dummyMovies} useCustomSlider />
       <MovieList title="박스오피스" movies={dummyMovies} useCustomSlider />
