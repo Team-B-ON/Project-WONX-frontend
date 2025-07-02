@@ -22,3 +22,13 @@ body {
   -ms-overflow-style: none; /* IE/Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+@keyframes loadingDots {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50%      { opacity: 1; transform: scale(1.2); }
+}
+@layer utilities {
+  .animate-loading-dots {
+    animation: loadingDots 1s linear infinite;
+  }
+}
