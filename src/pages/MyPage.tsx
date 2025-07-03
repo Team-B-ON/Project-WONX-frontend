@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from 'react'
 import TopNavBar from '@/components/common/TopNavBar'
-import ProfileHeader from '@/components/Profile/ProfileHeader'
-import MovieSlider from '@/components/common/MovieSlider'
-import PreferenceChart from '@/components/Profile/PreferenceChart'
-import CloseButton from '@/assets/common/buttons/close-button.svg'
-import EditProfileModal from '@/components/Profile/EditProfileModal'
-import type { Movie } from '@/types/movie'
+// import ProfileHeader from '@/components/Profile/ProfileHeader'
+// import MovieSlider from '@/components/common/MovieSlider'
+// import PreferenceChart from '@/components/Profile/PreferenceChart'
+// import CloseButton from '@/assets/common/buttons/close-button.svg'
+// import EditProfileModal from '@/components/Profile/EditProfileModal'
+// import type { Movie } from '@/types/movie'
 
 // const dummyMovies: Movie[] = Array.from({ length: 18 }, (_, idx) => ({
 //   id: `${idx + 1}`,
