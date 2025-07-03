@@ -3,28 +3,21 @@ import Banner from '@/components/Home/Banner';
 import BoxOfficeMovieRow from '@/components/Home/BoxOffice/BoxOfficeMovieRow';
 import HotTalkRow from '@/components/Home/HotTalk/HotTalkRow';
 import ReviewCount from '@/components/Home/ReviewCount';
-import { boxOfficeMovies } from '@/mocks/mockMovies';
 import TopNaviBar from '@/components/common/TopNavBar';
 import BoxOfficeMovieCard from '@/components/Home/BoxOffice/BoxOfficeMovieCard';
 import MovieList from '@/components/Home/MovieList';
 import { Movie } from '@/types/movie';
-import { getMainBanner } from '@/services/Home/homeApi';
+import { getBoxOfficeMovies, getHotMovies, getHotTalks, getMainBanner, getRecommendedMovies, getUpcomingMovies } from '@/services/Home/homeApi';
+import { HotMovie } from '@/types/hotMovie';
+import { BoxOfficeMovie } from '@/types/BoxOfficeMovie';
+import { HotTalk } from '@/types/HotTalk';
 
 
-const dummyMovies: Movie[] = Array.from({ length: 18 }, (_, idx) => ({
-  id: `${idx + 1}`,
-  title: `영화 ${idx + 1}`,
-  posterUrl:
-    'https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABV4CF2PBJ2cLwMao0g2JGonHwyfwofN3t5ue5E8BN8RsgEyzeD09PV4jr5QcmlTdksokq_-yHM9FeNw6e7jhdJZ0ys0ypDsnSpw.webp?r=35c',
-  description: '테스트용 설명',
-  durationMinutes: 120 + idx,
-  releaseDate: '2022-01-01',
-  ageRating: '15세 이상 관람가',
-  genre: ['SF', '액션', '코미디'].slice(0, (idx % 3) + 1),
-}))
+
 
 const Home = () => {
 
+  // 배너 연동
   const [bannerMovie, setBannerMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
@@ -34,6 +27,121 @@ const Home = () => {
       .catch(console.error);
   }, []);
 
+  // 인기 콘텐츠 연동
+  const [hotMovies, setHotMovies] = useState<HotMovie[]>([]);
+  
+  useEffect(() => {
+    getHotMovies(18)
+      .then(setHotMovies)
+      .catch(console.error);
+  }, []);
+
+  const convertedHotMovies: Movie[] = Array.isArray(hotMovies)
+  ? hotMovies.map((item, idx) => ({
+      id: String(idx),
+      title: item.title,
+      posterUrl: item.posterUrl,
+      description: "",
+      rating: 0,
+      durationMinutes: 0,
+      releaseDate: "",
+      ageRating: "",
+      bookmarked: false,
+      liked: false,
+    }))
+  : [];
+
+
+  // 추천 콘텐츠 연동
+  const [recommendedMovies, setRecommendedMovies] = useState<Movie[]>([]);
+
+  useEffect(() => {
+    getRecommendedMovies()
+      .then(setRecommendedMovies)
+      .catch(console.error);
+  }, []);
+
+  // 배열 변환해서 넘김 -> map()은 배열에만 쓸 수 있지만, 보장이 없음
+  const convertedRecommendedMovies: Movie[] = Array.isArray(recommendedMovies)
+  ? recommendedMovies.map((item, idx) => ({
+      id: item.id || String(idx),   // 혹시 id 없을 경우 idx로 대체
+      title: item.title,
+      posterUrl: item.posterUrl,
+      description: item.description || "",
+      rating: item.rating || 0,
+      durationMinutes: item.durationMinutes || 0,
+      releaseDate: item.releaseDate || "",
+      ageRating: item.ageRating || "",
+      bookmarked: item.bookmarked || false,
+      liked: item.liked || false,
+    }))
+    : [];
+  
+  // 박스오피스 연동
+  const [boxOfficeMovies, setBoxOfficeMovies] = useState<BoxOfficeMovie[]>([]);
+  
+  useEffect(() => {
+    getBoxOfficeMovies()
+      .then(setBoxOfficeMovies)
+      .catch(console.error);
+  }, []);
+
+  // 박스오피스 Movie[]로 변환
+  const convertedBoxOfficeMovies: Movie[] = Array.isArray(boxOfficeMovies)
+    ? boxOfficeMovies.map((item, idx) => ({
+        id: item.id ?? String(idx),
+        title: item.title,
+        posterUrl: item.posterUrl,
+        description: "",          
+        rating: 0,                
+        durationMinutes: 0,       
+        releaseDate: "",          
+        ageRating: "",            
+        bookmarked: false,        
+        liked: false,             
+      }))
+  : [];
+
+  // 개봉 예정작 연동 
+  const [upcomingMovies, setUpcomingMovies] = useState<Movie[]>([]);
+    useEffect(() => {
+      getUpcomingMovies().then(setUpcomingMovies).catch(console.error);
+  }, []);
+
+  const convertedUpcomingMovies: Movie[] = Array.isArray(upcomingMovies)
+  ? upcomingMovies.map((item, idx) => ({
+      id: item.id ?? String(idx),
+      title: item.title,
+      posterUrl: item.posterUrl,
+      description: item.description || "",
+      rating: item.rating || 0,
+      durationMinutes: item.durationMinutes || 0,
+      releaseDate: item.releaseDate || "",
+      ageRating: item.ageRating || "",
+      bookmarked: item.bookmarked || false,
+      liked: item.liked || false,
+    }))
+  : [];
+
+  // 지금 뜨는 리뷰 연동
+  const [hotTalks, setHotTalks] = useState<HotTalk[]>([]);
+
+    useEffect(() => {
+    getHotTalks()
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setHotTalks(data);
+        } else {
+          console.error("hotTalks API가 배열을 반환하지 않음:", data);
+          setHotTalks([]);
+        }
+      })
+      .catch((err) => {
+        console.error("hotTalks API 호출 실패:", err);
+        setHotTalks([]); // 에러 시에도 안전하게 빈 배열
+      });
+  }, []);
+  
   const handlePlay = () => {
     console.log('재생 버튼 클릭');
   };
@@ -57,27 +165,34 @@ const Home = () => {
       />
       )}
 
-      <MovieList title="WONX 인기 콘텐츠" movies={dummyMovies} useCustomSlider />
-      <MovieList title="박스오피스" movies={dummyMovies} useCustomSlider />
+      <MovieList
+        title="WONX 인기 콘텐츠"
+        movies={convertedHotMovies}
+        useCustomSlider
+      />
 
+      <MovieList
+        title="@@@님이 좋아할 만한 콘텐츠"
+        movies={convertedRecommendedMovies}
+        useCustomSlider
+      />
 
       <BoxOfficeMovieRow
-      title="박스오피스 TOP 10"
-      movies={boxOfficeMovies}
-      renderItem={(movie) => <BoxOfficeMovieCard key={movie.id} movie={movie} />}
-      onClickMore={() => { /* 전체 박스오피스 페이지 이동 등 */ }}
-/>
+        title="박스오피스 TOP10"
+        movies={convertedBoxOfficeMovies}
+        renderItem={(movie) => <BoxOfficeMovieCard key={movie.id} movie={movie} />}
+      />
 
       <BoxOfficeMovieRow
         title="개봉 예정작"
-        movies={boxOfficeMovies}
+        movies={convertedUpcomingMovies}
         renderItem={(movie) => <BoxOfficeMovieCard key={movie.id} movie={movie} />}
       />
 
       <HotTalkRow
         title="지금 뜨는 핫톡🔥"
-        movies={dummyMovies}
-        onClickMore={() => { /* 전체 핫톡 페이지로 이동 등 */ }}
+        hotTalks={hotTalks}
+        onClickMore={() => { /* 전체 핫톡 페이지로 이동 */ }}
       />
 
       <ReviewCount reviewCount={1555555266} />

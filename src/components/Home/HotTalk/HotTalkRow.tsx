@@ -1,19 +1,19 @@
 import { useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Movie } from '@/types/movie';
 import HotTalkCard from './HotTalkCard';
 import MovieTag from '@/components/common/MovieTag';
+import { HotTalk } from '@/types/HotTalk';
 
 interface Props {
   title: string;
-  movies: Movie[];
+  hotTalks: HotTalk[];
   onClickMore?: () => void; // 추가
   showMore?: boolean;       // 추가(선택)
 }
 
 export default function HotTalkRow({
   title,
-  movies,
+  hotTalks,
   onClickMore,
   showMore = true,
 }: Props) {
@@ -44,9 +44,9 @@ export default function HotTalkRow({
           ref={rowRef}
           className="flex overflow-x-scroll scrollbar-hide scroll-smooth snap-x snap-mandatory pr-8"
         >
-          {movies.map((movie, index) => (
+          {hotTalks.map((talk, index) => (
             <div
-              key={movie.id}
+              key={talk.id}
               className={`
                 snap-start 
                 px-0 
@@ -56,11 +56,11 @@ export default function HotTalkRow({
                 md:min-w-[33.3333%] 
                 relative 
                 z-10 
-                ${index === movies.length - 1 ? 'mr-0' : 'mr-4'}
+                ${index === hotTalks.length - 1 ? 'mr-0' : 'mr-4'}
               `}
             >
               <div className="transition-transform duration-300 hover:scale-105 hover:z-50 relative">
-                <HotTalkCard movie={movie} />
+                <HotTalkCard hotTalk={talk} />
               </div>
             </div>
           ))}
