@@ -17,10 +17,10 @@ const AuthCallback = () => {
       setAuthTokens({ accessToken, refreshToken });
       console.log("토큰 저장 완료");
       // 2) 홈으로 이동
-      navigate('/', { replace: true, state: { fromCallback: true } });
+      navigate('/home', { replace: true, state: { fromCallback: true } });
     } else {
       // 토큰이 없으면 로그인 페이지로
-      navigate('/login', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [search, navigate]);
 

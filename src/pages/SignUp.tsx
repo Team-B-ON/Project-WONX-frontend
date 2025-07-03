@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import backgroundImg from '@/assets/common/netflix-background.png';
+import logo from '@/assets/common/logo_image.svg';
 import { ChevronRight } from 'lucide-react';
 import { requestAuthLink } from "@/services/api/SignUpPage/auth";
 
@@ -33,9 +34,9 @@ const SignUp = () => {
             <div className="absolute inset-0 bg-black/80" />
 
             <div className="relative z-10 min-h-screen">
-                <header className="flex justify-between items-center px-[148px] py-[30px]">
-                    <div className="text-white font-bold text-xl">로고</div>
-                    <Link to="/login">
+                <header className="flex justify-between items-center px-[148px] pt-[8px]">
+                    <img className="w-[160px] h-auto" src={logo}/>
+                    <Link to="/">
                         <button className="bg-[#E50914] w-[71px] h-[32px] rounded-[4px] cursor-pointer 
                                             transition-colors duration-200 ease-in-out hover:bg-[rgb(193,17,25)]
                                             text-white text-[14px] font-medium
