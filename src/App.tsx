@@ -10,6 +10,7 @@ import TopNavBar from './components/common/TopNavBar'
 import MyPage from './pages/MyPage'
 import PersonDetails from './pages/PersonDetails'
 import GenreDetails from './pages/GenreDetails'
+import AuthCallback from './pages/AuthCallback'
 
 function AppRoutes() {
   const location = useLocation();
@@ -21,6 +22,7 @@ function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/search" element={<Search />} />
         <Route path="/movie" element={<MovieDetails />} />
         <Route path="/person/:id" element={<PersonDetails />} />
