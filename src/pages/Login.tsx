@@ -12,7 +12,7 @@ const Login = () => {
                 backgroundSize: '120%' 
             }}
         >
-            <div className="absolute inset-0 bg-black opacity-60" />
+            <div className="absolute inset-0 bg-black opacity-75" />
 
             <div className="relative z-10">
                 <Header />

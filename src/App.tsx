@@ -19,9 +19,9 @@ function AppRoutes() {
   return (
     <>
       <Routes location={state?.backgroundLocation || location}>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/search" element={<Search />} />
         <Route path="/movie" element={<MovieDetails />} />
