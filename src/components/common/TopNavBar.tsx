@@ -2,13 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { Bell, Search } from 'lucide-react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'  // useLocation 추가
 import Logo from '@/assets/common/images/logo2.svg'
-// import { ACCESS_KEY, REFRESH_KEY } from '@/constants/auth';
 
 const SCROLL_THRESHOLD = 2
 const DEFAULT_AVATAR =
   'https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABaSDR-kTPhPYcVVGSsV0jC3D-Q5HZSFE6fjzAM-4cMpltx1Gw9AV7OTnL8sYnC6CBxOBZQEAJLjStt822uD2lctOvNR05qM.png?r=962'
-
-/* ① 헤더 상태별 클래스 */
 const transparentClasses =
   'bg-[linear-gradient(180deg,rgba(0,0,0,0.7)_10%,transparent)] text-white'
 const solidClasses =
@@ -23,7 +20,6 @@ const TopNavBar: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()  // location 변화 감지용
 
-  // 스크롤 배경 처리 (기존 그대로)
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > SCROLL_THRESHOLD)
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -31,7 +27,6 @@ const TopNavBar: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // 로그인 상태 재검사: 다른 탭(storage) + 같은 탭(location) 변화
   useEffect(() => {
     const check = () => setIsAuth(!!localStorage.getItem('access_token'));
     // const checkAuth = () => setIsAuth(!!localStorage.getItem(ACCESS_KEY));
@@ -41,7 +36,6 @@ const TopNavBar: React.FC = () => {
     return () => window.removeEventListener('storage', check);
   }, [location]);
 
-  // 로그아웃 (기존대로)
   const handleLogout = () => {
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
@@ -51,10 +45,8 @@ const TopNavBar: React.FC = () => {
     navigate('/')
   }
 
-  /* ─────────────────────────────────── 렌더링 */
   return (
     <>
-      {/* ── 실제 내비게이션 바 ── */}
       <header
         className={`
           sticky top-0 inset-x-0 z-50

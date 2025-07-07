@@ -24,7 +24,6 @@ function AppRoutes() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
 
-
         {/* NavBar 포함하는 레이아웃 */}
         <Route element={<><TopNavBar /><Outlet/></>}>
           <Route path="/home" element={<Home />} />
