@@ -1,7 +1,6 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 
-import TopNaviBar from "@/components/common/TopNavBar";
 import SearchMovieGrid from "@/components/Search/SearchMovieGrid";
 import SearchResultHeader from "@/components/Search/SearchResultHeader";
 import SearchUserGrid from "@/components/Search/SearchUserGrid";
@@ -64,8 +63,6 @@ const Search = () => {
 
   return (
     <div className="bg-black min-h-screen">
-      <TopNaviBar />
-
       <div className="px-6 sm:px-10 lg:px-25.5 py-10 space-y-12">
         <SearchResultHeader query={searchQuery} />
 
