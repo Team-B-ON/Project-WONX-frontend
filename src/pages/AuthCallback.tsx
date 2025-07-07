@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { setAuthTokens } from '@/services/api/index';
-import TopNavBar from '@/components/common/TopNavBar';
 
 const AuthCallback = () => {
   const navigate = useNavigate();
@@ -28,7 +27,6 @@ const AuthCallback = () => {
     <div
         className="min-h-screen bg-cover bg-center relative"
     >
-        <TopNavBar />
         <div className="absolute inset-0 bg-black" />
 
         <div className="absolute inset-0 z-20 flex items-center justify-center min-h-screen text-white">

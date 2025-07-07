@@ -70,27 +70,34 @@ const MyPage: React.FC = () => {
   //   }
   // }
 
+  const handleOpenFollowing = () => setFollowingModalOpen(true)
+  const handleCloseFollowing = () => setFollowingModalOpen(false)
+  const handleOpenFollowers = () => setFollowersModalOpen(true)
+  const handleCloseFollowers = () => setFollowersModalOpen(false)
+
+  if (!profile) return <div>로딩 중…</div>
+
   return (
     <div className="min-h-screen bg-black">
-      <TopNavBar />
-
       {/* <main className="pt-[68px] px-8 pb-12 space-y-12">
         <ProfileHeader
           profilePictureUrl={previewAvatar ||
             'https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABVy2_XUhT73OmjpVmwUCEHzqmQPr4KCzW2BDHesl4hzaFniV_jmE73qjSMbBnOCtq46IAH4q-QnoeR7k09shYfPQkWoSRfVpxWOA.png?r=962'}
-          username={username}
-          followingCount={123}
-          followersCount={456}
+          username={profile.nickname}
+          followingCount={profile.followingsCount}
+          followersCount={profile.followersCount}
           onEditProfile={handleEditProfile}
           onShareProfile={handleShareProfile}
+          onClickFollowing={handleOpenFollowing}
+          onClickFollowers={handleOpenFollowers}
         />
 
         <section>
-            <h2 className="text-white text-lg font-semibold mb-2">
-              취향 분석 차트
-            </h2>
-            <PreferenceChart genreCounts={genreCounts} />
-          </section>
+          <h2 className="text-white text-lg font-semibold mb-2">
+            취향 분석 차트
+          </h2>
+          <PreferenceChart genreCounts={genreCounts} />
+        </section>
 
         <section>
           <h2 className="text-white text-lg font-semibold mb-2">내가 찜한 콘텐츠</h2>
@@ -117,16 +124,28 @@ const MyPage: React.FC = () => {
           <MovieSlider movies={reviewMovies} />
         </section>
       </main>
+
+      {/* 팔로잉 리스트 모달 */}
+      {isFollowingModalOpen && (
+        <FollowingListModal onClose={handleCloseFollowing} />
+      )}
+
+      {/* 팔로워 리스트 모달 */}
+      {isFollowersModalOpen && (
+        <FollowersListModal onClose={handleCloseFollowers} />
+      )}
+
+      {/* 프로필 수정 모달 */}
       {isEditModalOpen && (
-              <EditProfileModal
-                tempName={tempName}
-                setTempName={setTempName}
-                previewAvatar={previewAvatar}
-                handleAvatarChange={handleAvatarChange}
-                onSave={saveNewName}
-                onClose={() => setEditModalOpen(false)}
-              />
-            )} */}
+        <EditProfileModal
+          tempName={tempName}
+          setTempName={setTempName}
+          previewAvatar={previewAvatar}
+          handleAvatarChange={handleAvatarChange}
+          onSave={saveNewName}
+          onClose={() => setEditModalOpen(false)}
+        />
+      )} */}
     </div>
   )
 }

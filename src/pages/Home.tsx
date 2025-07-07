@@ -4,7 +4,6 @@ import BoxOfficeMovieRow from '@/components/Home/BoxOffice/BoxOfficeMovieRow';
 import HotTalkRow from '@/components/Home/HotTalk/HotTalkRow';
 import ReviewCount from '@/components/Home/ReviewCount';
 import { boxOfficeMovies } from '@/mocks/mockMovies';
-import TopNaviBar from '@/components/common/TopNavBar';
 import BoxOfficeMovieCard from '@/components/Home/BoxOffice/BoxOfficeMovieCard';
 import MovieList from '@/components/Home/MovieList';
 import { Movie } from '@/types/movie';
@@ -32,9 +31,7 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-black min-h-screen">
-      <TopNaviBar />
-
+    <div className="bg-black min-h-screen -mt-[68px]">
       <Banner
         title="드래곤 길들이기"
         rankText="오늘 시리즈 순위 2위"
