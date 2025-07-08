@@ -70,12 +70,12 @@ const MyPage: React.FC = () => {
   //   }
   // }
 
-  const handleOpenFollowing = () => setFollowingModalOpen(true)
-  const handleCloseFollowing = () => setFollowingModalOpen(false)
-  const handleOpenFollowers = () => setFollowersModalOpen(true)
-  const handleCloseFollowers = () => setFollowersModalOpen(false)
+  // const handleOpenFollowing = () => setFollowingModalOpen(true)
+  // const handleCloseFollowing = () => setFollowingModalOpen(false)
+  // const handleOpenFollowers = () => setFollowersModalOpen(true)
+  // const handleCloseFollowers = () => setFollowersModalOpen(false)
 
-  if (!profile) return <div>로딩 중…</div>
+  // if (!profile) return <div>로딩 중…</div>
 
   return (
     <div className="min-h-screen bg-black">
@@ -125,17 +125,14 @@ const MyPage: React.FC = () => {
         </section>
       </main>
 
-      {/* 팔로잉 리스트 모달 */}
       {isFollowingModalOpen && (
         <FollowingListModal onClose={handleCloseFollowing} />
       )}
 
-      {/* 팔로워 리스트 모달 */}
       {isFollowersModalOpen && (
         <FollowersListModal onClose={handleCloseFollowers} />
       )}
 
-      {/* 프로필 수정 모달 */}
       {isEditModalOpen && (
         <EditProfileModal
           tempName={tempName}
