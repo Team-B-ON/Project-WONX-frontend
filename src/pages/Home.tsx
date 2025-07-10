@@ -151,10 +151,8 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-black min-h-screen">
-      <TopNaviBar />
+    <div className="bg-black min-h-screen -mt-[68px]">
 
-      {bannerMovie && (
       <Banner
         title={bannerMovie.title}
         rankText="오늘 시리즈 순위 2위"
@@ -163,7 +161,6 @@ const Home = () => {
         onPlay={handlePlay}
         onInfo={handleInfo}
       />
-      )}
 
       <MovieList
         title="WONX 인기 콘텐츠"

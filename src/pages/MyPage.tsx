@@ -2,12 +2,18 @@ import React, { useState, useMemo } from 'react'
 import TopNavBar from '@/components/common/TopNavBar'
 import ProfileHeader from '@/components/Profile/ProfileHeader'
 import MovieSlider from '@/components/common/MovieSlider'
-import PreferenceChart from '@/components/Profile/PreferenceChart'
-import CloseButton from '@/assets/common/buttons/close-button.svg'
 import EditProfileModal from '@/components/Profile/EditProfileModal'
+import { FollowingListModal, FollowersListModal } from '@/components/Profile/ProfileModals'
 import type { Movie } from '@/types/movie'
+import { useNavigate } from 'react-router-dom';
+import MovieTag from '@/components/common/MovieTag';
 
-const dummyMovies: Movie[] = Array.from({ length: 18 }, (_, idx) => ({
+// Movie 타입 보강 (genre 추가 필요)
+type ExtendedMovie = Movie & {
+  genre: string[]
+}
+
+const dummyMovies: ExtendedMovie[] = Array.from({ length: 18 }, (_, idx) => ({
   id: `${idx + 1}`,
   title: `영화 ${idx + 1}`,
   posterUrl:
@@ -26,19 +32,20 @@ const liked        = dummyMovies.slice(0, 12)
 const reviewMovies = dummyMovies.slice(6)
 
 const MyPage: React.FC = () => {
-    const [username, setUsername] = useState('닉네임')
-    const [isEditModalOpen, setEditModalOpen] = useState(false)
-    const [tempName, setTempName] = useState('')
-    const [tempAvatar, setTempAvatar] = useState<File | null>(null)
-    const [previewAvatar, setPreviewAvatar] = useState<string | null>(null)
+  const [username, setUsername] = useState('닉네임')
+  const [isEditModalOpen, setEditModalOpen] = useState(false)
+  const [tempName, setTempName] = useState('')
+  const [tempAvatar, setTempAvatar] = useState<File | null>(null)
+  const [previewAvatar, setPreviewAvatar] = useState<string | null>(null)
+  const [isFollowingModalOpen, setFollowingModalOpen] = useState(false)
+  const [isFollowersModalOpen, setFollowersModalOpen] = useState(false)
+  const navigate = useNavigate();
 
-  const genreCounts = useMemo(() => {
-      const counts: Record<string, number> = {}
-      dummyMovies.forEach(({ genre }) =>
-        genre.forEach((g) => (counts[g] = (counts[g] ?? 0) + 1)),
-      )
-      return counts
-    }, [])
+  const profile = useMemo(() => ({
+    nickname: username,
+    followingsCount: 12,
+    followersCount: 34,
+  }), [username])
 
   const handleEditProfile = () => {
     setTempName(username)
@@ -70,63 +77,94 @@ const MyPage: React.FC = () => {
     }
   }
 
+  const handleOpenFollowing = () => setFollowingModalOpen(true)
+  const handleCloseFollowing = () => setFollowingModalOpen(false)
+  const handleOpenFollowers = () => setFollowersModalOpen(true)
+  const handleCloseFollowers = () => setFollowersModalOpen(false)
+
   return (
     <div className="min-h-screen bg-black">
       <TopNavBar />
 
       <main className="pt-[68px] px-8 pb-12 space-y-12">
         <ProfileHeader
-          profilePictureUrl={previewAvatar ||
-            'https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABVy2_XUhT73OmjpVmwUCEHzqmQPr4KCzW2BDHesl4hzaFniV_jmE73qjSMbBnOCtq46IAH4q-QnoeR7k09shYfPQkWoSRfVpxWOA.png?r=962'}
-          username={username}
-          followingCount={123}
-          followersCount={456}
+          profilePictureUrl={
+            previewAvatar ||
+            'https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABVy2_XUhT73OmjpVmwUCEHzqmQPr4KCzW2BDHesl4hzaFniV_jmE73qjSMbBnOCtq46IAH4q-QnoeR7k09shYfPQkWoSRfVpxWOA.png?r=962'
+          }
+          username={profile.nickname}
+          followingCount={profile.followingsCount}
+          followersCount={profile.followersCount}
           onEditProfile={handleEditProfile}
           onShareProfile={handleShareProfile}
+          onClickFollowing={handleOpenFollowing}
+          onClickFollowers={handleOpenFollowers}
         />
 
         <section>
-            <h2 className="text-white text-lg font-semibold mb-2">
-              취향 분석 차트
-            </h2>
-            <PreferenceChart genreCounts={genreCounts} />
-          </section>
-
-        <section>
-          <h2 className="text-white text-lg font-semibold mb-2">내가 찜한 콘텐츠</h2>
+          <MovieTag
+            title="내가 찜한 콘텐츠"
+            onClickMore={() => navigate('/mypage/wishlist')}
+            showMore={true}
+          />
           <MovieSlider movies={wishList} />
         </section>
 
         <section>
-          <h2 className="text-white text-lg font-semibold mb-2">시청 중인 콘텐츠</h2>
+          <MovieTag
+            title="시청 중인 콘텐츠"
+            onClickMore={() => navigate('/mypage/watching')}
+            showMore={true}
+          />
           <MovieSlider movies={watchingNow} />
         </section>
 
         <section>
-          <h2 className="text-white text-lg font-semibold mb-2">시청한 콘텐츠</h2>
+          <MovieTag
+            title="시청한 콘텐츠"
+            onClickMore={() => navigate('/mypage/watched')}
+            showMore={true}
+          />
           <MovieSlider movies={watched} />
         </section>
 
         <section>
-          <h2 className="text-white text-lg font-semibold mb-2">좋아한 콘텐츠</h2>
+          <MovieTag
+            title="좋아한 콘텐츠"
+            onClickMore={() => navigate('/mypage/liked')}
+            showMore={true}
+          />
           <MovieSlider movies={liked} />
         </section>
 
         <section>
-          <h2 className="text-white text-lg font-semibold mb-2">내 리뷰 모아보기</h2>
+          <MovieTag
+            title="내 리뷰 모아보기"
+            onClickMore={() => navigate('/mypage/reviews')}
+            showMore={true}
+          />
           <MovieSlider movies={reviewMovies} />
         </section>
       </main>
+
+      {isFollowingModalOpen && (
+        <FollowingListModal onClose={handleCloseFollowing} />
+      )}
+
+      {isFollowersModalOpen && (
+        <FollowersListModal onClose={handleCloseFollowers} />
+      )}
+
       {isEditModalOpen && (
-              <EditProfileModal
-                tempName={tempName}
-                setTempName={setTempName}
-                previewAvatar={previewAvatar}
-                handleAvatarChange={handleAvatarChange}
-                onSave={saveNewName}
-                onClose={() => setEditModalOpen(false)}
-              />
-            )}
+        <EditProfileModal
+          tempName={tempName}
+          setTempName={setTempName}
+          previewAvatar={previewAvatar}
+          handleAvatarChange={handleAvatarChange}
+          onSave={saveNewName}
+          onClose={() => setEditModalOpen(false)}
+        />
+      )}
     </div>
   )
 }

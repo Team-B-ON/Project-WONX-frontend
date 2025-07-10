@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { setAuthTokens } from '@/services/api/index';
-import TopNavBar from '@/components/common/TopNavBar';
 
 const AuthCallback = () => {
   const navigate = useNavigate();
@@ -16,6 +15,9 @@ const AuthCallback = () => {
       // 1) 토큰 저장
       setAuthTokens({ accessToken, refreshToken });
       console.log("토큰 저장 완료");
+      // 두번째 토큰 로그
+      console.log(localStorage.getItem('accessToken'));
+      console.log(localStorage.getItem('refreshToken'));
       // 2) 홈으로 이동
       navigate('/home', { replace: true, state: { fromCallback: true } });
     } else {
@@ -28,7 +30,6 @@ const AuthCallback = () => {
     <div
         className="min-h-screen bg-cover bg-center relative"
     >
-        <TopNavBar />
         <div className="absolute inset-0 bg-black" />
 
         <div className="absolute inset-0 z-20 flex items-center justify-center min-h-screen text-white">

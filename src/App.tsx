@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import MovieDetails from './pages/MovieDetails'
@@ -19,16 +19,22 @@ function AppRoutes() {
   return (
     <>
       <Routes location={state?.backgroundLocation || location}>
+        {/* NavBar 없이 로그인·회원가입·콜백만 */}
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/home" element={<Home />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/movie" element={<MovieDetails />} />
-        <Route path="/person/:id" element={<PersonDetails />} />
-        <Route path="/genre/:id" element={<GenreDetails />} />
-        <Route path="/navbar" element={<TopNavBar />} />
-        <Route path="/mypage" element={<MyPage />} />
+
+        {/* NavBar 포함하는 레이아웃 */}
+        <Route element={<><TopNavBar /><Outlet/></>}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/movie" element={<MovieDetails />} />
+          <Route path="/person/:id" element={<PersonDetails />} />
+          <Route path="/genre/:id" element={<GenreDetails />} />
+          <Route path="/navbar" element={<TopNavBar />} />
+          <Route path="/mypage" element={<MyPage />} />
+        </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
 

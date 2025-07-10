@@ -1,21 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Bell, Search } from 'lucide-react'
-
-{/* 하드코딩한 부분들 추후 수정 */}
-
-// 하드코딩한 로고 및 프사 추후 변경
-import Logo from '../../assets/common/images/logo.svg'
+import { Link, useNavigate, useLocation } from 'react-router-dom'  // useLocation 추가
+import Logo from '@/assets/common/images/logo2.svg'
 
 const SCROLL_THRESHOLD = 2
-const DEFAULT_PROFILE =
+const DEFAULT_AVATAR =
   'https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABaSDR-kTPhPYcVVGSsV0jC3D-Q5HZSFE6fjzAM-4cMpltx1Gw9AV7OTnL8sYnC6CBxOBZQEAJLjStt822uD2lctOvNR05qM.png?r=962'
+const transparentClasses =
+  'bg-[linear-gradient(180deg,rgba(0,0,0,0.7)_10%,transparent)] text-white'
+const solidClasses =
+  'bg-[#141414]/95 backdrop-blur-sm text-white'
 
 const TopNavBar: React.FC = () => {
   const [solid, setSolid] = useState(false)
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const inputRef = useRef<HTMLInputElement>(null)
+  // 키를 snake_case로 통일
+  const [isAuth, setIsAuth] = useState<boolean>(
+    () => !!localStorage.getItem('access_token')
+  )
+  const navigate = useNavigate()
+  const location = useLocation()  // location 변화 감지용
 
-  // 스크롤 배경
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > SCROLL_THRESHOLD)
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -24,127 +28,78 @@ const TopNavBar: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    if (isSearchOpen) {
-      inputRef.current?.focus()
-    }
-  }, [isSearchOpen])
+    const check = () => setIsAuth(!!localStorage.getItem('access_token'));
+    // const checkAuth = () => setIsAuth(!!localStorage.getItem(ACCESS_KEY));
+    window.addEventListener('storage', check);
+    // location이 바뀔 때도 실행 (AuthCallback에서 /home으로 navigate 후)
+    check();
+    return () => window.removeEventListener('storage', check);
+  }, [location]);
 
-  const handleSearch = () => {
-      const q = inputRef.current?.value.trim()
-      if (q) window.location.href = `/search?query=${encodeURIComponent(q)}`
-      setIsSearchOpen(false)
+  const handleLogout = () => {
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+    // localStorage.removeItem(ACCESS_KEY)
+    // localStorage.removeItem(REFRESH_KEY)
+    setIsAuth(false)
+    navigate('/')
   }
 
-  const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = e => {
-      if (e.key === 'Enter') {
-        e.preventDefault()
-        handleSearch()
-      }
-      if (e.key === 'Escape') {
-        e.preventDefault()
-        setIsSearchOpen(false)
-        inputRef.current?.blur()
-      }
-    }
-
   return (
-    <header
-      className={`
-        sticky top-0 inset-x-0 z-50
-        transition-colors duration-300 ease-in-out
-        backdrop-blur-sm
-        ${solid
-          ? 'bg-black text-white'
-          : 'bg-gradient-to-b from-black/60 via-black/20 to-transparent text-white'}
-      `}
-    >
-      <div className="mx-auto max-w-[1440px] flex items-center px-0 py-0 h-[68px]">
+    <>
+      <header
+        className={`
+          sticky top-0 inset-x-0 z-50
+          h-[68px] px-8 sm:px-11 flex items-center
+          transition-colors duration-300 ease-in-out
+          ${solid ? solidClasses : transparentClasses}
+        `}
+      >
         {/* 로고 */}
-        <a href="/" className="block pl-[47.5547px]">
-          <img
-            src={Logo}
-            alt="NETFLIX Logo"
-            className="w-20 sm:w-23 md:w-26 lg:w-30 h-auto object-contain"
-          />
-        </a>
+        <Link to="/home" className="flex-shrink-0">
+          <img src={Logo} alt="WONX Logo" className="w-20 h-auto" />
+        </Link>
 
         {/* 메뉴 */}
         <nav className="ml-8">
-          <ul className="flex items-center space-x-6 text-[0.625rem] sm:text-xs md:text-sm">
-            <li>
-              <a href="/" className="hover:text-gray-300">
-                홈
-              </a>
-            </li>
-            <li>
-              <a href="/movie" className="hover:text-gray-300">
-                영화
-              </a>
-            </li>
+          <ul className="flex items-center space-x-6 text-xs md:text-sm">
+            <li><Link to="/home"   className="hover:text-gray-300">홈</Link></li>
+            <li><Link to="/movies" className="hover:text-gray-300">영화</Link></li>
           </ul>
         </nav>
 
-        {/* 오른쪽 아이콘 그룹 */}
-        <div className="ml-auto flex items-center space-x-4 relative">
-          {/* 검색 버튼 & 입력창 래퍼 */}
-          <div className="relative flex items-center">
-            {!isSearchOpen && (
-            <button
-              onClick={() => setIsSearchOpen(true)}
-              className="z-20 p-2 text-white"
-            >
-              <Search size={24} />
-            </button>
-            )}
+        {/* 우측 아이콘/버튼 */}
+        <div className="ml-auto flex items-center space-x-5">
+          {isAuth ? (
+            <>
+              <button aria-label="검색"><Search size={24} /></button>
+              <button aria-label="알림"><Bell size={24} /></button>
 
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="제목, 사람, 장르"
-              onBlur={() => setIsSearchOpen(false)}
-              onKeyDown={onKeyDown}
-              style={{ transformOrigin: 'right center' }}
-              className={`
-                absolute right-0 top-1/2 -translate-y-1/2
-                h-9 bg-black text-gray-300
-                placeholder:text-sm placeholder-gray-400
-                border border-white rounded-none
-                focus:outline-none focus:ring-0.4 focus:ring-white
-                py-[7px] pl-[43px] pr-[6px]
-                transition-all duration-200 ease-in-out
-                ${isSearchOpen
-                  ? 'w-[275px] opacity-100'
-                  : 'w-0 opacity-0 overflow-hidden'}
-              `}
-            />
+              <Link to="/mypage">
+                <img
+                  src={DEFAULT_AVATAR}
+                  alt="User avatar"
+                  className="h-8 w-8 rounded-md object-cover"
+                />
+              </Link>
 
-            {isSearchOpen && (
-              <Search
-                size={21.71}
-                className="
-                  absolute right-[243px] top-1/2 -translate-y-1/2
-                  text-white-400 z-10
-                "
-              />
-            )}
-          </div>
-
-          {/* 알림 버튼 */}
-          <button aria-label="알림" className="z-20 p-2 text-white">
-            <Bell size={24} />
-          </button>
-
-          {/* 프로필 버튼 */}
-          <a href="/mypage" className="block pr-[47.5547px] z-20">
-            <img
-              src={DEFAULT_PROFILE}
-              alt="User profile"
-              className="h-8 w-8 rounded-md object-cover"
-            />
-          </a>
+              <button
+                onClick={handleLogout}
+                className="text-sm text-gray-300 hover:text-white"
+              >
+                로그아웃
+              </button>
+            </>
+          ) : (
+            <Link to="/login">
+              <button className="bg-[#E50914] w-[80px] h-8 rounded text-white text-sm">
+                로그인
+              </button>
+            </Link>
+          )}
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   )
 }
 
