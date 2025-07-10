@@ -3,7 +3,6 @@ import Banner from '@/components/Home/Banner';
 import BoxOfficeMovieRow from '@/components/Home/BoxOffice/BoxOfficeMovieRow';
 import HotTalkRow from '@/components/Home/HotTalk/HotTalkRow';
 import ReviewCount from '@/components/Home/ReviewCount';
-import TopNaviBar from '@/components/common/TopNavBar';
 import BoxOfficeMovieCard from '@/components/Home/BoxOffice/BoxOfficeMovieCard';
 import MovieList from '@/components/Home/MovieList';
 import { Movie } from '@/types/movie';
@@ -31,18 +30,21 @@ const Home = () => {
   const [hotMovies, setHotMovies] = useState<HotMovie[]>([]);
   
   useEffect(() => {
-    getHotMovies(18)
-      .then(setHotMovies)
-      .catch(console.error);
-  }, []);
+  getHotMovies(18)
+    .then((data) => {
+      console.log("hotMovies 원본:", data);
+      setHotMovies(data);
+    })
+    .catch(console.error);
+}, []);
 
   const convertedHotMovies: Movie[] = Array.isArray(hotMovies)
   ? hotMovies.map((item, idx) => ({
-      id: String(idx),
+      id: `hot-${idx}`,                  // 고유 ID 없으니 프리픽스 붙여 생성
       title: item.title,
       posterUrl: item.posterUrl,
-      description: "",
-      rating: 0,
+      description: "",                   // 없는 필드는 기본값
+      rating: item.viewCount ?? 0,       // viewCount를 임시로 rating에 대응시킴
       durationMinutes: 0,
       releaseDate: "",
       ageRating: "",
@@ -50,7 +52,6 @@ const Home = () => {
       liked: false,
     }))
   : [];
-
 
   // 추천 콘텐츠 연동
   const [recommendedMovies, setRecommendedMovies] = useState<Movie[]>([]);
@@ -81,9 +82,12 @@ const Home = () => {
   const [boxOfficeMovies, setBoxOfficeMovies] = useState<BoxOfficeMovie[]>([]);
   
   useEffect(() => {
-    getBoxOfficeMovies()
-      .then(setBoxOfficeMovies)
-      .catch(console.error);
+  getBoxOfficeMovies()
+    .then((data) => {
+      console.log("원본 박스오피스 데이터:", data); 
+      setBoxOfficeMovies(data);
+    })
+    .catch(console.error);
   }, []);
 
   // 박스오피스 Movie[]로 변환
@@ -101,7 +105,8 @@ const Home = () => {
         liked: false,             
       }))
   : [];
-
+  console.log("convertedBoxOfficeMovies:", convertedBoxOfficeMovies);
+  
   // 개봉 예정작 연동 
   const [upcomingMovies, setUpcomingMovies] = useState<Movie[]>([]);
     useEffect(() => {
@@ -152,16 +157,17 @@ const Home = () => {
 
   return (
     <div className="bg-black min-h-screen -mt-[68px]">
-
-      <Banner
-        title={bannerMovie.title}
-        rankText="오늘 시리즈 순위 2위"
-        overview={bannerMovie.description}
-        backdropUrl={bannerMovie.posterUrl}
-        onPlay={handlePlay}
-        onInfo={handleInfo}
-      />
-
+      {bannerMovie && (
+        <Banner
+          title={bannerMovie.title}
+          rankText="오늘 시리즈 순위 2위"
+          overview={bannerMovie.description}
+          backdropUrl={bannerMovie.posterUrl}
+          onPlay={handlePlay}
+          onInfo={handleInfo}
+        />
+      )}
+      
       <MovieList
         title="WONX 인기 콘텐츠"
         movies={convertedHotMovies}
