@@ -5,6 +5,8 @@ import MovieSlider from '@/components/common/MovieSlider'
 import EditProfileModal from '@/components/Profile/EditProfileModal'
 import { FollowingListModal, FollowersListModal } from '@/components/Profile/ProfileModals'
 import type { Movie } from '@/types/movie'
+import { useNavigate } from 'react-router-dom';
+import MovieTag from '@/components/common/MovieTag';
 
 // Movie 타입 보강 (genre 추가 필요)
 type ExtendedMovie = Movie & {
@@ -37,6 +39,7 @@ const MyPage: React.FC = () => {
   const [previewAvatar, setPreviewAvatar] = useState<string | null>(null)
   const [isFollowingModalOpen, setFollowingModalOpen] = useState(false)
   const [isFollowersModalOpen, setFollowersModalOpen] = useState(false)
+  const navigate = useNavigate();
 
   const profile = useMemo(() => ({
     nickname: username,
@@ -99,27 +102,47 @@ const MyPage: React.FC = () => {
         />
 
         <section>
-          <h2 className="text-white text-lg font-semibold mb-2">내가 찜한 콘텐츠</h2>
+          <MovieTag
+            title="내가 찜한 콘텐츠"
+            onClickMore={() => navigate('/mypage/wishlist')}
+            showMore={true}
+          />
           <MovieSlider movies={wishList} />
         </section>
 
         <section>
-          <h2 className="text-white text-lg font-semibold mb-2">시청 중인 콘텐츠</h2>
+          <MovieTag
+            title="시청 중인 콘텐츠"
+            onClickMore={() => navigate('/mypage/watching')}
+            showMore={true}
+          />
           <MovieSlider movies={watchingNow} />
         </section>
 
         <section>
-          <h2 className="text-white text-lg font-semibold mb-2">시청한 콘텐츠</h2>
+          <MovieTag
+            title="시청한 콘텐츠"
+            onClickMore={() => navigate('/mypage/watched')}
+            showMore={true}
+          />
           <MovieSlider movies={watched} />
         </section>
 
         <section>
-          <h2 className="text-white text-lg font-semibold mb-2">좋아한 콘텐츠</h2>
+          <MovieTag
+            title="좋아한 콘텐츠"
+            onClickMore={() => navigate('/mypage/liked')}
+            showMore={true}
+          />
           <MovieSlider movies={liked} />
         </section>
 
         <section>
-          <h2 className="text-white text-lg font-semibold mb-2">내 리뷰 모아보기</h2>
+          <MovieTag
+            title="내 리뷰 모아보기"
+            onClickMore={() => navigate('/mypage/reviews')}
+            showMore={true}
+          />
           <MovieSlider movies={reviewMovies} />
         </section>
       </main>
