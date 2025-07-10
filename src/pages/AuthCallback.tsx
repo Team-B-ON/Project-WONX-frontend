@@ -11,19 +11,25 @@ const AuthCallback = () => {
     const accessToken  = params.get('accessToken');
     const refreshToken = params.get('refreshToken');
 
-    console.log("search:", location.search);
-    console.log("accessToken:", accessToken);
-    console.log("refreshToken:", refreshToken);
+    console.log("search:", search);
+    console.log("access_token:", accessToken);
+    console.log("refresh_token:", refreshToken);
 
     if (accessToken && refreshToken) {
       // 1) 토큰 저장
+      console.log("토큰 저장 시도");
       setAuthTokens({ accessToken, refreshToken });
+
       setTimeout(() => {
+        console.log("홈으로 이동");
         navigate('/home', { replace: true, state: { fromCallback: true } });
-      }, 100); // 100ms 정도 딜레이 주는 게 안정적
+      }, 500);
     } else {
       // 토큰이 없으면 로그인 페이지로
-      navigate('/', { replace: true });
+      console.warn("토큰 없음. 로그인 페이지로 이동");
+      setTimeout(() => {
+        navigate('/');
+      }, 500);
     }
   }, [search, navigate]);
 
