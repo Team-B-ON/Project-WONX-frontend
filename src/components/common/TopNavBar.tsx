@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { Bell, Search } from 'lucide-react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'  // useLocation 추가
 import Logo from '@/assets/common/images/logo2.svg'
+import defaultAvatar from "@/assets/common/images/default-avatar.png";
 
 const SCROLL_THRESHOLD = 2
-const DEFAULT_AVATAR =
-  'https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABaSDR-kTPhPYcVVGSsV0jC3D-Q5HZSFE6fjzAM-4cMpltx1Gw9AV7OTnL8sYnC6CBxOBZQEAJLjStt822uD2lctOvNR05qM.png?r=962'
+const DEFAULT_AVATAR = defaultAvatar
 const transparentClasses =
   'bg-[linear-gradient(180deg,rgba(0,0,0,0.7)_10%,transparent)] text-white'
 const solidClasses =
-  'bg-[#141414]/95 backdrop-blur-sm text-white'
+  'bg-[#000000] backdrop-blur-sm text-white'
 
 const TopNavBar: React.FC = () => {
   const [solid, setSolid] = useState(false)
@@ -45,6 +45,9 @@ const TopNavBar: React.FC = () => {
     navigate('/')
   }
 
+  const forceSolidOn = ['/mypage']
+  const isForceSolid = forceSolidOn.includes(location.pathname)
+
   return (
     <>
       <header
@@ -52,7 +55,7 @@ const TopNavBar: React.FC = () => {
           sticky top-0 inset-x-0 z-50
           h-[68px] px-8 sm:px-11 flex items-center
           transition-colors duration-300 ease-in-out
-          ${solid ? solidClasses : transparentClasses}
+        ${ (solid || isForceSolid) ? solidClasses : transparentClasses }
         `}
       >
         {/* 로고 */}
