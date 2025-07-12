@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Bell, Search } from 'lucide-react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'  // useLocation 추가
 import Logo from '@/assets/common/images/logo2.svg'
@@ -19,6 +19,9 @@ const TopNavBar: React.FC = () => {
   )
   const navigate = useNavigate()
   const location = useLocation()  // location 변화 감지용
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+
 
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > SCROLL_THRESHOLD)
@@ -26,6 +29,21 @@ const TopNavBar: React.FC = () => {
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    if (isSearchOpen) inputRef.current?.focus()
+  }, [isSearchOpen])
+
+  const handleSearch = () => {
+    const q = inputRef.current?.value.trim()
+    if (q) window.location.href = `/search?query=${encodeURIComponent(q)}`
+    setIsSearchOpen(false)
+  }
+
+  const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = e => {
+    if (e.key === 'Enter') { e.preventDefault(); handleSearch() }
+    if (e.key === 'Escape') { e.preventDefault(); setIsSearchOpen(false) }
+  }
 
   useEffect(() => {
     const check = () => setIsAuth(!!localStorage.getItem('access_token'));
@@ -75,7 +93,43 @@ const TopNavBar: React.FC = () => {
         <div className="ml-auto flex items-center space-x-5">
           {isAuth ? (
             <>
-              <button aria-label="검색"><Search size={24} /></button>
+              {/* 검색 토글 영역 */}
+              <div className="relative flex items-center">
+                {!isSearchOpen && (
+                  <button
+                    aria-label="검색"
+                    onClick={() => setIsSearchOpen(true)}
+                    className="z-20 p-2 text-white"
+                  >
+                    <Search size={24} />
+                  </button>
+                )}
+                <input
+                  ref={inputRef}
+                  type="text"
+                  placeholder="제목, 사람, 장르"
+                  onBlur={() => setIsSearchOpen(false)}
+                  onKeyDown={onKeyDown}
+                  style={{ transformOrigin: 'right center' }}
+                  className={`
+                  absolute right-0 top-1/2 -translate-y-1/2
+                  h-9 bg-black text-gray-300
+                  placeholder:text-sm placeholder-gray-400
+                  border border-white
+                  py-[7px] pl-[43px] pr-[6px]
+                  transition-all duration-200 ease-in-out
+                  ${isSearchOpen
+                    ? 'w-[275px] opacity-100'
+                    : 'w-0 opacity-0 overflow-hidden'}
+                `}
+                />
+                {isSearchOpen && (
+                  <Search
+                    size={21.7}
+                    className="absolute right-[243px] top-1/2 -translate-y-1/2 text-gray-400 z-10"
+                  />
+                )}
+              </div>
               <button aria-label="알림"><Bell size={24} /></button>
 
               <Link to="/mypage">
