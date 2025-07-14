@@ -79,7 +79,7 @@ async (error: AxiosError) => {
     } catch (refreshError) {
       onFailed(refreshError);
       clearAuthTokens();
-      window.location.href = '/login';
+      window.location.href = '/';
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;
