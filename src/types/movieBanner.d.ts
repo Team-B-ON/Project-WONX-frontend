@@ -1,5 +1,5 @@
 // 배너 응답
-export interface Movie {
+export interface MovieBanner {
   id: string;
   title: string;
   posterUrl: string;

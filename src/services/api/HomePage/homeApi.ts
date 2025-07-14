@@ -1,11 +1,12 @@
 import { HotMovie } from "@/types/hotMovie";
-import { Movie } from "@/types/movie";
-import axiosInstance from "../api";
+// import { Movie } from "@/types/movie";
+import axiosInstance from "../index";
 import { BoxOfficeMovie } from "@/types/BoxOfficeMovie";
 import { HotTalk } from "@/types/HotTalk";
+import { MovieBanner } from "@/types/movieBanner";
 
 // 배너용 함수
-export const getMainBanner = (): Promise<Movie> => {
+export const getMainBanner = (): Promise<MovieBanner> => {
 
   return axiosInstance.get("/home/banner")
     .then((res) => res.data);
@@ -19,7 +20,7 @@ export const getHotMovies = (count: number = 18): Promise<HotMovie[]> => {
 }
 
 // 추천 콘텐츠 함수
-export const getRecommendedMovies = (): Promise<Movie[]> => {
+export const getRecommendedMovies = (): Promise<MovieBanner[]> => {
   return axiosInstance.get("/home/recommend")
     .then(res => res.data);
 }
@@ -31,7 +32,7 @@ export const getBoxOfficeMovies = (): Promise<BoxOfficeMovie[]> => {
 };
 
 // 개봉 예정작 함수
-export const getUpcomingMovies = (): Promise<Movie[]> => {
+export const getUpcomingMovies = (): Promise<MovieBanner[]> => {
   return axiosInstance.get('/home/upcoming').then(res => res.data);
 };
 

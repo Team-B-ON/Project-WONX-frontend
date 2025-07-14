@@ -5,8 +5,9 @@ import HotTalkRow from '@/components/Home/HotTalk/HotTalkRow';
 import ReviewCount from '@/components/Home/ReviewCount';
 import BoxOfficeMovieCard from '@/components/Home/BoxOffice/BoxOfficeMovieCard';
 import MovieList from '@/components/Home/MovieList';
-import { Movie } from '@/types/movie';
-import { getBoxOfficeMovies, getHotMovies, getHotTalks, getMainBanner, getRecommendedMovies, getUpcomingMovies } from '@/services/Home/homeApi';
+import { MovieBanner } from '@/types/movieBanner';
+// import { Movie } from '@/types/movie';
+import { getBoxOfficeMovies, getHotMovies, getHotTalks, getMainBanner, getRecommendedMovies, getUpcomingMovies } from '@/services/api/HomePage/homeApi';
 import { HotMovie } from '@/types/hotMovie';
 import { BoxOfficeMovie } from '@/types/BoxOfficeMovie';
 import { HotTalk } from '@/types/HotTalk';
@@ -17,7 +18,7 @@ import { HotTalk } from '@/types/HotTalk';
 const Home = () => {
 
   // 배너 연동
-  const [bannerMovie, setBannerMovie] = useState<Movie | null>(null);
+  const [bannerMovie, setBannerMovie] = useState<MovieBanner | null>(null);
 
   useEffect(() => {
     console.log("API BASE:", import.meta.env.VITE_API_BASE_URL);
@@ -38,7 +39,7 @@ const Home = () => {
     .catch(console.error);
 }, []);
 
-  const convertedHotMovies: Movie[] = Array.isArray(hotMovies)
+  const convertedHotMovies: MovieBanner[] = Array.isArray(hotMovies)
   ? hotMovies.map((item, idx) => ({
       id: `hot-${idx}`,                  // 고유 ID 없으니 프리픽스 붙여 생성
       title: item.title,
@@ -54,7 +55,7 @@ const Home = () => {
   : [];
 
   // 추천 콘텐츠 연동
-  const [recommendedMovies, setRecommendedMovies] = useState<Movie[]>([]);
+  const [recommendedMovies, setRecommendedMovies] = useState<MovieBanner[]>([]);
 
   useEffect(() => {
     getRecommendedMovies()
@@ -63,7 +64,7 @@ const Home = () => {
   }, []);
 
   // 배열 변환해서 넘김 -> map()은 배열에만 쓸 수 있지만, 보장이 없음
-  const convertedRecommendedMovies: Movie[] = Array.isArray(recommendedMovies)
+  const convertedRecommendedMovies: MovieBanner[] = Array.isArray(recommendedMovies)
   ? recommendedMovies.map((item, idx) => ({
       id: item.id || String(idx),   // 혹시 id 없을 경우 idx로 대체
       title: item.title,
@@ -91,7 +92,7 @@ const Home = () => {
   }, []);
 
   // 박스오피스 Movie[]로 변환
-  const convertedBoxOfficeMovies: Movie[] = Array.isArray(boxOfficeMovies)
+  const convertedBoxOfficeMovies: MovieBanner[] = Array.isArray(boxOfficeMovies)
     ? boxOfficeMovies.map((item, idx) => ({
         id: item.id ?? String(idx),
         title: item.title,
@@ -108,12 +109,12 @@ const Home = () => {
   console.log("convertedBoxOfficeMovies:", convertedBoxOfficeMovies);
   
   // 개봉 예정작 연동 
-  const [upcomingMovies, setUpcomingMovies] = useState<Movie[]>([]);
+  const [upcomingMovies, setUpcomingMovies] = useState<MovieBanner[]>([]);
     useEffect(() => {
       getUpcomingMovies().then(setUpcomingMovies).catch(console.error);
   }, []);
 
-  const convertedUpcomingMovies: Movie[] = Array.isArray(upcomingMovies)
+  const convertedUpcomingMovies: MovieBanner[] = Array.isArray(upcomingMovies)
   ? upcomingMovies.map((item, idx) => ({
       id: item.id ?? String(idx),
       title: item.title,
