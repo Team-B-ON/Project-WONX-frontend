@@ -1,4 +1,4 @@
-import { RawHotMovie, HotMovie } from "@/types/hotMovie";
+import { HotMovie } from "@/types/hotMovie";
 // import { Movie } from "@/types/movie";
 import axiosInstance from "../index";
 import { BoxOfficeMovie } from "@/types/BoxOfficeMovie";
@@ -15,14 +15,14 @@ export const getMainBanner = (): Promise<MovieBanner> => {
 // 인기 콘텐츠 함수
 export const getHotMovies = (count = 18): Promise<HotMovie[]> =>
   axiosInstance
-    .get<RawHotMovie[]>(`/home/hot-movies?count=${count}`)
+    .get<HotMovie[]>(`/home/hot-movies?count=${count}`)
     .then(res => {
       console.log(res.data); 
       return res.data.map(item => ({
-        id:        item.videoId,
+        id:        item.id,
         title:     item.title,
-        posterUrl: item.thumbnailUrl,
-        viewCount: item.watchCount,
+        posterUrl: item.posterUrl,
+        viewCount: item.viewCount,
       }));
     });
 
