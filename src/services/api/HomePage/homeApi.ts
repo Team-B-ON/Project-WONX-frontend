@@ -16,14 +16,15 @@ export const getMainBanner = (): Promise<MovieBanner> => {
 export const getHotMovies = (count = 18): Promise<HotMovie[]> =>
   axiosInstance
     .get<{ ranking: RawHotMovie[] }>(`/home/hot-movies?count=${count}`)
-    .then(res =>
-      res.data.ranking.map(item => ({
+    .then(res => {
+      console.log(res.data); 
+      return res.data.ranking.map(item => ({
         id:        item.videoId,
         title:     item.title,
         posterUrl: item.thumbnailUrl,
         viewCount: item.watchCount,
-      }))
-    );
+      }));
+    });
 
 // 추천 콘텐츠 함수
 export const getRecommendedMovies = (): Promise<MovieBanner[]> => {
