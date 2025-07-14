@@ -11,6 +11,14 @@ import MyPage from './pages/MyPage'
 import PersonDetails from './pages/PersonDetails'
 import GenreDetails from './pages/GenreDetails'
 import AuthCallback from './pages/AuthCallback'
+import Users from './pages/admin/Users'
+import Movies from './pages/admin/Movies';
+import Likes from './pages/admin/Likes';
+import Bookmarks from './pages/admin/Bookmarks';
+import Reviews from './pages/admin/Reviews';
+import People from './pages/admin/People';
+import HotTalks from './pages/admin/HotTalks';
+import WatchHistories from './pages/admin/WatchHistories';
 
 function AppRoutes() {
   const location = useLocation();
@@ -31,6 +39,14 @@ function AppRoutes() {
           <Route path="/person/:id" element={<PersonDetails />} />
           <Route path="/genre/:id" element={<GenreDetails />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/movies" element={<Movies />} />
+          <Route path="/admin/likes" element={<Likes />} />
+          <Route path="/admin/bookmarks" element={<Bookmarks />} />
+          <Route path="/admin/reviews" element={<Reviews />} />
+          <Route path="/admin/people" element={<People />} />
+          <Route path="/admin/hot-talks" element={<HotTalks />} />
+          <Route path="/admin/watch-histories" element={<WatchHistories />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
