@@ -24,29 +24,36 @@ const AdminFollowsPage = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p className="p-4">로딩 중...</p>;
+  if (loading) return <p className="p-4 text-white">로딩 중...</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">팔로우 목록</h1>
-      <table className="w-full text-sm border">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="p-2 border">팔로워 ID</th>
-            <th className="p-2 border">팔로이 ID</th>
-            <th className="p-2 border">팔로우 일시</th>
-          </tr>
-        </thead>
-        <tbody>
-          {follows.map((follow, index) => (
-            <tr key={index} className="border-t">
-              <td className="p-2 border">{follow.followerId}</td>
-              <td className="p-2 border">{follow.followeeId}</td>
-              <td className="p-2 border">{new Date(follow.createdAt).toLocaleString()}</td>
+    <div className="p-6 text-white">
+      <h1 className="text-3xl font-semibold mb-6">팔로우 목록</h1>
+      <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-700">
+        <table className="min-w-full text-sm">
+          <thead className="bg-gray-800 text-white uppercase tracking-wider">
+            <tr>
+              <th className="px-4 py-3 text-left border-b border-gray-700">팔로워 ID</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">팔로이 ID</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">팔로우 일시</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {follows.map((follow, index) => (
+              <tr
+                key={index}
+                className={`border-b border-gray-700 ${
+                  index % 2 === 0 ? 'bg-gray-900' : 'bg-gray-800'
+                } hover:bg-gray-700 transition`}
+              >
+                <td className="px-4 py-2">{follow.followerId}</td>
+                <td className="px-4 py-2">{follow.followeeId}</td>
+                <td className="px-4 py-2">{new Date(follow.createdAt).toLocaleString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

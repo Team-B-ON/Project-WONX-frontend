@@ -24,33 +24,38 @@ const AdminLikesPage = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p className="p-4">로딩 중...</p>;
+  if (loading) return <p className="p-4 text-white">로딩 중...</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">좋아요 목록</h1>
-      <table className="w-full text-sm border">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="p-2 border">ID</th>
-            <th className="p-2 border">사용자</th>
-            <th className="p-2 border">영화 ID</th>
-            <th className="p-2 border">생성일</th>
-          </tr>
-        </thead>
-        <tbody>
-          {likes.map(like => (
-            <tr key={like.id} className="border-t">
-              <td className="p-2 border">{like.id}</td>
-              <td className="p-2 border">{like.userId}</td>
-              <td className="p-2 border">{like.movieId}</td>
-              <td className="p-2 border">
-                {new Date(like.createdAt).toLocaleString()}
-              </td>
+    <div className="p-6 text-white">
+      <h1 className="text-3xl font-semibold mb-6">좋아요 목록</h1>
+      <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-700">
+        <table className="min-w-full text-sm">
+          <thead className="bg-gray-800 text-white uppercase tracking-wider">
+            <tr>
+              <th className="px-4 py-3 text-left border-b border-gray-700">ID</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">사용자</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">영화 ID</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">생성일</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {likes.map((like, index) => (
+              <tr
+                key={like.id}
+                className={`border-b border-gray-700 ${
+                  index % 2 === 0 ? 'bg-gray-900' : 'bg-gray-800'
+                } hover:bg-gray-700 transition`}
+              >
+                <td className="px-4 py-2">{like.id}</td>
+                <td className="px-4 py-2">{like.userId}</td>
+                <td className="px-4 py-2">{like.movieId}</td>
+                <td className="px-4 py-2">{new Date(like.createdAt).toLocaleString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

@@ -24,39 +24,46 @@ const AdminWatchHistoriesPage = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p className="p-4">로딩 중...</p>;
+  if (loading) return <p className="p-4 text-white">로딩 중...</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">시청 기록</h1>
-      <table className="w-full text-sm border">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="p-2 border">ID</th>
-            <th className="p-2 border">유저 ID</th>
-            <th className="p-2 border">영상 ID</th>
-            <th className="p-2 border">시청일시</th>
-            <th className="p-2 border">마지막 위치</th>
-            <th className="p-2 border">시청 시간(초)</th>
-            <th className="p-2 border">업데이트일시</th>
-            <th className="p-2 border">완료 여부</th>
-          </tr>
-        </thead>
-        <tbody>
-          {histories.map(history => (
-            <tr key={history.id} className="border-t">
-              <td className="p-2 border">{history.id}</td>
-              <td className="p-2 border">{history.userId}</td>
-              <td className="p-2 border">{history.videoId}</td>
-              <td className="p-2 border">{new Date(history.watchedAt).toLocaleString()}</td>
-              <td className="p-2 border">{history.lastPosition}</td>
-              <td className="p-2 border">{history.watchedSeconds}</td>
-              <td className="p-2 border">{new Date(history.updatedAt).toLocaleString()}</td>
-              <td className="p-2 border">{history.isCompleted ? '✅' : '❌'}</td>
+    <div className="p-6 text-white">
+      <h1 className="text-3xl font-semibold mb-6">시청 기록</h1>
+      <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-700">
+        <table className="min-w-full text-sm">
+          <thead className="bg-gray-800 text-white uppercase tracking-wider">
+            <tr>
+              <th className="px-4 py-3 text-left border-b border-gray-700">ID</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">유저 ID</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">영상 ID</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">시청일시</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">마지막 위치</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">시청 시간(초)</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">업데이트일시</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">완료 여부</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {histories.map((history, index) => (
+              <tr
+                key={history.id}
+                className={`border-b border-gray-700 ${
+                  index % 2 === 0 ? 'bg-gray-900' : 'bg-gray-800'
+                } hover:bg-gray-700 transition`}
+              >
+                <td className="px-4 py-2">{history.id}</td>
+                <td className="px-4 py-2">{history.userId}</td>
+                <td className="px-4 py-2">{history.videoId}</td>
+                <td className="px-4 py-2">{new Date(history.watchedAt).toLocaleString()}</td>
+                <td className="px-4 py-2">{history.lastPosition}</td>
+                <td className="px-4 py-2">{history.watchedSeconds}</td>
+                <td className="px-4 py-2">{new Date(history.updatedAt).toLocaleString()}</td>
+                <td className="px-4 py-2">{history.isCompleted ? '✅' : '❌'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

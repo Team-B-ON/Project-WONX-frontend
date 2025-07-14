@@ -24,33 +24,40 @@ const AdminHotTalksPage = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p className="p-4">로딩 중...</p>;
+  if (loading) return <p className="p-4 text-white">로딩 중...</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Hot Talk 목록</h1>
-      <table className="w-full text-sm border">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="p-2 border">ID</th>
-            <th className="p-2 border">내용</th>
-            <th className="p-2 border">조회수</th>
-            <th className="p-2 border">등록일</th>
-            <th className="p-2 border">연결된 영상 ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          {hotTalks.map(talk => (
-            <tr key={talk.id} className="border-t">
-              <td className="p-2 border">{talk.id}</td>
-              <td className="p-2 border whitespace-pre-wrap">{talk.content}</td>
-              <td className="p-2 border">{talk.viewCount}</td>
-              <td className="p-2 border">{new Date(talk.createdAt).toLocaleString()}</td>
-              <td className="p-2 border">{talk.movieId ?? '없음'}</td>
+    <div className="p-6 text-white">
+      <h1 className="text-3xl font-semibold mb-6">Hot Talk 목록</h1>
+      <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-700">
+        <table className="min-w-full text-sm">
+          <thead className="bg-gray-800 text-white uppercase tracking-wider">
+            <tr>
+              <th className="px-4 py-3 text-left border-b border-gray-700">ID</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">내용</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">조회수</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">등록일</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">연결된 영상 ID</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {hotTalks.map((talk, index) => (
+              <tr
+                key={talk.id}
+                className={`border-b border-gray-700 ${
+                  index % 2 === 0 ? 'bg-gray-900' : 'bg-gray-800'
+                } hover:bg-gray-700 transition`}
+              >
+                <td className="px-4 py-2">{talk.id}</td>
+                <td className="px-4 py-2 whitespace-pre-wrap">{talk.content}</td>
+                <td className="px-4 py-2">{talk.viewCount}</td>
+                <td className="px-4 py-2">{new Date(talk.createdAt).toLocaleString()}</td>
+                <td className="px-4 py-2">{talk.movieId ?? '없음'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

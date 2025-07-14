@@ -24,27 +24,34 @@ const AdminPeoplePage = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p className="p-4">로딩 중...</p>;
+  if (loading) return <p className="p-4 text-white">로딩 중...</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">출연/감독 인물 목록</h1>
-      <table className="w-full text-sm border">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="p-2 border">ID</th>
-            <th className="p-2 border">이름</th>
-          </tr>
-        </thead>
-        <tbody>
-          {people.map(person => (
-            <tr key={person.id} className="border-t">
-              <td className="p-2 border">{person.id}</td>
-              <td className="p-2 border">{person.name}</td>
+    <div className="p-6 text-white">
+      <h1 className="text-3xl font-semibold mb-6">출연/감독 인물 목록</h1>
+      <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-700">
+        <table className="min-w-full text-sm">
+          <thead className="bg-gray-800 text-white uppercase tracking-wider">
+            <tr>
+              <th className="px-4 py-3 text-left border-b border-gray-700">ID</th>
+              <th className="px-4 py-3 text-left border-b border-gray-700">이름</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {people.map((person, index) => (
+              <tr
+                key={person.id}
+                className={`border-b border-gray-700 ${
+                  index % 2 === 0 ? 'bg-gray-900' : 'bg-gray-800'
+                } hover:bg-gray-700 transition`}
+              >
+                <td className="px-4 py-2">{person.id}</td>
+                <td className="px-4 py-2">{person.name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
