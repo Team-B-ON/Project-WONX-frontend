@@ -40,8 +40,8 @@ const Home = () => {
 }, []);
 
   const convertedHotMovies: MovieBanner[] = Array.isArray(hotMovies)
-  ? hotMovies.map((item, idx) => ({
-      id: `hot-${idx}`,                  // 고유 ID 없으니 프리픽스 붙여 생성
+  ? hotMovies.map((item) => ({
+      id: item.id,
       title: item.title,
       posterUrl: item.posterUrl,
       description: "",                   // 없는 필드는 기본값
