@@ -10,7 +10,7 @@ body {
     width: 100vw;
     height: 100vh;
     font-family: 'Noto Sans KR', sans-serif;
-    background-color: #fff;
+    background-color: #000;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
