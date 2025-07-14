@@ -31,9 +31,9 @@ const Search = () => {
   ];
 
   const allHotTalk = [
-    { id: "1", movieTitle: "라라랜드", content: "정말 감동적이었어요! 음악이 최고였음.", author: "유저123", rating: 5 },
-    { id: "2", movieTitle: "인셉션", content: "역시 놀란 감독. 최고의 연출력!", author: "유저456", rating: 5 },
-    { id: "3", movieTitle: "인터스텔라", content: "웅장한 스케일, 눈물남.", author: "유저789", rating: 4 },
+    { id: "1", movieTitle: "라라랜드", content: "정말 감동적이었어요! 음악이 최고였음.", author: "유저123", rating: 5, viewCount: 1, createdAt: "2024-07-13T12:34:56Z", moviePosterUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABV4CF2PBJ2cLwMao0g2JGonHwyfwofN3t5ue5E8BN8RsgEyzeD09PV4jr5QcmlTdksokq_-yHM9FeNw6e7jhdJZ0ys0ypDsnSpw.webp?r=35c" },
+    { id: "2", movieTitle: "인셉션", content: "역시 놀란 감독. 최고의 연출력!", author: "유저456", rating: 5, viewCount: 1, createdAt: "2024-07-13T12:34:56Z", moviePosterUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABV4CF2PBJ2cLwMao0g2JGonHwyfwofN3t5ue5E8BN8RsgEyzeD09PV4jr5QcmlTdksokq_-yHM9FeNw6e7jhdJZ0ys0ypDsnSpw.webp?r=35c" },
+    { id: "3", movieTitle: "인터스텔라", content: "웅장한 스케일, 눈물남.", author: "유저789", rating: 4, viewCount: 1, createdAt: "2024-07-13T12:34:56Z", moviePosterUrl: "https://occ-0-3097-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABV4CF2PBJ2cLwMao0g2JGonHwyfwofN3t5ue5E8BN8RsgEyzeD09PV4jr5QcmlTdksokq_-yHM9FeNw6e7jhdJZ0ys0ypDsnSpw.webp?r=35c" },
   ];
 
   const filteredMovies = allMovies.filter((movie) =>
