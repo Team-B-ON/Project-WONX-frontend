@@ -35,9 +35,15 @@ const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) =
     const location = useLocation();
 
     const handleClick = () => {
-        const searchParams = new URLSearchParams(location.search);
-        searchParams.set('id', movie.id);
-        navigate(`${location.pathname}?${searchParams.toString()}`)
+        const params = new URLSearchParams(location.search);
+        params.set('id', movie.id);
+        navigate(
+            {
+                pathname: location.pathname,
+                search: `?${params.toString()}`
+            },
+            { state: { backgroundLocation: location } }
+        );
     };
 
     return (

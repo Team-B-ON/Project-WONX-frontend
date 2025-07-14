@@ -28,10 +28,8 @@ function AppRoutes() {
         <Route element={<><TopNavBar /><Outlet/></>}>
           <Route path="/home" element={<Home />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/movie" element={<MovieDetails />} />
           <Route path="/person/:id" element={<PersonDetails />} />
           <Route path="/genre/:id" element={<GenreDetails />} />
-          <Route path="/navbar" element={<TopNavBar />} />
           <Route path="/mypage" element={<MyPage />} />
         </Route>
 
@@ -42,6 +40,7 @@ function AppRoutes() {
         <Routes>
           <Route path="/person/:id" element={<PersonDetails />} />
           <Route path="/genre/:id" element={<GenreDetails />} />
+          <Route path="*" element={<MovieDetails />} />
         </Routes>
       )}
     </>
