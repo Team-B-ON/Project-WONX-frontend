@@ -148,7 +148,7 @@ const TopNavBar: React.FC = () => {
               </button>
             </>
           ) : (
-            <Link to="/login">
+            <Link to="/">
               <button className="bg-[#E50914] w-[80px] h-8 rounded text-white text-sm">
                 로그인
               </button>
