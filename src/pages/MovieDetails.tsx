@@ -70,7 +70,10 @@ const MovieDetails = () => {
 
   // API 호출 - 영화 상세 정보 조회
   const { movie, loading, error } = useMovieDetail(selectedId);
-  const { show, animate } = useModalAnimation(!!selectedId && movie?.id === selectedId);
+  const isOpen = Boolean(selectedId);
+  const { show, animate } = useModalAnimation(isOpen);
+  console.log("param id:", selectedId);
+  console.log("movie.id:", movie?.id);
 
   // 모달 닫기 함수
   const closeModal = () => {
