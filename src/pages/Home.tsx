@@ -163,7 +163,7 @@ const Home = () => {
           title={bannerMovie.title}
           rankText="오늘 시리즈 순위 2위"
           overview={bannerMovie.description}
-          backdropUrl={bannerMovie.posterUrl}
+          backdropUrl={bannerMovie.backdropUrl || bannerMovie.posterUrl}
           onPlay={handlePlay}
           onInfo={handleInfo}
         />
