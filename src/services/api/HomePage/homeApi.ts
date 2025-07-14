@@ -15,10 +15,10 @@ export const getMainBanner = (): Promise<MovieBanner> => {
 // 인기 콘텐츠 함수
 export const getHotMovies = (count = 18): Promise<HotMovie[]> =>
   axiosInstance
-    .get<{ ranking: RawHotMovie[] }>(`/home/hot-movies?count=${count}`)
+    .get<RawHotMovie[]>(`/home/hot-movies?count=${count}`)
     .then(res => {
       console.log(res.data); 
-      return res.data.ranking.map(item => ({
+      return res.data.map(item => ({
         id:        item.videoId,
         title:     item.title,
         posterUrl: item.thumbnailUrl,
