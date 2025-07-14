@@ -5,4 +5,6 @@ export interface HotTalk {
   createdAt: string;   
   movieTitle: string;
   moviePosterUrl: string;
+  author: string;
+  rating: number;
 }

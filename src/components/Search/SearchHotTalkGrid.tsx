@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { hotTalk } from "@/types/HotTalk";
+import { HotTalk } from "@/types/HotTalk";
 
 interface SearchHotTalkGridProps {
   query: string;
-  reviews: hotTalk[];
+  reviews: HotTalk[];
 }
 
 export default function SearchHotTalkGrid({ query, reviews }: SearchHotTalkGridProps) {
