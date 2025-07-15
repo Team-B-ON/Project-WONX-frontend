@@ -190,7 +190,7 @@ const MovieDetails = () => {
           <div className="flex flex-row justify-between">
             <div className="flex flex-col">
               <div className="flex flex-row gap-[8px] text-[rgb(188,188,188)]">
-                <p>{getYearFromDate(movie?.releaseDate)}</p>
+                <p>{getYearFromDate(movie?.releaseDate ?? '')}</p>
                 <p>{formatDuration(movie.durationMinutes ?? 0)}</p>
               </div>
               <img src={ageRating15} className="w-[32px] h-[32px] mt-[1px]"/>
