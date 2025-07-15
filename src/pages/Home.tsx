@@ -2,159 +2,141 @@ import React, { useEffect, useState } from 'react';
 import Banner from '@/components/Home/Banner';
 import BoxOfficeMovieRow from '@/components/Home/BoxOffice/BoxOfficeMovieRow';
 import HotTalkRow from '@/components/Home/HotTalk/HotTalkRow';
-import ReviewCount from '@/components/Home/ReviewCount';
+import ReviewCountBanner from '@/components/Home/ReviewCount';
 import BoxOfficeMovieCard from '@/components/Home/BoxOffice/BoxOfficeMovieCard';
 import MovieList from '@/components/Home/MovieList';
+
+import {
+  getMainBanner,
+  getUpcomingMovies,
+  getHotMovies,
+  getHotTalks,
+  getBoxOfficeMovies,
+  getRecentWatchHistory,
+  getContinueWatching,
+  getRecommendedMovies,
+  getReviewCount,
+} from '@/services/api/HomePage/homeApi';
+
+import { fetchMyUser } from '@/services/api/common/userApi';
+
 import { MovieBanner } from '@/types/movieBanner';
-// import { Movie } from '@/types/movie';
-import { getBoxOfficeMovies, getHotMovies, getHotTalks, getMainBanner, getRecommendedMovies, getUpcomingMovies } from '@/services/api/HomePage/homeApi';
 import { HotMovie } from '@/types/hotMovie';
-import { BoxOfficeMovie } from '@/types/BoxOfficeMovie';
-import { HotTalk } from '@/types/HotTalk';
-
-
-
+import { BoxOffice } from '@/types/boxOffice';
+import { HotTalk } from '@/types/hotTalk';
+import { WatchHistory } from '@/types/watchHistory';
+import { User } from '@/types/user';
 
 const Home = () => {
-
-  // 배너 연동
   const [bannerMovie, setBannerMovie] = useState<MovieBanner | null>(null);
-
-  useEffect(() => {
-    console.log("API BASE:", import.meta.env.VITE_API_BASE_URL);
-    getMainBanner()
-      .then((data) => setBannerMovie(data))
-      .catch(console.error);
-  }, []);
-
-  // 인기 콘텐츠 연동
   const [hotMovies, setHotMovies] = useState<HotMovie[]>([]);
-  
-  useEffect(() => {
-  getHotMovies(18)
-    .then((data) => {
-      console.log("hotMovies 원본:", data);
-      setHotMovies(data);
-    })
-    .catch(console.error);
-}, []);
-
-  const convertedHotMovies: MovieBanner[] = Array.isArray(hotMovies)
-  ? hotMovies.map((item) => ({
-      id: item.id,
-      title: item.title,
-      posterUrl: item.posterUrl,
-      description: "",                   // 없는 필드는 기본값
-      rating: item.viewCount ?? 0,       // viewCount를 임시로 rating에 대응시킴
-      durationMinutes: 0,
-      releaseDate: "",
-      ageRating: "",
-      bookmarked: false,
-      liked: false,
-    }))
-  : [];
-
-  // 추천 콘텐츠 연동
   const [recommendedMovies, setRecommendedMovies] = useState<MovieBanner[]>([]);
-
-  useEffect(() => {
-    getRecommendedMovies()
-      .then(setRecommendedMovies)
-      .catch(console.error);
-  }, []);
-
-  // 배열 변환해서 넘김 -> map()은 배열에만 쓸 수 있지만, 보장이 없음
-  const convertedRecommendedMovies: MovieBanner[] = Array.isArray(recommendedMovies)
-  ? recommendedMovies.map((item, idx) => ({
-      id: item.id || String(idx),   // 혹시 id 없을 경우 idx로 대체
-      title: item.title,
-      posterUrl: item.posterUrl,
-      description: item.description || "",
-      rating: item.rating || 0,
-      durationMinutes: item.durationMinutes || 0,
-      releaseDate: item.releaseDate || "",
-      ageRating: item.ageRating || "",
-      bookmarked: item.bookmarked || false,
-      liked: item.liked || false,
-    }))
-    : [];
-  
-  // 박스오피스 연동
-  const [boxOfficeMovies, setBoxOfficeMovies] = useState<BoxOfficeMovie[]>([]);
-  
-  useEffect(() => {
-  getBoxOfficeMovies()
-    .then((data) => {
-      console.log("원본 박스오피스 데이터:", data); 
-      setBoxOfficeMovies(data);
-    })
-    .catch(console.error);
-  }, []);
-
-  // 박스오피스 Movie[]로 변환
-  const convertedBoxOfficeMovies: MovieBanner[] = Array.isArray(boxOfficeMovies)
-    ? boxOfficeMovies.map((item, idx) => ({
-        id: item.id ?? String(idx),
-        title: item.title,
-        posterUrl: item.posterUrl,
-        description: "",          
-        rating: 0,                
-        durationMinutes: 0,       
-        releaseDate: "",          
-        ageRating: "",            
-        bookmarked: false,        
-        liked: false,             
-      }))
-  : [];
-  console.log("convertedBoxOfficeMovies:", convertedBoxOfficeMovies);
-  
-  // 개봉 예정작 연동 
+  const [boxOfficeMovies, setBoxOfficeMovies] = useState<BoxOffice[]>([]);
   const [upcomingMovies, setUpcomingMovies] = useState<MovieBanner[]>([]);
-    useEffect(() => {
-      getUpcomingMovies().then(setUpcomingMovies).catch(console.error);
-  }, []);
-
-  const convertedUpcomingMovies: MovieBanner[] = Array.isArray(upcomingMovies)
-  ? upcomingMovies.map((item, idx) => ({
-      id: item.id ?? String(idx),
-      title: item.title,
-      posterUrl: item.posterUrl,
-      description: item.description || "",
-      rating: item.rating || 0,
-      durationMinutes: item.durationMinutes || 0,
-      releaseDate: item.releaseDate || "",
-      ageRating: item.ageRating || "",
-      bookmarked: item.bookmarked || false,
-      liked: item.liked || false,
-    }))
-  : [];
-
-  // 지금 뜨는 리뷰 연동
   const [hotTalks, setHotTalks] = useState<HotTalk[]>([]);
+  const [recentWatched, setRecentWatched] = useState<WatchHistory[]>([]);
+  const [continueWatching, setContinueWatching] = useState<WatchHistory[]>([]);
+  const [reviewCount, setReviewCount] = useState<number>(0);
+  const [user, setUser] = useState<User | null>(null);
 
-    useEffect(() => {
+  useEffect(() => {
+    getMainBanner().then(setBannerMovie).catch(console.error);
+    getHotMovies(18).then(setHotMovies).catch(console.error);
+    getRecommendedMovies().then(setRecommendedMovies).catch(console.error);
+    getBoxOfficeMovies().then(setBoxOfficeMovies).catch(console.error);
+    getUpcomingMovies().then(setUpcomingMovies).catch(console.error);
+    getRecentWatchHistory().then(setRecentWatched).catch(console.error);
+    getContinueWatching().then(setContinueWatching).catch(console.error);
+    getReviewCount().then(setReviewCount).catch(console.error);
     getHotTalks()
       .then((data) => {
-        if (Array.isArray(data)) {
-          setHotTalks(data);
-        } else {
+        if (Array.isArray(data)) setHotTalks(data);
+        else {
           console.error("hotTalks API가 배열을 반환하지 않음:", data);
           setHotTalks([]);
         }
       })
       .catch((err) => {
         console.error("hotTalks API 호출 실패:", err);
-        setHotTalks([]); // 에러 시에도 안전하게 빈 배열
+        setHotTalks([]);
+      });
+
+    fetchMyUser()
+      .then(setUser)
+      .catch((err) => {
+        console.error('사용자 정보 불러오기 실패:', err);
+        setUser(null);
       });
   }, []);
-  
-  const handlePlay = () => {
-    console.log('재생 버튼 클릭');
-  };
 
-  const handleInfo = () => {
-    console.log('상세 정보 버튼 클릭');
-  };
+  const convertedHotMovies = hotMovies.map((item) => ({
+    id: item.id,
+    title: item.title,
+    posterUrl: item.posterUrl,
+    description: "",
+    rating: item.viewCount ?? 0,
+    durationMinutes: 0,
+    releaseDate: "",
+    ageRating: "",
+    bookmarked: false,
+    liked: false,
+  }));
+
+  const convertedRecommendedMovies = recommendedMovies.map((item, idx) => ({
+    id: item.id || String(idx),
+    title: item.title,
+    posterUrl: item.posterUrl,
+    description: item.description || "",
+    rating: item.rating || 0,
+    durationMinutes: item.durationMinutes || 0,
+    releaseDate: item.releaseDate || "",
+    ageRating: item.ageRating || "",
+    bookmarked: item.bookmarked || false,
+    liked: item.liked || false,
+  }));
+
+  const convertedBoxOfficeMovies = boxOfficeMovies.map((item, idx) => ({
+    id: item.id ?? String(idx),
+    title: item.title,
+    posterUrl: item.posterUrl,
+    description: "",
+    rating: 0,
+    durationMinutes: 0,
+    releaseDate: "",
+    ageRating: "",
+    bookmarked: false,
+    liked: false,
+  }));
+
+  const convertedUpcomingMovies = upcomingMovies.map((item, idx) => ({
+    id: item.id ?? String(idx),
+    title: item.title,
+    posterUrl: item.posterUrl,
+    description: item.description || "",
+    rating: item.rating || 0,
+    durationMinutes: item.durationMinutes || 0,
+    releaseDate: item.releaseDate || "",
+    ageRating: item.ageRating || "",
+    bookmarked: item.bookmarked || false,
+    liked: item.liked || false,
+  }));
+
+  const convertWatchHistoriesToMovieBanner = (histories: WatchHistory[]): MovieBanner[] =>
+    histories.map((item, idx) => ({
+      id: item.videoId || String(idx),
+      title: item.movie?.title || "제목 없음",
+      posterUrl: item.movie?.posterUrl || "",
+      description: item.movie?.description || "",
+      rating: item.movie?.rating || 0,
+      durationMinutes: item.movie?.durationMinutes || 0,
+      releaseDate: item.movie?.releaseDate || "",
+      ageRating: item.movie?.ageRating || "",
+      bookmarked: false,
+      liked: false,
+    }));
+
+  const handlePlay = () => console.log('재생 버튼 클릭');
+  const handleInfo = () => console.log('상세 정보 버튼 클릭');
 
   return (
     <div className="bg-black min-h-screen -mt-[68px]">
@@ -168,15 +150,23 @@ const Home = () => {
           onInfo={handleInfo}
         />
       )}
-      
+
       <MovieList
-        title="WONX 인기 콘텐츠"
-        movies={convertedHotMovies}
+        title="이어보기"
+        movies={convertWatchHistoriesToMovieBanner(continueWatching)}
         useCustomSlider
       />
 
       <MovieList
-        title="@@@님이 좋아할 만한 콘텐츠"
+        title="최근 본 콘텐츠"
+        movies={convertWatchHistoriesToMovieBanner(recentWatched)}
+        useCustomSlider
+      />
+
+      <MovieList title="WONX 인기 콘텐츠" movies={convertedHotMovies} useCustomSlider />
+
+      <MovieList
+        title={`${user?.nickname || '당신'}님이 좋아할 만한 콘텐츠`}
         movies={convertedRecommendedMovies}
         useCustomSlider
       />
@@ -193,13 +183,9 @@ const Home = () => {
         renderItem={(movie) => <BoxOfficeMovieCard key={movie.id} movie={movie} />}
       />
 
-      <HotTalkRow
-        title="지금 뜨는 핫톡🔥"
-        hotTalks={hotTalks}
-        onClickMore={() => { /* 전체 핫톡 페이지로 이동 */ }}
-      />
+      <HotTalkRow title="지금 뜨는 핫톡🔥" hotTalks={hotTalks} onClickMore={() => {}} />
 
-      <ReviewCount reviewCount={1555555266} />
+      <ReviewCountBanner reviewCount={reviewCount} />
     </div>
   );
 };
