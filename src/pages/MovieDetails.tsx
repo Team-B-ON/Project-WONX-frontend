@@ -95,11 +95,6 @@ const MovieDetails = () => {
   const insetTopClass = atTop ? 'top-[30px]' : 'top-0';
   const insetBottomClass = atBottom ? 'bottom-[30px]' : 'bottom-0';
 
-  // 감독/각본/출연 목록
-  const directors = movie.directors ?? [];
-  const screenwriters = movie.screenwriters ?? [];
-  const actors = movie.actors ?? [];
-
   // 로딩/에러 상태 처리
   if (loading) {
     return (
@@ -115,7 +110,13 @@ const MovieDetails = () => {
       </div>
     );
   }
-  if (!show) return null;
+  if (!show || !movie) return null;
+
+  // 감독/각본/출연 목록
+  const directors = movie.directors;
+  const screenwriters = movie.screenwriters;
+  const actors = movie.actors;
+  //const genres = movie.genres;
 
   return(
     <div 
