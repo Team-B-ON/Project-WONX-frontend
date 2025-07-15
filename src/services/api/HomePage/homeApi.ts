@@ -1,3 +1,5 @@
+// src/services/api/HomePage/homeApi.ts
+
 import axiosInstance from "../index";
 import { MovieBanner } from "@/types/movieBanner";
 import { HotMovie } from "@/types/hotMovie";
