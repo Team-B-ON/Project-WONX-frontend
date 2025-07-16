@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import HotTalkCard from './HotTalkCard';
 import MovieTag from '@/components/common/MovieTag';
-import { HotTalk } from '@/types/HotTalk';
+import { HotTalk } from '@/types/hotTalk';
 
 interface Props {
   title: string;

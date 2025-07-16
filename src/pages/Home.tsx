@@ -26,11 +26,12 @@ import { BoxOffice } from '@/types/boxOffice';
 import { HotTalk } from '@/types/hotTalk';
 import { WatchHistory } from '@/types/watchHistory';
 import { User } from '@/types/user';
+import { RecommendMovie } from '@/types/recommend';
 
 const Home = () => {
   const [bannerMovie, setBannerMovie] = useState<MovieBanner | null>(null);
   const [hotMovies, setHotMovies] = useState<HotMovie[]>([]);
-  const [recommendedMovies, setRecommendedMovies] = useState<MovieBanner[]>([]);
+  const [recommendedMovies, setRecommendedMovies] = useState<RecommendMovie[]>([]);
   const [boxOfficeMovies, setBoxOfficeMovies] = useState<BoxOffice[]>([]);
   const [upcomingMovies, setUpcomingMovies] = useState<MovieBanner[]>([]);
   const [hotTalks, setHotTalks] = useState<HotTalk[]>([]);
@@ -86,17 +87,17 @@ const Home = () => {
     id: item.id || String(idx),
     title: item.title,
     posterUrl: item.posterUrl,
-    description: item.description || "",
-    rating: item.rating || 0,
-    durationMinutes: item.durationMinutes || 0,
-    releaseDate: item.releaseDate || "",
-    ageRating: item.ageRating || "",
-    bookmarked: item.bookmarked || false,
-    liked: item.liked || false,
+    description: "",
+    rating: 0,
+    durationMinutes: 0,
+    releaseDate: "",
+    ageRating: "",
+    bookmarked: false,
+    liked: false,
   }));
 
   const convertedBoxOfficeMovies = boxOfficeMovies.map((item, idx) => ({
-    id: item.id ?? String(idx),
+    id: item.movieId ?? String(idx),
     title: item.title,
     posterUrl: item.posterUrl,
     description: "",
@@ -123,16 +124,16 @@ const Home = () => {
 
   const convertWatchHistoriesToMovieBanner = (histories: WatchHistory[]): MovieBanner[] =>
     histories.map((item, idx) => ({
-      id: item.videoId || String(idx),
-      title: item.movie?.title || "제목 없음",
-      posterUrl: item.movie?.posterUrl || "",
-      description: item.movie?.description || "",
-      rating: item.movie?.rating || 0,
-      durationMinutes: item.movie?.durationMinutes || 0,
-      releaseDate: item.movie?.releaseDate || "",
-      ageRating: item.movie?.ageRating || "",
-      bookmarked: false,
-      liked: false,
+      id: item.movie.id || String(idx),
+      title: item.movie.title || "제목 없음",
+      posterUrl: item.movie.posterUrl || "",
+      description: item.movie.description || "",
+      rating: item.movie.rating || 0,
+      durationMinutes: item.movie.durationMinutes || 0,
+      releaseDate: item.movie.releaseDate || "",
+      ageRating: item.movie.ageRating || "",
+      bookmarked: item.movie.isBookmarked || false,
+      liked: item.movie.isLiked || false,
     }));
 
   const handlePlay = () => console.log('재생 버튼 클릭');

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { HotTalk } from '@/types/HotTalk';
+import { HotTalk } from '@/types/hotTalk';
 
 interface HotTalkCardProps {
   hotTalk: HotTalk;
@@ -18,7 +18,7 @@ export default function HotTalkCard({ hotTalk }: HotTalkCardProps) {
       {/* 왼쪽 이미지 */}
       <div className="absolute inset-y-0 left-0 w-[100px] sm:w-[120px] md:w-[140px]">
         <img
-          src={hotTalk.moviePosterUrl || '/fallback.jpg'}
+          src={hotTalk.posterUrl || '/fallback.jpg'}
           alt={hotTalk.movieTitle}
           className="w-full h-full object-cover"
           loading="lazy"

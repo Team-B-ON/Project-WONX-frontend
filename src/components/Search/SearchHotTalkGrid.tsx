@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { HotTalk } from "@/types/HotTalk";
+import { HotTalk } from "@/types/hotTalk";
 
 interface SearchHotTalkGridProps {
   query: string;
