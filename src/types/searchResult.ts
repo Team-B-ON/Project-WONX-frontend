@@ -6,7 +6,7 @@ export interface MovieSearchDto {
 export interface UserSearchDto {
   id: string;
   nickname: string;
-  avatarUrl: string;
+  profileImageUrl: string;
 }
 export interface ReviewSearchDto {
   id: string;
