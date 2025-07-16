@@ -5,4 +5,5 @@ export interface HotTalk {
   content: string;           // 리뷰 내용
   author: string;            // ✅ 작성자
   rating: number;            // ✅ 평점
+  createdAt: Date;
 }
