@@ -5,16 +5,19 @@ interface RawMovie {
   movieId: number;
   title: string;
   posterUrl: string;
+  mainImg: string;
   releaseDate: string;
-  duration: number;
+  durationMinutes: number;
   ageRating: string;
   description: string;
+
+  genres: { id: number; name: string }[];
   actors: { id: number; name: string }[];
-  genre: { id: number; name: string }[];
-  director: { id: number; name: string };
+  directors: { id: number; name: string }[];
   screenwriters: { id: number; name: string }[];
-  isBookmarked: boolean;
-  isLiked: boolean;
+
+  bookmarked: boolean;
+  liked: boolean;
 }
 
 function transformRawMovie(raw: RawMovie): Movie {
@@ -22,21 +25,22 @@ function transformRawMovie(raw: RawMovie): Movie {
     id: raw.movieId.toString(),
     title: raw.title,
     description: raw.description,
-    durationMinutes: raw.duration,
+    durationMinutes: raw.durationMinutes,
     releaseDate: raw.releaseDate,
     posterUrl: raw.posterUrl,
+    mainImg: raw.mainImg,
     ageRating: raw.ageRating,
 
-    genres: raw.genre.map(g => ({ id: g.id.toString(), name: g.name })),
+    genres: raw.genres.map(g => ({ id: g.id.toString(), name: g.name })),
     actors: raw.actors.map(a => ({ id: a.id.toString(), name: a.name })),
-    directors: [{ id: raw.director.id.toString(), name: raw.director.name }],
+    directors: raw.directors.map(d => ({ id: d.id.toString(), name: d.name })),
     screenwriters: raw.screenwriters.map(s => ({
       id: s.id.toString(),
       name: s.name,
     })),
 
-    isBookmarked: raw.isBookmarked,
-    isLiked: raw.isLiked,
+    isBookmarked: raw.bookmarked,
+    isLiked: raw.liked,
   };
 }
 
