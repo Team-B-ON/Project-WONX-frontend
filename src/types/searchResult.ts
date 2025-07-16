@@ -11,6 +11,7 @@ export interface UserSearchDto {
 export interface ReviewSearchDto {
   id: string;
   movieTitle: string;
+  posterUrl: string;
   content: string;
   author: string;
   rating: number;
