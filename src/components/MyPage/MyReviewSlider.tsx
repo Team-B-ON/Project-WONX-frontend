@@ -25,7 +25,7 @@ export default function MyReviewSlider({
 
   // id 기준으로 리뷰 찾기
   const reviewMap = Object.fromEntries(
-    reviews.map(r => [r.videoId, r])
+    reviews.map(r => [r.movieId, r])
   );
 
   const next = () => {

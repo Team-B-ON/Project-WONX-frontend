@@ -11,7 +11,7 @@ export const ReviewProvider: React.FC<{
 }> = ({ reviews, children }) => {
   const map: ReviewMap = {};
   reviews.forEach(r => {
-    map[r.videoId] = r;
+    map[r.movieId] = r;
   });
   return (
     <ReviewContext.Provider value={map}>

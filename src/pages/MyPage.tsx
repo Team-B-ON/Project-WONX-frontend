@@ -67,7 +67,7 @@ const MyPage: React.FC = () => {
         setLiked(l);
         setReviews(rv);
 
-        const movieIds = rv.map(r => r.videoId);
+        const movieIds = rv.map(r => r.movieId);
         const mv = await getMoviesByIds(movieIds);
         setReviewMovies(mv);
 

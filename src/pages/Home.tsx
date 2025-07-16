@@ -8,12 +8,9 @@ import MovieList from '@/components/Home/MovieList';
 
 import {
   getMainBanner,
-  getUpcomingMovies,
   getHotMovies,
   getHotTalks,
-  getBoxOfficeMovies,
   getRecentWatchHistory,
-  getContinueWatching,
   getRecommendedMovies,
   getReviewCount,
 } from '@/services/api/HomePage/homeApi';
