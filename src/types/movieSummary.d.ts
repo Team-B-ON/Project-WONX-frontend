@@ -1,4 +1,5 @@
-// src/types/movieSummary.ts
+import { Genre } from './genre';
+
 export interface MovieSummary {
   movieId: string;  
   title: string;
@@ -7,5 +8,5 @@ export interface MovieSummary {
   isLiked: boolean;
   ageRating: string;
   durationMinutes: number;
-  genres: string[];      
+  genres: Genre[];  // ✅ string[] → Genre[]
 }

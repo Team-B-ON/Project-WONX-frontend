@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import SearchMovieGrid from "@/components/Search/SearchMovieGrid";
 import SearchResultHeader from "@/components/Search/SearchResultHeader";
 import SearchUserGrid from "@/components/Search/SearchUserGrid";
-import SearchHotTalkGrid from "@/components/Search/SearchHotTalkGrid";
+import SearchReviewGrid from "@/components/Search/SearchReviewGrid";
 
 import { getSearchResults } from "@/services/api/SearchPage/SearchApi";
 import { MovieSearchDto, ReviewSearchDto, UserSearchDto } from "@/types/searchResult";
@@ -40,15 +40,13 @@ const Search = () => {
         <SearchResultHeader query={searchQuery} />
 
         {movies.length > 0 ? (
-          <>
-            <SearchMovieGrid title="영화 검색 결과" movies={movies} />
-          </>
+          <SearchMovieGrid title="영화 검색 결과" movies={movies} />
         ) : (
           <p className="text-white text-lg font-bold">검색 결과가 없습니다.</p>
         )}
 
         {reviews.length > 0 && (
-          <SearchHotTalkGrid query={searchQuery} reviews={reviews} />
+          <SearchReviewGrid query={searchQuery} reviews={reviews} />
         )}
 
         {users.length > 0 && (
