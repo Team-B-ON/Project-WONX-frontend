@@ -113,9 +113,9 @@ const MovieDetails = () => {
   if (!show || !movie) return null;
 
   // 감독/각본/출연 목록
-  const directors = movie.directors;
-  const screenwriters = movie.screenwriters;
-  const actors = movie.actors;
+  const directors = movie?.directors ?? [];
+  const screenwriters = movie?.screenwriters ?? [];
+  const actors = movie?.actors ?? [];
   //const genres = movie.genres;
 
   return(
@@ -191,7 +191,7 @@ const MovieDetails = () => {
             <div className="flex flex-col">
               <div className="flex flex-row gap-[8px] text-[rgb(188,188,188)]">
                 <p>{getYearFromDate(movie?.releaseDate ?? '')}</p>
-                <p>{formatDuration(movie.durationMinutes ?? 0)}</p>
+                <p>{formatDuration(movie?.durationMinutes ?? 0)}</p>
               </div>
               <img src={ageRating15} className="w-[32px] h-[32px] mt-[1px]"/>
               <p className="pt-[28.8px] pb-[11.27px] w-[471.33px] text-[16px] leading-[26px]">{movie?.description}</p>
@@ -212,7 +212,7 @@ const MovieDetails = () => {
                 ))}
               </p>
               <p>장르: 
-                {movie.genres.map((genre, index) => (
+                {movie?.genres?.map((genre, index) => (
                   <Link
                     key={genre.id}
                     to={`/genre/${genre.id}`}
@@ -242,7 +242,7 @@ const MovieDetails = () => {
 
           {/* 영화 상세 정보 */}
           <div className="pt-[92px] pb-[65px]">
-            <p className="text-[24px] font-medium pb-[20px]">{movie.title} 상세 정보</p>
+            <p className="text-[24px] font-medium pb-[20px]">{movie?.title} 상세 정보</p>
             <div className="text-[#777] text-[14px] leading-[20px] break-words">
               <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">감독: 
                 <span className="text-white pl-[4px]">
@@ -297,7 +297,7 @@ const MovieDetails = () => {
               </p>
               <p className="mt-[7px] mr-[7px] mb-[7px] ml-0">장르: 
                 {movie.genres.length > 0 ? (
-                  movie.genres.map((genre, idx) => (
+                  movie?.genres?.map((genre, idx) => (
                     <Link
                       key={genre.id}
                       to={`/genre/${genre.id}`}
@@ -315,7 +315,7 @@ const MovieDetails = () => {
               <div className="mt-[7px] mr-[7px] mb-[7px] ml-0 flex items-start">
                 <span>관람등급:</span>
                 <img src={ageRating15} className="ml-[14px] mr-[19.6px] w-[28px] h-[28px]"/>
-                <span className="text-white pt-[3px]">{movie.ageRating}</span>
+                <span className="text-white pt-[3px]">{movie?.ageRating}</span>
               </div>
             </div>
           </div>
