@@ -4,11 +4,12 @@ import axiosInstance from "../index";
 import { MovieSummary } from "@/types/movieSummary";
 import { WatchHistory } from "@/types/watchHistory";
 import { Review } from "@/types/review";
+import { Movie } from "@/types/movie";
 
 // ✅ 1. 메인 배너 (MovieSummary 하나)
-export const getMainBanner = (): Promise<MovieSummary> => {
+export async function getMainBanner(): Promise<Movie> {
   return axiosInstance.get("/home/banner").then(res => res.data);
-};
+}
 
 // ✅ 2. 인기 콘텐츠 (MovieSummary 리스트)
 export const getHotMovies = (): Promise<MovieSummary[]> => {

@@ -21,7 +21,7 @@ import { Movie } from '@/types/movie';
 import { User } from '@/types/user';
 
 const Home = () => {
-  const [bannerMovie, setBannerMovie] = useState<MovieSummary | null>(null);
+  const [bannerMovie, setBannerMovie] = useState<Movie | null>(null);
   const [hotMovies, setHotMovies] = useState<MovieSummary[]>([]);
   const [recommendedMovies, setRecommendedMovies] = useState<MovieSummary[]>([]);
   const [recentWatched, setRecentWatched] = useState<WatchHistory[]>([]);
@@ -56,6 +56,7 @@ const Home = () => {
     id: item.movie.id,
     title: item.movie.title,
     posterUrl: item.movie.posterUrl,
+    mainImg: item.movie.mainImg,
     isBookmarked: item.movie.isBookmarked,
     isLiked: item.movie.isLiked,
     ageRating: item.movie.ageRating,
@@ -70,7 +71,7 @@ const Home = () => {
           title={bannerMovie.title}
           rankText="오늘 시리즈 순위 2위"
           overview={''}
-          backdropUrl={bannerMovie.posterUrl}
+          backdropUrl={bannerMovie.mainImg}
           onPlay={() => console.log('재생')}
           onInfo={() => console.log('상세 정보')}
         />

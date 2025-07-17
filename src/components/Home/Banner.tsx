@@ -1,6 +1,6 @@
 import React from 'react';
-import playIcon from '@/assets/common/buttons/play-button.svg';
 import infoIcon from '@/assets/common/buttons/arrowdown-button.svg';
+import PlayVideoBtn from '../common/PlayVideoBtn';
 
 type BannerProps = {
   title: string;
@@ -55,22 +55,16 @@ const Banner = ({
         </p>
 
         {/* 버튼 */}
-        <div className="flex flex-wrap gap-2 sm:gap-3 pt-2 sm:pt-4">
-          <button
-            onClick={onPlay}
-            className="flex items-center px-3 sm:px-4 py-2 bg-white text-black font-semibold rounded hover:opacity-90 transition"
-          >
-            <img src={playIcon} alt="Play" className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-            재생
-          </button>
-          <button
-            onClick={onInfo}
-            className="flex items-center px-3 sm:px-4 py-2 bg-gray-700 bg-opacity-70 text-white font-semibold rounded hover:bg-opacity-90 transition"
-          >
-            <img src={infoIcon} alt="Info" className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-            상세 정보
-          </button>
-        </div>
+          <div className="flex flex-wrap gap-2 sm:gap-3 pt-2 sm:pt-4">
+            <PlayVideoBtn />
+            <button
+              onClick={onInfo}
+              className="flex items-center px-3 sm:px-4 py-2 bg-gray-700 bg-opacity-70 text-white font-semibold rounded hover:bg-opacity-90 transition"
+            >
+              <img src={infoIcon} alt="Info" className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+              상세 정보
+            </button>
+          </div>
       </div>
     </div>
   );
