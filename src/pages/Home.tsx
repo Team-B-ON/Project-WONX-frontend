@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Banner from '@/components/Home/Banner';
 import MovieList from '@/components/Home/MovieList';
 import ReviewCountBanner from '@/components/Home/ReviewCount';
-import HotMoviesRow from '@/components/Home/HotMoviesRow';
-import PopularReviewsRow from '@/components/Home/PopularReviewsRow';
+import HotMoviesList from '@/components/Home/HotMoviesList';
+import PopularReviewsList from '@/components/Home/PopularReviewsList';
 
 import {
   getMainBanner,
@@ -88,17 +88,19 @@ const Home = () => {
       )}
 
       {/* 2. 최근 본 콘텐츠 */}
-      <MovieList
-        title="최근 본 콘텐츠"
-        movies={convertedRecentWatched}
-        useCustomSlider
-      />
+      {convertedRecentWatched.length > 0 && (
+        <MovieList
+          title="최근 본 콘텐츠"
+          movies={convertedRecentWatched}
+          useCustomSlider
+        />
+      )}
 
       {/* 3. 인기 콘텐츠 */}
-      <HotMoviesRow title="WONX 인기 콘텐츠" movies={convertedHotMovies} />
+      <HotMoviesList title="WONX 인기 콘텐츠" movies={convertedHotMovies} />
 
       {/* 4. 인기 리뷰 */}
-      <PopularReviewsRow title="지금 인기 있는 리뷰" reviews={popularReviews} />
+      <PopularReviewsList title="지금 인기 있는 리뷰" reviews={popularReviews} />
 
       {/* 5. 추천 콘텐츠 */}
       <MovieList
