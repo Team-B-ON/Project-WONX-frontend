@@ -54,7 +54,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       {currentPage > 0 && isHovered &&(
         <button
           onClick={handlePrev}
-          className="absolute left-0 top-0 bottom-0 z-[1100] bg-black/50 hover:bg-opacity-70 text-white p-2"
+          className="absolute left-0 top-0 bottom-0 z-[20] bg-black/50 hover:bg-opacity-70 text-white p-2"
         >
           <ChevronLeft className="w-7 h-7" />
         </button>
@@ -83,7 +83,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
                 onMouseEnter={() => setHoveredIndex(idx)} // 호버 시 현재 인덱스 기록
                 onMouseLeave={() => setHoveredIndex(null)} // 호버 해제 시 초기화
                 className={`flex-shrink-0 w-[217.91px]${ // 호버된 카드만 확대 & z-index 높임
-                  hoveredIndex === idx ? 'scale-[1.15] z-1000' : 'scale-100 z-0' // 아니면 기본 크기
+                  hoveredIndex === idx ? 'scale-[1.15] z-10' : 'scale-100 z-0' // 아니면 기본 크기
                   }`}
                 >
                   {/* 카드 실제 컨텐츠 */}
@@ -105,7 +105,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       {currentPage < totalPages - 1 && isHovered &&(
         <button
           onClick={handleNext}
-          className="absolute right-0 top-0 bottom-0 z-[1100] bg-black/50 hover:bg-opacity-70 text-white p-2"
+          className="absolute right-0 top-0 bottom-0 z-[20] bg-black/50 hover:bg-opacity-70 text-white p-2"
         >
           <ChevronRight className="w-7 h-7" />
         </button>
