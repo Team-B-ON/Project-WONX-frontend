@@ -67,8 +67,8 @@ async (error: AxiosError) => {
     try {
       const refreshToken = localStorage.getItem('refresh_token');
       // Refresh Token 으로 새 Access Token 요청
-      const { data } = await axiosInstance.post('/auth/refresh', {}, {
-          headers: { Authorization: `Bearer ${refreshToken}` },
+      const { data } = await axiosInstance.post('/auth/refresh', {
+        refreshToken: refreshToken,
       });
       const newAccessToken = data.accessToken;
       localStorage.setItem('access_token', newAccessToken);
