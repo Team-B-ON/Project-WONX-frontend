@@ -1,12 +1,11 @@
-// src/components/Home/HotMoviesRow.tsx
 import { Movie } from '@/types/movie';
 
-interface HotMoviesRowProps {
+interface HotMoviesListProps {
   title: string;
   movies: Movie[];
 }
 
-const HotMoviesRow = ({ title, movies }: HotMoviesRowProps) => {
+const HotMoviesList = ({ title, movies }: HotMoviesListProps) => {
   return (
     <section className="pt-6 pb-10 space-y-4 overflow-visible text-white">
       <div className="px-6 sm:px-10 lg:px-20 space-y-4">
@@ -17,4 +16,4 @@ const HotMoviesRow = ({ title, movies }: HotMoviesRowProps) => {
   );
 };
 
-export default HotMoviesRow;
+export default HotMoviesList;

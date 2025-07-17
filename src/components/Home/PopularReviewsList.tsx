@@ -1,12 +1,11 @@
-// src/components/Home/PopularReviewsRow.tsx
 import { Review } from '@/types/review';
 
-interface PopularReviewsRowProps {
+interface PopularReviewsListProps {
   title: string;
   reviews: Review[];
 }
 
-const PopularReviewsRow = ({ title, reviews }: PopularReviewsRowProps) => {
+const PopularReviewsList = ({ title, reviews }: PopularReviewsListProps) => {
   return (
     <section className="pt-6 pb-10 space-y-4 overflow-visible text-white">
       <div className="px-6 sm:px-10 lg:px-20 space-y-4">
@@ -17,4 +16,4 @@ const PopularReviewsRow = ({ title, reviews }: PopularReviewsRowProps) => {
   );
 };
 
-export default PopularReviewsRow;
+export default PopularReviewsList;

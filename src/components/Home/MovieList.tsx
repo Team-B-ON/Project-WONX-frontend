@@ -3,7 +3,7 @@ import MovieCard from '../common/MovieCard';
 import MovieSlider from '../common/MovieSlider';
 import MovieTag from '../common/MovieTag'; // MovieTag 꼭 import!
 
-interface MovieListRowProps {
+interface MovieListProps {
   title: string;
   movies: Movie[];
   useCustomSlider?: boolean; // true면 MovieSlider, false면 직접 슬라이드
@@ -11,13 +11,13 @@ interface MovieListRowProps {
   showMore?: boolean;       // 버튼 노출 여부 (기본 true)
 }
 
-export default function MovieListRow({
+export default function MovieList({
   title,
   movies,
   useCustomSlider,
   onClickMore,
   showMore = true,
-}: MovieListRowProps) {
+}: MovieListProps) {
   return (
     <section className="pt-6 pb-10 space-y-4 overflow-visible">
       {/* 섹션 제목 + "모두 보기" 버튼 */}
