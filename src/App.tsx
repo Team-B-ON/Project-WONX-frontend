@@ -17,7 +17,6 @@ import Likes from './pages/admin/Likes';
 import Bookmarks from './pages/admin/Bookmarks';
 import Reviews from './pages/admin/Reviews';
 import People from './pages/admin/People';
-import HotTalks from './pages/admin/HotTalks';
 import WatchHistories from './pages/admin/WatchHistories';
 
 function AppRoutes() {
@@ -45,7 +44,6 @@ function AppRoutes() {
           <Route path="/admin/bookmarks" element={<Bookmarks />} />
           <Route path="/admin/reviews" element={<Reviews />} />
           <Route path="/admin/people" element={<People />} />
-          <Route path="/admin/hot-talks" element={<HotTalks />} />
           <Route path="/admin/watch-histories" element={<WatchHistories />} />
         </Route>
 

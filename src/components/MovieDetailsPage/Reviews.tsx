@@ -6,23 +6,29 @@ import { userReview } from '@/types/userReview';
 const reviews: userReview[] = [
   {
     id: "1",
+    reviewId: "1",
     userId: "u1",
-    videoId: "v1",
+    userNickname: "movieFan01",
+    movieId: "v1",
     rating: 7.5,
     content: "우리만의 따뜻한 불 영원한 꿈 영혼과 삶 난 난 오늘 떠날 거라고 생각했어 날 미워하지 마 no pain no where 음악이 없는 세상 no where no fear 바다 같은 색깔 no cap no cry 이미 죽은 사람 아냐 사실 태양에 맡겨뒀던 가족과 모든 분들의 사랑 물안개 짙어진 뒤 훔치려고 모인 자경단",
     isAnonymous: false,
-    createdAt: new Date("2025-05-05T17:50:00"),
+    createdAt: new Date("2025-05-05T17:50:00").toISOString(),
     nickname: "movieFan01",
+    isMine: false,
   },
   {
     id: "2",
+    reviewId: "2",
     userId: "u2",
-    videoId: "v1",
+    userNickname: "filmLover",
+    movieId: "v1",
     rating: 9,
     content: "연출이 아주 훌륭했어요!",
     isAnonymous: false,
-    createdAt: new Date("2025-05-06T09:20:00"),
+    createdAt: new Date("2025-05-05T17:50:00").toISOString(),
     nickname: "filmLover",
+    isMine: false,
   },
 ];
 
@@ -99,7 +105,7 @@ const Reviews = () => {
                     </p>
                     {/* 리뷰 리스트 */}
                     {reviews.map((review) => (
-                        <ReviewItem key={review.id} review={review} />
+                        <ReviewItem key={review.reviewId} review={review} />
                     ))}
                 </div>
             </div>
