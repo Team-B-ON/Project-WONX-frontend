@@ -71,7 +71,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
                     key={movie.id}
                     onMouseEnter={() => setHoveredIndex(idx)}
                     onMouseLeave={() => setHoveredIndex(null)}
-                    className={`flex-shrink-0 w-[217.91px] transform transition-transform duration-300 ${
+                    className={`frelative lex-shrink-0 w-[217.91px] transform transition-transform duration-300 ${
                       hoveredIndex === idx ? 'scale-[1.15] z-[1000]' : 'scale-100 z-0'
                     }`}
                   >
