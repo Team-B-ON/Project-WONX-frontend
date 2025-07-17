@@ -49,7 +49,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       )}
 
       {/* 슬라이드 영역 */}
-      <div className="relative w-full overflow-x-auto scrollbar-hide scroll-smooth">
+      <div className="relative w-full overflow-x-auto overflow-visible scrollbar-hide scroll-smooth">
         <div className="flex gap-x-3 min-w-fit px-2">
           <AnimatePresence initial={false} custom={direction}>
             <motion.div
@@ -69,19 +69,13 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
                 return (
                   <div
                     key={movie.id}
-                    onMouseEnter={() => setHoveredIndex(idx)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                    className={`frelative lex-shrink-0 w-[217.91px] transform transition-transform duration-300 ${
-                      hoveredIndex === idx ? 'scale-[1.15] z-[1000]' : 'scale-100 z-0'
-                    }`}
+                    className="relative flex-shrink-0 w-[217.91px] z-0"
                   >
-                    <div className="relative">
-                      <MovieCard
-                        movie={movie}
-                        isFirst={isFirst}
-                        isLast={isLast}
-                      />
-                    </div>
+                    <MovieCard
+                      movie={movie}
+                      isFirst={isFirst}
+                      isLast={isLast}
+                    />
                   </div>
                 );
               })}
