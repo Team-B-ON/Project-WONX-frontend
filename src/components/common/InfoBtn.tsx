@@ -1,4 +1,3 @@
-// components/common/InfoBtn.tsx
 import { useLocation, useNavigate } from 'react-router-dom';
 import infoIcon from '@/assets/common/buttons/arrowdown-button.svg';
 import { Movie } from '@/types/movie';
@@ -26,9 +25,12 @@ const InfoBtn = ({ movie }: InfoBtnProps) => {
   return (
     <button
       onClick={handleClick}
-      className="flex items-center px-3 sm:px-4 py-2 bg-gray-700 bg-opacity-70 text-white font-semibold rounded hover:bg-opacity-90 transition"
+      className="w-[116.02px] h-[43.19px] rounded-[4px] 
+                 bg-gray-700 text-white hover:bg-opacity-90 
+                 flex items-center justify-center gap-[10px]
+                 font-medium text-[19.2px] cursor-pointer"
     >
-      <img src={infoIcon} alt="Info" className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+      <img src={infoIcon} alt="상세 정보" className="w-[29px] h-[29px]" />
       상세 정보
     </button>
   );

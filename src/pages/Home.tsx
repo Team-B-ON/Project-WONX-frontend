@@ -79,7 +79,7 @@ const Home = () => {
       {bannerMovie && (
         <Banner
           title={bannerMovie.title}
-          rankText="오늘 시리즈 순위 2위" // 고정 문구 or 상태로 설정
+          rankText="이어서 감상해보세요" // 고정 문구 or 상태로 설정
           overview={bannerMovie.description}
           backdropUrl={bannerMovie.mainImg}
           onPlay={() => console.log('재생')}
