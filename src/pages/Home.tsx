@@ -97,10 +97,16 @@ const Home = () => {
       )}
 
       {/* 3. 인기 콘텐츠 */}
-      <HotMoviesList title="WONX 인기 콘텐츠" movies={convertedHotMovies} />
+      <HotMoviesList 
+        title="WONX 인기 콘텐츠" 
+        movies={convertedHotMovies} 
+      />
 
       {/* 4. 인기 리뷰 */}
-      <PopularReviewsList title="지금 인기 있는 리뷰" reviews={popularReviews} />
+      <PopularReviewsList 
+        title="지금 인기 있는 리뷰" 
+        reviews={popularReviews} 
+      />
 
       {/* 5. 추천 콘텐츠 */}
       <MovieList

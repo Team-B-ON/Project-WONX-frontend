@@ -1,16 +1,29 @@
-import { Review } from '@/types/review';
+// components/Home/PopularReviewsList.tsx
+import React from "react";
+import { Review } from "@/types/review";
+import MovieTag from "../common/MovieTag";
+import ReviewSlider from "../common/ReviewSlider";
 
-interface PopularReviewsListProps {
+type PopularReviewsListProps = {
   title: string;
   reviews: Review[];
-}
+  onClickMore?: () => void;
+  showMore?: boolean;
+};
 
-const PopularReviewsList = ({ title, reviews }: PopularReviewsListProps) => {
+const PopularReviewsList = ({
+  title,
+  reviews,
+  onClickMore,
+  showMore = true,
+}: PopularReviewsListProps) => {
+  if (reviews.length === 0) return null;
+
   return (
-    <section className="pt-6 pb-10 space-y-4 overflow-visible text-white">
+    <section className="pt-6 pb-10 space-y-4 overflow-visible">
       <div className="px-6 sm:px-10 lg:px-20 space-y-4">
-        <h2 className="text-2xl font-bold">{title}</h2>
-        <div>💬 인기 리뷰 컴포넌트 (총 {reviews.length}개)</div>
+        <MovieTag title={title} onClickMore={onClickMore} showMore={showMore} />
+        <ReviewSlider reviews={reviews} />
       </div>
     </section>
   );
