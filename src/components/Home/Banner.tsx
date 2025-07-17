@@ -1,6 +1,8 @@
 import React from 'react';
 import infoIcon from '@/assets/common/buttons/arrowdown-button.svg';
 import PlayVideoBtn from '../common/PlayVideoBtn';
+import InfoBtn from '../common/InfoBtn';
+import { Movie } from '@/types/movie';
 
 type BannerProps = {
   title: string;
@@ -9,6 +11,7 @@ type BannerProps = {
   rankText?: string;
   onPlay?: () => void;
   onInfo?: () => void;
+  movie: Movie;
 };
 
 const Banner = ({
@@ -18,6 +21,7 @@ const Banner = ({
   rankText,
   onPlay,
   onInfo,
+  movie,
 }: BannerProps) => {
   return (
     <div className="relative w-full h-[70vh] sm:h-[80vh] md:h-[100vh] overflow-hidden">
@@ -57,13 +61,7 @@ const Banner = ({
         {/* 버튼 */}
           <div className="flex flex-wrap gap-2 sm:gap-3 pt-2 sm:pt-4">
             <PlayVideoBtn />
-            <button
-              onClick={onInfo}
-              className="flex items-center px-3 sm:px-4 py-2 bg-gray-700 bg-opacity-70 text-white font-semibold rounded hover:bg-opacity-90 transition"
-            >
-              <img src={infoIcon} alt="Info" className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-              상세 정보
-            </button>
+            <InfoBtn movie={movie} />
           </div>
       </div>
     </div>

@@ -73,7 +73,7 @@ const Home = () => {
           overview={''}
           backdropUrl={bannerMovie.mainImg}
           onPlay={() => console.log('재생')}
-          onInfo={() => console.log('상세 정보')}
+          movie={bannerMovie}
         />
       )}
 
