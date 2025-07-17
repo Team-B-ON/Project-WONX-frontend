@@ -13,7 +13,7 @@ import {
   getReviewCount,
 } from '@/services/api/HomePage/homeApi';
 import { fetchMyUser } from '@/services/api/common/userApi';
-
+import { getMovieById } from '@/services/api/MovieDetailsPage/movie';
 import { MovieSummary } from '@/types/movieSummary';
 import { WatchHistory } from '@/types/watchHistory';
 import { Review } from '@/types/review';
@@ -30,7 +30,17 @@ const Home = () => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    getMainBanner().then(setBannerMovie).catch(console.error);
+    getMainBanner()
+      .then((summary) => {
+        if (!summary?.movieId) return;
+
+        // 상세 정보 요청
+        getMovieById(summary.movieId).then((movieDetail) => {
+          setBannerMovie(movieDetail);
+        });
+      })
+      .catch(console.error);
+
     getHotMovies().then(setHotMovies).catch(console.error);
     getRecommendedMovies().then(setRecommendedMovies).catch(console.error);
     getRecentWatchHistory().then(setRecentWatched).catch(console.error);
@@ -69,8 +79,8 @@ const Home = () => {
       {bannerMovie && (
         <Banner
           title={bannerMovie.title}
-          rankText="오늘 시리즈 순위 2위"
-          overview={''}
+          rankText="오늘 시리즈 순위 2위" // 고정 문구 or 상태로 설정
+          overview={bannerMovie.description}
           backdropUrl={bannerMovie.mainImg}
           onPlay={() => console.log('재생')}
           movie={bannerMovie}
