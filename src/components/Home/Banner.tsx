@@ -36,7 +36,7 @@ const Banner = ({
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
 
       {/* 콘텐츠 */}
-      <div className="absolute top-[66%] sm:top-[20%] md:top-[28%] left-4 right-0 px-4 sm:px-6 md:px-12 lg:px-20 max-w-[90%] md:max-w-3xl space-y-3 sm:space-y-4 md:space-y-6 text-white">
+      <div className="absolute bottom-8 sm:top-[20%] md:top-[28%] left-4 right-0 px-4 sm:px-6 md:px-12 lg:px-20 max-w-[90%] md:max-w-3xl space-y-3 sm:space-y-4 md:space-y-6 text-white">
         {/* 제목 */}
         <h2 className="text-2xl sm:text-4xl md:text-6xl font-bold leading-tight">
           {title}
