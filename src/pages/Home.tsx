@@ -99,7 +99,7 @@ const Home = () => {
       {/* 3. 인기 콘텐츠 */}
       <HotMoviesList 
         title="WONX 인기 콘텐츠" 
-        movies={convertedHotMovies} 
+        movies={hotMovies} 
       />
 
       {/* 4. 인기 리뷰 */}
