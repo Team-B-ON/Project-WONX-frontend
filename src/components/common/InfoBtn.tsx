@@ -25,7 +25,7 @@ const InfoBtn = ({ movie }: InfoBtnProps) => {
   return (
     <button
       onClick={handleClick}
-      className="w-[150.02px] h-[45.19px] rounded-[4px] 
+      className="w-[150.02px] h-[50.19px] rounded-[4px] 
                  bg-gray-700 text-white hover:bg-opacity-90 
                  flex items-center justify-center gap-[10px]
                  font-medium text-[19.2px] cursor-pointer"
