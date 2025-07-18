@@ -1,4 +1,4 @@
-import React, { useRef, useState, UIEvent } from 'react';
+import React, { useRef, useState, UIEvent, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import type { Movie } from '@/types/movie';
 import { formatDuration } from '@/utils/timeFormat';
@@ -77,6 +77,14 @@ const MovieDetails = () => {
       console.error("좋아요 처리 실패", e);
     }
   };
+
+  // 북마크, 좋아요 상태 관리
+  useEffect(() => {
+    if (movie) {
+      setIsBookmarked(movie.isBookmarked ?? false);
+      setIsLiked(movie.isLiked ?? false);
+    }
+  }, [movie]);
 
   // 모달 닫기 함수
   const closeModal = () => {

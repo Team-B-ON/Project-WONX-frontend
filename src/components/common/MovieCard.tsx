@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { Movie } from "@/types/movie";
 import { formatDuration } from "@/utils/timeFormat";
+import { getAgeRatingImage } from '@/utils/getAgeRatingImage';
 import playButton from '@/assets/common/buttons/play-button.svg';
 import addButton from '@/assets/common/buttons/add-button.svg';
 import thumbUpButton from '@/assets/common/buttons/thumbup-button.svg';
@@ -14,8 +15,9 @@ import bookmarkButton from '@/assets/MovieDetailsPage/bookmark-check-btn.svg';
 import bookmarkHoveredButton from '@/assets/MovieDetailsPage/bookmark-check-hovered.svg';
 import likeButton from '@/assets/MovieDetailsPage/thumbup-fill-btn.svg';
 import likeHoveredButton from '@/assets/MovieDetailsPage/thumbup-fill-hovered.svg';
-import ageRating15 from '@/assets/MovieDetailsPage/15-age-rating.png';
 import { MovieSummary } from '@/types/movieSummary';
+import { postBookmark, deleteBookmark } from '@/services/api/MovieDetailsPage/bookmark';
+import { postLike, deleteLike } from '@/services/api/MovieDetailsPage/like';
 
 type MovieCardProps = {
     movie: Movie | MovieSummary;
@@ -29,11 +31,13 @@ const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) =
     const [isThumbHovered, setIsThumbHovered] = useState(false);
     const [isDetailsHovered, setIsDetailsHovered] = useState(false);
 
-    const [isBookmarked, setIsBookmarked] = useState(false);
-    const [isLiked, setIsLiked] = useState(false);
+    const [isBookmarked, setIsBookmarked] = useState(movie.isBookmarked ?? false);
+    const [isLiked, setIsLiked] = useState(movie.isLiked ?? false);
 
     const navigate = useNavigate();
     const location = useLocation();
+
+    const movieId = 'movieId' in movie ? movie.movieId : movie.id;
 
     const handleClick = () => {
         const params = new URLSearchParams(location.search);
@@ -47,6 +51,41 @@ const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) =
             { state: { backgroundLocation: location } }
         );
     };
+
+    // API 호출 - 북마크 처리
+    const handleBookmarkClick = async () => {
+        try {
+            if (isBookmarked) {
+            const res = await deleteBookmark(movieId);
+            setIsBookmarked(res.bookmarked);
+            } else {
+            const res = await postBookmark(movieId);
+            setIsBookmarked(res.bookmarked);
+            }
+        } catch (e) {
+            console.error("북마크 처리 실패", e);
+        }
+    };
+
+    // API 호출 - 좋아요 처리
+    const handleLikeClick = async () => {
+        try {
+            if (isLiked) {
+            const res = await deleteLike(movieId);
+            setIsLiked(res.liked);
+            } else {
+            const res = await postLike(movieId);
+            setIsLiked(res.liked);
+            }
+        } catch (e) {
+            console.error("좋아요 처리 실패", e);
+        }
+    };
+
+    useEffect(() => {
+        setIsBookmarked(movie.isBookmarked ?? false);
+        setIsLiked(movie.isLiked ?? false);
+    }, [movie]);
 
     return (
         <div className="
@@ -117,7 +156,7 @@ const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) =
                                     className="cursor-pointer w-[40px] h-[40px]"
                                     onMouseEnter={() => setIsAddHovered(true)}
                                     onMouseLeave={() => setIsAddHovered(false)}
-                                    onClick={() => setIsBookmarked(prev => !prev)}
+                                    onClick={handleBookmarkClick}
                                 />
                                 <img 
                                     src={
@@ -128,7 +167,7 @@ const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) =
                                     className="cursor-pointer w-[40px] h-[40px]"
                                     onMouseEnter={() => setIsThumbHovered(true)}
                                     onMouseLeave={() => setIsThumbHovered(false)}
-                                    onClick={() => setIsLiked(prev => !prev)}
+                                    onClick={handleLikeClick}
                                 />
                             </div>
                             <img 
@@ -141,7 +180,7 @@ const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) =
                         </div>
                         <div className="flex flex-col gap-y-[13px] text-[16px]">
                             <div className="flex flex-row gap-x-1 items-center">
-                                <img src={ageRating15} className="w-[32px] h-[32px]"/>
+                                <img src={getAgeRatingImage(movie?.ageRating ?? '')} className="w-[32px] h-[32px]"/>
                                 <p className="text-[#bcbcbc] pl-[14.4px]">
                                     {formatDuration(movie.durationMinutes ?? 0)}
                                 </p>
