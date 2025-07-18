@@ -81,7 +81,7 @@ const HotMoviesList = ({ title, movies }: HotMoviesListProps) => {
                       key={movie.movieId}
                       onMouseEnter={() => setHoveredIndex(idx)}
                       onMouseLeave={() => setHoveredIndex(null)}
-                      className={`flex-shrink-0 w-[217.91px] mx-1 ${
+                      className={`flex-shrink-0 w-[217.91px] mx-2 ${
                         hoveredIndex === idx ? 'scale-[1.15] z-10' : 'scale-100 z-0'
                       }`}
                     >
