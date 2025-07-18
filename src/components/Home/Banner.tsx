@@ -1,5 +1,5 @@
 import React from 'react';
-import infoIcon from '@/assets/common/buttons/arrowdown-button.svg';
+//import infoIcon from '@/assets/common/buttons/arrowdown-button.svg';
 import PlayVideoBtn from '../common/PlayVideoBtn';
 import InfoBtn from '../common/InfoBtn';
 import { Movie } from '@/types/movie';
@@ -38,7 +38,9 @@ const Banner = ({
       {/* 콘텐츠 */}
       <div className="absolute bottom-8 sm:top-[20%] md:top-[28%] left-4 right-0 px-4 sm:px-6 md:px-12 lg:px-20 max-w-[90%] md:max-w-3xl space-y-3 sm:space-y-4 md:space-y-6 text-white">
         {/* 제목 */}
-        <h2 className="text-2xl sm:text-4xl md:text-6xl font-bold leading-tight">
+        <h2 
+          className="text-2xl sm:text-4xl md:text-6xl font-bold leading-tight"
+          style={{ textShadow: '0 0 9px rgba(0, 0, 0, 0.8)' }}>
           {title}
         </h2>
 
@@ -49,12 +51,19 @@ const Banner = ({
               <span>ON</span>
               <span>NOW</span>
             </div>
-            <span className="text-sm sm:text-base md:text-xl font-semibold">{rankText}</span>
+            <span 
+              className="text-sm sm:text-base md:text-xl font-semibold"
+              style={{ textShadow: '0 0 7px rgba(0, 0, 0, 0.6)' }}
+            >
+              {rankText}
+            </span>
           </div>
         )}
 
         {/* 설명 */}
-        <p className="text-xs sm:text-sm md:text-lg whitespace-pre-line line-clamp-4">
+        <p 
+          className="text-xs sm:text-sm md:text-lg whitespace-pre-line line-clamp-4"
+          style={{ textShadow: '0 0 5px rgba(0, 0, 0, 0.6)' }}>
           {overview}
         </p>
 
