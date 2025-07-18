@@ -72,8 +72,6 @@ const MovieDetails = () => {
   const { movie, loading, error } = useMovieDetail(selectedId);
   const isOpen = Boolean(selectedId);
   const { show, animate } = useModalAnimation(isOpen);
-  console.log("param id:", selectedId);
-  console.log("movie.id:", movie?.id);
 
   // 모달 닫기 함수
   const closeModal = () => {

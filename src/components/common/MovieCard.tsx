@@ -15,9 +15,10 @@ import bookmarkHoveredButton from '@/assets/MovieDetailsPage/bookmark-check-hove
 import likeButton from '@/assets/MovieDetailsPage/thumbup-fill-btn.svg';
 import likeHoveredButton from '@/assets/MovieDetailsPage/thumbup-fill-hovered.svg';
 import ageRating15 from '@/assets/MovieDetailsPage/15-age-rating.png';
+import { MovieSummary } from '@/types/movieSummary';
 
 type MovieCardProps = {
-    movie: Movie;
+    movie: Movie | MovieSummary;
     isFirst?: boolean;
     isLast?: boolean;
 };
@@ -36,7 +37,8 @@ const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) =
 
     const handleClick = () => {
         const params = new URLSearchParams(location.search);
-        params.set('id', movie.id);
+        const movieId = 'movieId' in movie ? movie.movieId : movie.id;
+        params.set('id', movieId);
         navigate(
             {
                 pathname: location.pathname,

@@ -1,9 +1,12 @@
 import React from 'react';
 import { MovieSummary } from '@/types/movieSummary';
+import MovieCard from './MovieCard';
 
 type HotCardProps = {
   movie: MovieSummary;
   rank: number;
+  isFirst?: boolean;
+  isLast?: boolean;
 };
 
 const HotCard = ({ movie, rank }: HotCardProps) => {
@@ -15,10 +18,10 @@ const HotCard = ({ movie, rank }: HotCardProps) => {
       </div>
 
       {/* 포스터 이미지 */}
-      <img
-        src={movie.posterUrl}
-        alt={movie.title}
-        className="w-full h-auto rounded-md z-10 relative"
+      <MovieCard 
+        movie={movie} 
+        isFirst={isFirst}
+        isLast={isLast}
       />
 
       {/* 하단 라벨 (선택) */}
