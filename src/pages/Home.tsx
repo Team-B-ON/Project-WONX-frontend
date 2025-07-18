@@ -61,12 +61,20 @@ const Home = () => {
 
   const convertedHotMovies: Movie[] = hotMovies.map(convertSummaryToMovie);
   const convertedRecommended: Movie[] = recommendedMovies.map(convertSummaryToMovie);
-  const convertedRecentWatched: Movie[] = recentWatched.map((item) =>
-    convertSummaryToMovie({
-      ...item.movie,
-      movieId: item.movie.id,
-    } as MovieSummary)
-  );
+  const convertedRecentWatched: Movie[] = recentWatched.map((item) => {
+    const raw = item.movie;
+
+    return {
+      id: raw.id || raw.movieId || "", // ✅ 무조건 id 채우기
+      title: raw.title,
+      posterUrl: raw.posterUrl,
+      isBookmarked: raw.isBookmarked,
+      isLiked: raw.isLiked,
+      ageRating: raw.ageRating,
+      durationMinutes: raw.durationMinutes,
+      genres: raw.genres,
+    };
+  });
 
   return (
     <div className="bg-black min-h-screen -mt-[68px]">
