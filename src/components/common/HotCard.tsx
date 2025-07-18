@@ -13,7 +13,7 @@ const HotCard = ({ movie, rank, isFirst, isLast }: HotCardProps) => {
   return (
     <div className="relative w-[217.91px]">
       {/* 랭킹 숫자 */}
-      <div className="absolute -left-[70px] top-1 text-[120px] font-black text-white opacity-20 z-0 select-none leading-[1] pointer-events-none">
+      <div className="absolute -left-[60px] top-1 text-[120px] font-black text-white opacity-20 z-0 select-none leading-[1] pointer-events-none">
         {rank}
       </div>
 
