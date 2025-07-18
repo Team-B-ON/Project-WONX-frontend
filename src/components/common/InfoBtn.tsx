@@ -30,7 +30,7 @@ const InfoBtn = ({ movie }: InfoBtnProps) => {
                  flex items-center justify-center gap-[10px]
                  font-medium text-[19.2px] cursor-pointer"
     >
-      <img src={infoIcon} alt="상세 정보" className="w-[29px] h-[29px]" />
+      <img src={infoIcon} alt="상세 정보" className="w-[25px] h-[25px]" />
       상세 정보
     </button>
   );

@@ -40,7 +40,7 @@ const Banner = ({
         {/* 제목 */}
         <h2 
           className="text-2xl sm:text-4xl md:text-6xl font-bold leading-tight"
-          style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' }}>
+          style={{ textShadow: '2px 2px 3px rgba(0, 0, 0, 0.5)' }}>
           {title}
         </h2>
 
@@ -53,7 +53,7 @@ const Banner = ({
             </div>
             <span 
               className="text-sm sm:text-base md:text-xl font-semibold"
-              style={{ textShadow: '2px 2px 3px rgba(0, 0, 0, 0.6)' }}
+              style={{ textShadow: '2px 2px 3px rgba(0, 0, 0, 0.3)' }}
             >
               {rankText}
             </span>
@@ -63,7 +63,7 @@ const Banner = ({
         {/* 설명 */}
         <p 
           className="text-xs sm:text-sm md:text-lg whitespace-pre-line line-clamp-4"
-          style={{ textShadow: '2px 2px 3px rgba(0, 0, 0, 0.6)' }}>
+          style={{ textShadow: '2px 2px 3px rgba(0, 0, 0, 0.2)' }}>
           {overview}
         </p>
 
