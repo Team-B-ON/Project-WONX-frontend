@@ -9,11 +9,11 @@ type HotCardProps = {
   isLast?: boolean;
 };
 
-const HotCard = ({ movie, rank }: HotCardProps) => {
+const HotCard = ({ movie, rank, isFirst, isLast }: HotCardProps) => {
   return (
-    <div className="relative w-[160px] sm:w-[180px] md:w-[200px]">
+    <div className="relative w-[217.91px]">
       {/* 랭킹 숫자 */}
-      <div className="absolute -left-[25px] top-1 text-[100px] font-black text-white opacity-10 z-0 select-none leading-[1]">
+      <div className="absolute -left-[20px] top-1 text-[90px] font-black text-white opacity-10 z-0 select-none leading-[1]">
         {rank}
       </div>
 
