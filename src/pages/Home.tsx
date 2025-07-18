@@ -61,17 +61,12 @@ const Home = () => {
 
   const convertedHotMovies: Movie[] = hotMovies.map(convertSummaryToMovie);
   const convertedRecommended: Movie[] = recommendedMovies.map(convertSummaryToMovie);
-  const convertedRecentWatched: Movie[] = recentWatched.map((item) => ({
-    ...item.movie,
-    id: item.movie.id,
-    title: item.movie.title,
-    posterUrl: item.movie.posterUrl,
-    mainImg: item.movie.mainImg,
-    isBookmarked: item.movie.isBookmarked,
-    isLiked: item.movie.isLiked,
-    ageRating: item.movie.ageRating,
-    durationMinutes: item.movie.durationMinutes,
-  }));
+  const convertedRecentWatched: Movie[] = recentWatched.map((item) =>
+    convertSummaryToMovie({
+      ...item.movie,
+      movieId: item.movie.id,
+    } as MovieSummary)
+  );
 
   return (
     <div className="bg-black min-h-screen -mt-[68px]">
