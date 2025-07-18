@@ -25,7 +25,7 @@ const HotCard = ({ movie, rank, isFirst, isLast }: HotCardProps) => {
       />
 
       {/* 하단 라벨 (선택) */}
-      <div className="absolute top-1 left-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded font-bold z-10">
+      <div className="absolute bottom-1 left-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded font-bold z-10">
         Hot
       </div>
     </div>
