@@ -68,7 +68,7 @@ const HotMoviesList = ({ title, movies }: HotMoviesListProps) => {
                   damping: 40,
                   duration: 0.83,
                 }}
-                className="flex gap-x-3 justify-center w-full"
+                className="flex gap-x-9 justify-center w-full"
                 style={{ position: 'absolute' }}
               >
                 {currentMovies.map((movie, idx) => {
@@ -81,7 +81,7 @@ const HotMoviesList = ({ title, movies }: HotMoviesListProps) => {
                       key={movie.movieId}
                       onMouseEnter={() => setHoveredIndex(idx)}
                       onMouseLeave={() => setHoveredIndex(null)}
-                      className={`flex-shrink-0 w-[217.91px] ${
+                      className={`flex-shrink-0 w-[217.91px] mx-4 ${
                         hoveredIndex === idx ? 'scale-[1.15] z-10' : 'scale-100 z-0'
                       }`}
                     >
