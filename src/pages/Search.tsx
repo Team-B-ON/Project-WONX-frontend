@@ -1,60 +1,80 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import MovieList from '@/components/Home/MovieList';
+import { Movie } from '@/types/movie';
+import { Review } from '@/types/review';
+import { User } from '@/types/user';
 
-import SearchMovieGrid from "@/components/Search/SearchMovieGrid";
-import SearchResultHeader from "@/components/Search/SearchResultHeader";
-import SearchUserGrid from "@/components/Search/SearchUserGrid";
-import SearchReviewGrid from "@/components/Search/SearchReviewGrid";
+import {
+  searchMoviesByTitle,
+  searchMoviesByGenre,
+  searchMoviesByPerson,
+  searchReviewsByContent,
+} from '@/services/api/SearchPage/SearchApi';
+import { fetchMyUser } from '@/services/api/common/userApi';
+import SearchReviewsList from '@/components/Search/SearchReviewsList';
 
-import { getSearchResults } from "@/services/api/SearchPage/SearchApi";
-import { MovieSearchDto, ReviewSearchDto, UserSearchDto } from "@/types/searchResult";
-
-const Search = () => {
+const SearchPage = () => {
   const [searchParams] = useSearchParams();
-  const searchQuery = searchParams.get("query") || "";
+  const query = searchParams.get('q') || '';
 
-  const [movies, setMovies] = useState<MovieSearchDto[]>([]);
-  const [users, setUsers] = useState<UserSearchDto[]>([]);
-  const [reviews, setReviews] = useState<ReviewSearchDto[]>([]);
+  const [user, setUser] = useState<User | null>(null);
+  const [moviesByTitle, setMoviesByTitle] = useState<Movie[]>([]);
+  const [moviesByGenre, setMoviesByGenre] = useState<Movie[]>([]);
+  const [moviesByPerson, setMoviesByPerson] = useState<Movie[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
-    if (!searchQuery) return;
+    if (!query) return;
 
-    getSearchResults(searchQuery)
-      .then((data) => {
-        setMovies(data.movies || []);
-        setUsers(data.users || []);
-        setReviews(data.reviews || []);
-      })
-      .catch((err) => {
-        console.error("검색 API 오류:", err);
-        setMovies([]);
-        setUsers([]);
-        setReviews([]);
-      });
-  }, [searchQuery]);
+    // 검색 실행
+    searchMoviesByTitle(query).then(setMoviesByTitle).catch(console.error);
+    searchMoviesByGenre(query).then(setMoviesByGenre).catch(console.error);
+    searchMoviesByPerson(query).then(setMoviesByPerson).catch(console.error);
+    searchReviewsByContent(query).then(setReviews).catch(console.error);
+    fetchMyUser().then(setUser).catch(console.error);
+  }, [query]);
 
   return (
-    <div className="bg-black min-h-screen">
-      <div className="px-6 sm:px-10 lg:px-25.5 py-10 space-y-12">
-        <SearchResultHeader query={searchQuery} />
+    <div className="bg-black min-h-screen text-white pt-[68px] px-6 pb-20 space-y-12">
+      <h2 className="text-2xl font-bold">"{query}" 검색 결과</h2>
 
-        {movies.length > 0 ? (
-          <SearchMovieGrid title="영화 검색 결과" movies={movies} />
-        ) : (
-          <p className="text-white text-lg font-bold">검색 결과가 없습니다.</p>
-        )}
+      {/* 영화 제목으로 검색 */}
+      {moviesByTitle.length > 0 && (
+        <MovieList
+          title="제목으로 찾은 콘텐츠"
+          movies={moviesByTitle}
+          useCustomSlider
+        />
+      )}
 
-        {reviews.length > 0 && (
-          <SearchReviewGrid query={searchQuery} reviews={reviews} />
-        )}
+      {/* 장르로 검색 */}
+      {moviesByGenre.length > 0 && (
+        <MovieList
+          title="장르로 찾은 콘텐츠"
+          movies={moviesByGenre}
+          useCustomSlider
+        />
+      )}
 
-        {users.length > 0 && (
-          <SearchUserGrid query={searchQuery} users={users} />
-        )}
-      </div>
+      {/* 감독/배우로 검색 */}
+      {moviesByPerson.length > 0 && (
+        <MovieList
+          title="인물로 찾은 콘텐츠"
+          movies={moviesByPerson}
+          useCustomSlider
+        />
+      )}
+
+      {/* 리뷰로 검색 */}
+      {reviews.length > 0 && (
+        <SearchReviewsList
+          title="리뷰에서 찾은 콘텐츠"
+          reviews={reviews}
+        />
+      )}
     </div>
   );
 };
 
-export default Search;
+export default SearchPage;
