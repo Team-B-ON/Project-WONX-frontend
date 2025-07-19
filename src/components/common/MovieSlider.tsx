@@ -21,6 +21,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
     currentPage * cardsPerPage,
     (currentPage + 1) * cardsPerPage
   );
+  const shouldCenter = currentMovies.length === cardsPerPage;
 
   const handleNext = () => {
     setDirection(1);
@@ -49,7 +50,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       )}
 
       {/* 슬라이드 카드 영역 */}
-      <div className="flex gap-x-3 justify-center min-h-[120px] relative">
+      <div className={`flex gap-x-3 ${shouldCenter ? 'justify-center' : 'justify-start'} min-h-[120px] relative`}>
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={currentPage}
