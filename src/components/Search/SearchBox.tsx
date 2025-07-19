@@ -60,6 +60,7 @@ const SearchBox: React.FC = () => {
   };
 
   const handleSuggestionClick = (text: string) => {
+    setQuery(text); // 🔥 선택된 항목으로 상태 업데이트
     navigate(`/search?q=${encodeURIComponent(text.trim())}`);
     setSuggestions([]);
     setIsExpanded(false);
