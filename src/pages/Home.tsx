@@ -43,7 +43,10 @@ const Home = () => {
       .catch(console.error);
 
     getHotMovies().then(setHotMovies).catch(console.error);
-    getHotTalks().then(setPopularReviews).catch(console.error);
+    getHotTalks().then((res) => {
+      console.log("🔥 인기 리뷰 데이터:", res);
+      setPopularReviews(res);
+    }).catch(console.error);
     getRecommendedMovies().then(setRecommendedMovies).catch(console.error);
     getRecentWatchHistory().then(setRecentWatched).catch(console.error);
     getReviewCount().then(setReviewCount).catch(console.error);
