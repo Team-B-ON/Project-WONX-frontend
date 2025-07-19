@@ -37,7 +37,7 @@ const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) =
     const navigate = useNavigate();
     const location = useLocation();
 
-    const movieId = 'movieId' in movie ? movie.movieId : movie.id;
+    const movieId = ('movieId' in movie ? movie.movieId : movie.id)?.toString();
 
     const handleClick = () => {
         if (!movieId) return;
