@@ -8,6 +8,7 @@ import PopularReviewsList from '@/components/Home/PopularReviewsList';
 import {
   getMainBanner,
   getHotMovies,
+  getHotTalks,
   getRecentWatchHistory,
   getRecommendedMovies,
   getReviewCount,
@@ -42,6 +43,7 @@ const Home = () => {
       .catch(console.error);
 
     getHotMovies().then(setHotMovies).catch(console.error);
+    getHotTalks().then(setPopularReviews).catch(console.error);
     getRecommendedMovies().then(setRecommendedMovies).catch(console.error);
     getRecentWatchHistory().then(setRecentWatched).catch(console.error);
     getReviewCount().then(setReviewCount).catch(console.error);
@@ -107,7 +109,7 @@ const Home = () => {
       {/* 4. 인기 리뷰 */}
       <PopularReviewsList 
         title="지금 인기 있는 리뷰" 
-        reviews={popularReviews} 
+        reviews={popularReviews}
       />
 
       {/* 5. 추천 콘텐츠 */}
