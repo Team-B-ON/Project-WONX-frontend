@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import RatingStars from '@/components/MovieDetailsPage/RatingStars';
 import { Review } from '@/types/review';
 
@@ -8,6 +9,8 @@ type ReviewCardProps = {
 
 const ReviewCard = ({ review }: ReviewCardProps) => {
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
   const MAX_LENGTH = 70;
 
   const isLong = review.content.length > MAX_LENGTH;
@@ -17,13 +20,31 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
       ? review.content
       : review.content.slice(0, MAX_LENGTH) + '...';
 
-  const handleToggle = () => setExpanded(!expanded);
+  const handleToggle = (e: React.MouseEvent) => {
+    e.stopPropagation(); // 부모 클릭 방지
+    setExpanded(!expanded);
+  };
+
+  const handleClick = () => {
+    const params = new URLSearchParams(location.search);
+    params.set("id", review.movieId.toString());
+    navigate(
+      {
+        pathname: location.pathname,
+        search: `?${params.toString()}`
+      },
+      { state: { backgroundLocation: location } }
+    );
+  };
 
   const date = new Date(review.createdAt);
   const formatted = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
 
   return (
-    <div className="w-[280px] bg-[#2f2f2f] rounded-lg px-4 py-3 text-white space-y-2">
+    <div
+      onClick={handleClick}
+      className="w-[280px] bg-[#2f2f2f] rounded-lg px-4 py-3 text-white space-y-2 cursor-pointer hover:bg-[#3a3a3a] transition"
+    >
       <div className="flex justify-between items-center">
         <p className="text-sm font-semibold truncate max-w-[180px]">
           {review.isAnonymous ? '익명' : review.userNickname}
