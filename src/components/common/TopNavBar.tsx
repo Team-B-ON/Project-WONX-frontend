@@ -142,14 +142,17 @@ const TopNavBar: React.FC = () => {
 
               <button
                 onClick={handleLogout}
-                className="text-sm text-gray-300 hover:text-white"
+                className="text-sm text-gray-300 hover:text-white font-medium cursor-pointer"
               >
                 로그아웃
               </button>
             </>
           ) : (
             <Link to="/">
-              <button className="bg-[#E50914] w-[80px] h-8 rounded text-white text-sm">
+              <button className="bg-[#E50914] w-[71px] h-[32px] rounded-[4px] cursor-pointer 
+                                  transition-colors duration-200 ease-in-out hover:bg-[rgb(193,17,25)]
+                                  text-white text-[14px] font-medium
+                                  flex items-center justify-center">
                 로그인
               </button>
             </Link>
