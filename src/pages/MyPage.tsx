@@ -63,8 +63,8 @@ const MyPage: React.FC = () => {
         ]);
         
         setMypageWatchHistories(r);
-        setBookmarks(b);
-        setLiked(l);
+        setBookmarks(b.map(transformRawMovie));
+        setLiked(l.map(transformRawMovie));
         setReviews(rv);
 
         const movieIds = rv.map(r => r.movieId);
@@ -93,6 +93,25 @@ const MyPage: React.FC = () => {
       genres: raw.genres,
     };
   });
+
+  function transformRawMovie(raw: any): Movie {
+    return {
+      id: raw.movieId?.toString() || raw.id || "",
+      title: raw.title,
+      description: raw.description ?? "",
+      durationMinutes: raw.durationMinutes,
+      releaseDate: raw.releaseDate,
+      posterUrl: raw.posterUrl,
+      mainImg: raw.mainImg ?? "",
+      ageRating: raw.ageRating,
+      genres: (raw.genres ?? []).map((g: any) => ({ id: g.id.toString(), name: g.name })),
+      actors: [],
+      directors: [],
+      screenwriters: [],
+      isBookmarked: raw.bookmarked ?? raw.isBookmarked ?? false,
+      isLiked: raw.liked ?? raw.isLiked ?? false,
+    };
+  }
 
   // --- 로딩 / 에러 UI ---
   if (loading) {
