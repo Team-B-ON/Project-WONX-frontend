@@ -43,7 +43,7 @@ const SearchBox: React.FC = () => {
 
   const handleSearch = () => {
     if (query.trim()) {
-      navigate(`/search?query=${encodeURIComponent(query.trim())}`);
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
       setSuggestions([]);
       setIsExpanded(false);
     }
@@ -60,7 +60,7 @@ const SearchBox: React.FC = () => {
   };
 
   const handleSuggestionClick = (text: string) => {
-    navigate(`/search?query=${encodeURIComponent(text)}`);
+    navigate(`/search?q=${encodeURIComponent(query.trim())}`);
     setSuggestions([]);
     setIsExpanded(false);
   };
