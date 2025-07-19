@@ -3,7 +3,8 @@ import axiosInstance from "../index";
 import { Movie } from "@/types/movie";
 
 interface RawMovie {
-  movieId: number;
+  id?: number;
+  movieId?: number;
   title: string;
   posterUrl: string;
   mainImg: string;
@@ -23,7 +24,7 @@ interface RawMovie {
 
 function transformRawMovie(raw: RawMovie): Movie {
   return {
-    id: raw.movieId.toString(),
+    id: (raw.movieId ?? raw.id).toString(),
     title: raw.title,
     description: raw.description,
     durationMinutes: raw.durationMinutes,

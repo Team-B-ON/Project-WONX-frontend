@@ -251,7 +251,7 @@ const MovieDetails = () => {
             <p className="font-semibold text-[24px] pb-[20px]">함께 시청된 콘텐츠</p>
             <div className="grid grid-cols-3 gap-[16px]">
               {relatedMovies.map((movie) => (
-                <RelatedMovieCard key={movie.movieId} movie={movie}/>
+                <RelatedMovieCard key={movie.id} movie={movie}/>
               ))}
             </div>
           </div>
