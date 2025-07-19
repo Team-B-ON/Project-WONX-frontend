@@ -2,7 +2,7 @@ import { Genre } from "./genre";
 import { Person } from "./person";
 
 export interface Movie {
-    movieId?: any;
+    movieId?: string;
     id: string,
     title: string,
     description?: string,

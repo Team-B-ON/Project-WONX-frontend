@@ -15,7 +15,7 @@ type RelatedMovieCardProps = {
 
 const RelatedMovieCard = ({movie}: RelatedMovieCardProps) => {
     const [isAddHovered, setIsAddHovered] = useState(false);
-    const [isBookmarked, setIsBookmarked] = useState(false);
+    const [isBookmarked, setIsBookmarked] = useState(movie.isBookmarked ?? false);
 
     return (
         <div className="group w-[237.48px] h-[363.6px] bg-[#2f2f2f] rounded-[4px] overflow-hidden text-white cursor-pointer">

@@ -1,3 +1,4 @@
+import { RelatedMoviesResponse } from "@/types/relatedMoviesResponse";
 import axiosInstance from "../index";
 import { Movie } from "@/types/movie";
 
@@ -54,3 +55,28 @@ export const getMovieById = async (id: string): Promise<Movie> => {
         throw e;
     }
 };
+
+// 함께 시청된 콘텐츠 조회
+export const getRelatedMovies = async (
+  movieId: string,
+  offset = 0,
+  limit = 6
+): Promise<RelatedMoviesResponse> => {
+  try {
+    const res = await axiosInstance.get(`/movies/${movieId}/related`, {
+      params: { offset, limit },
+    });
+
+    const { total, offset: o, limit: l, results } = res.data;
+
+    return {
+      total,
+      offset: o,
+      limit: l,
+      results: results.map(transformRawMovie),
+    };
+  } catch (error) {
+    console.error('함께 시청된 콘텐츠 조회 실패: ', error);
+    throw error;
+  }
+}

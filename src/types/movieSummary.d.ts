@@ -8,5 +8,5 @@ export interface MovieSummary {
   isLiked: boolean;
   ageRating: string;
   durationMinutes: number;
-  genres: Genre[];  // ✅ string[] → Genre[]
+  genres: Genre[];
 }

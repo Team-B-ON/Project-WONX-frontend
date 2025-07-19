@@ -20,22 +20,14 @@ import { useMovieDetail } from '@/hooks/MovieDetailsPage/useMovieDetail';
 import { useModalAnimation } from '@/hooks/MovieDetailsPage/useModalAnimation';
 import { postBookmark, deleteBookmark } from '@/services/api/MovieDetailsPage/bookmark';
 import { postLike, deleteLike } from '@/services/api/MovieDetailsPage/like';
-
-const relatedMovie: Movie = {  // 임시 데이터
-  id: '2',
-  title: '타오르는 여인의 초상',
-  description: '화가 마리안느. 결혼을 앞둔 딸의 초상화를 그려달라는 귀족 부인의 의뢰를 받는다. 단, 딸 몰래 그려야 한다. 비밀스레 모델을 관찰하던 마리안느는 어느덧 초상화 주인공의 시선을 느낀다.',
-  durationMinutes: 121,
-  releaseDate: '2020-01-01',
-  posterUrl: 'https://occ-0-3076-993.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABbQyop_-8RQ2VA-l9KezQJbJLdr1DcEboWvzR1YWRGUGCEI5dhdvesMdM8aei40c0h18SUhur1B2l99EW56rrXLL6LJIMiZslZc.webp?r=8fd',
-  ageRating: '15세 이상 관람가',
-};
+import { getRelatedMovies } from "@/services/api/MovieDetailsPage/movie";
 
 const MovieDetails = () => {
   const [isAddHovered, setIsAddHovered] = useState(false);
   const [isThumbHovered, setIsThumbHovered] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [relatedMovies, setRelatedMovies] = useState<Movie[]>([]);
   
   // 라우팅 훅
   const navigate = useNavigate();
@@ -84,6 +76,21 @@ const MovieDetails = () => {
       setIsBookmarked(movie.isBookmarked ?? false);
       setIsLiked(movie.isLiked ?? false);
     }
+  }, [movie]);
+
+  // API 호출 - 함께 시청된 콘텐츠 조회
+  useEffect(() => {
+      const fetchRelated = async () => {
+          if (!movie) return;
+          try {
+              const { results } = await getRelatedMovies(movie.id);
+              setRelatedMovies(results);
+          } catch (e) {
+              console.error('함께 시청된 콘텐츠 불러오기 실패', e);
+          }
+      };
+
+      fetchRelated();
   }, [movie]);
 
   // 모달 닫기 함수
@@ -243,8 +250,8 @@ const MovieDetails = () => {
           <div className="pt-[48px]">
             <p className="font-semibold text-[24px] pb-[20px]">함께 시청된 콘텐츠</p>
             <div className="grid grid-cols-3 gap-[16px]">
-              {[...Array(15)].map((_, index) => (
-                <RelatedMovieCard key={index} movie={relatedMovie}/>
+              {relatedMovies.map((movie) => (
+                <RelatedMovieCard key={movie.movieId} movie={movie}/>
               ))}
             </div>
           </div>
