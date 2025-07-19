@@ -50,7 +50,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       )}
 
       {/* 슬라이드 카드 영역 */}
-      <div className={`flex gap-x-3 ${shouldCenter ? 'justify-center' : 'justify-start'} min-h-[120px] relative`}>
+      <div className={`flex gap-x-3 ${shouldCenter ? 'justify-center' : 'justify-start'} min-h-[120px] relative h-[130px]`}>
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={currentPage}
@@ -76,11 +76,13 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
                   key={movie.id}
                   onMouseEnter={() => setHoveredIndex(idx)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  className={`flex-shrink-0 w-[217.91px] ${
-                    hoveredIndex === idx ? "scale-[1.15] z-20" : "scale-100 z-0"
-                  } transition-transform duration-200 ease-in-out`}
+                  className="relative w-[217.91px] h-[100%]"
                 >
-                  <div className="relative">
+                  <div className={`absolute top-0 left-0 w-full h-full transition-transform duration-200 ease-in-out ${
+                      hoveredIndex === idx ? "scale-[1.15] z-20" : "scale-100 z-0"
+                    }`}
+                    style={{ transformOrigin: "center top" }}
+                  >
                     <MovieCard
                       movie={movie}
                       isFirst={isFirst}
