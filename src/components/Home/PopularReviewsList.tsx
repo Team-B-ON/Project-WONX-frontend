@@ -1,30 +1,31 @@
 // components/Home/PopularReviewsList.tsx
-import React from "react";
-import { Review } from "@/types/review";
-import MovieTag from "../common/MovieTag";
-import ReviewSlider from "../common/ReviewSlider";
 
-type PopularReviewsListProps = {
-  title: string;
+import React from 'react';
+import { Review } from '@/types/review';
+import MovieTag from '@/components/common/MovieTag';
+import ReviewSlider from '@/components/common/ReviewSlider';
+import { useNavigate } from 'react-router-dom';
+
+type Props = {
   reviews: Review[];
-  onClickMore?: () => void;
-  showMore?: boolean;
+  title?: string; // 기본값을 줄 수 있게 옵션
 };
 
-const PopularReviewsList = ({
-  title,
-  reviews,
-  onClickMore,
-  showMore = true,
-}: PopularReviewsListProps) => {
-  if (reviews.length === 0) return null;
+const PopularReviewsList = ({ reviews, title = "인기 리뷰 모아보기" }: Props) => {
+  const navigate = useNavigate();
+
+  if (!reviews || reviews.length === 0) {
+    return <div className="text-white px-6">아직 인기 있는 리뷰가 없습니다.</div>;
+  }
 
   return (
-    <section className="pt-6 pb-10 space-y-4 overflow-visible">
-      <div className="px-6 sm:px-10 lg:px-20 space-y-4">
-        <MovieTag title={title} onClickMore={onClickMore} showMore={showMore} />
-        <ReviewSlider reviews={reviews} />
-      </div>
+    <section>
+      <MovieTag
+        title={title}
+        onClickMore={() => navigate('/reviews/popular')}
+        showMore
+      />
+      <ReviewSlider reviews={reviews} />
     </section>
   );
 };
