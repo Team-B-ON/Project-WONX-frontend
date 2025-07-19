@@ -59,7 +59,6 @@ const Home = () => {
     genres: summary.genres,
   });
 
-  const convertedHotMovies: Movie[] = hotMovies.map(convertSummaryToMovie);
   const convertedRecommended: Movie[] = recommendedMovies.map(convertSummaryToMovie);
   const convertedRecentWatched: Movie[] = recentWatched.map((item) => {
     const raw = item.movie;

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ProfileHeader from '@/components/Profile/ProfileHeader';
 import MovieTag from '@/components/common/MovieTag';
 import MovieSlider from '@/components/common/MovieSlider';
+import MypageReviewsList from '@/components/MyPage/MypageReviewsList';
 import EditProfileModal from '@/components/Profile/EditProfileModal';
 import defaultAvatar from "@/assets/common/images/default-avatar.png";
 import {
@@ -13,27 +14,27 @@ import {
 
 import {
   getMyProfile,
-  getRecent,
+  getMypageWatchHistories,
   getBookmarks,
-  getProgress,
   getLiked,
   getReviews,
   UserProfile,
-  MovieItem, getMoviesByIds, updateMyProfile,
+  getMoviesByIds, updateMyProfile,
 } from '@/services/api/MyPage/mypage';
-import MyReviewSlider from '@/components/MyPage/MyReviewSlider';
+
 import { Movie } from '@/types/movie';
 import { Review } from '@/types/review';
+import { WatchHistory } from '@/types/watchHistory';
+import MovieList from '@/components/Home/MovieList';
 
 const MyPage: React.FC = () => {
   const navigate = useNavigate();
 
   // --- 상태 정의 ---
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [recent, setRecent] = useState<MovieItem[]>([]);
-  const [bookmarks, setBookmarks] = useState<MovieItem[]>([]);
-  const [progress, setProgress] = useState<MovieItem[]>([]);
-  const [liked, setLiked] = useState<MovieItem[]>([]);
+  const [mypageWatchHistories, setMypageWatchHistories] = useState<WatchHistory[]>([]);
+  const [bookmarks, setBookmarks] = useState<Movie[]>([]);
+  const [liked, setLiked] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [reviewMovies, setReviewMovies] = useState<Movie[]>([]);
@@ -54,16 +55,15 @@ const MyPage: React.FC = () => {
         console.log('👀 getMyProfile:', me);
         setProfile(me);
 
-        const [r, b, p, l, rv] = await Promise.all([
-          getRecent(),
+        const [r, b, l, rv] = await Promise.all([
+          getMypageWatchHistories(),
           getBookmarks(),
-          getProgress(),
           getLiked(),
           getReviews(),
         ]);
-        setRecent(r);
+        
+        setMypageWatchHistories(r);
         setBookmarks(b);
-        setProgress(p);
         setLiked(l);
         setReviews(rv);
 
@@ -78,6 +78,21 @@ const MyPage: React.FC = () => {
       }
     })();
   }, []);
+
+  const convertedMypageWatched: Movie[] = mypageWatchHistories.map((item) => {
+    const raw = item.movie;
+
+    return {
+      id: raw.id || raw.movieId || "", // ✅ 무조건 id 채우기
+      title: raw.title,
+      posterUrl: raw.posterUrl,
+      isBookmarked: raw.isBookmarked,
+      isLiked: raw.isLiked,
+      ageRating: raw.ageRating,
+      durationMinutes: raw.durationMinutes,
+      genres: raw.genres,
+    };
+  });
 
   // --- 로딩 / 에러 UI ---
   if (loading) {
@@ -151,53 +166,46 @@ const MyPage: React.FC = () => {
         />
 
         {/* 각각의 섹션 */}
+        {/* 1. 최근 시청한 콘텐츠 */}
         <section>
           <MovieTag
             title="최근 시청한 콘텐츠"
             onClickMore={() => navigate('/mypage/recent')}
             showMore
           />
-          <MovieSlider movies={recent} />
+          <MovieSlider movies={convertedMypageWatched} />
         </section>
 
+        {/* 2. 내가 찜한 콘텐츠 */}
         <section>
-          <MovieTag
+          <MovieList
             title="내가 찜한 콘텐츠"
+            movies={bookmarks}
+            useCustomSlider
             onClickMore={() => navigate('/mypage/bookmarks')}
             showMore
           />
-          <MovieSlider movies={bookmarks} />
         </section>
 
+        {/* 3. 내가 좋아요한 콘텐츠 */}
         <section>
-          <MovieTag
-            title="시청 중인 콘텐츠"
-            onClickMore={() => navigate('/mypage/progress')}
+          <MovieList
+            title="좋아요한 콘텐츠"
+            movies={liked}
+            useCustomSlider
+            onClickMore={() => navigate('/mypage/liks')}
             showMore
           />
-          <MovieSlider movies={progress} />
         </section>
 
+        {/* 4. 내가 쓴 리뷰 */}
         <section>
           <MovieTag
-            title="좋아한 콘텐츠"
-            onClickMore={() => navigate('/mypage/liked')}
-            showMore
-          />
-          <MovieSlider movies={liked} />
-        </section>
-
-        <section>
-          <MovieTag
-            title="내 리뷰 모아보기"
+            title="내가 쓴 리뷰 모아보기"
             onClickMore={() => navigate('/mypage/reviews')}
             showMore
           />
-          {/* MovieSlider 대신 MyReviewSlider */}
-          <MyReviewSlider
-            movies={reviewMovies}
-            reviews={reviews}
-          />
+          <MypageReviewsList reviews={reviews} />
         </section>
       </main>
 

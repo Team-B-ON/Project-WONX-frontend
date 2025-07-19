@@ -54,7 +54,7 @@ export const getMyFollowers = (): Promise<PublicProfileDto[]> => {
 // ---------- 콘텐츠 ----------
 
 // ✅ 1. 최근 본 콘텐츠 (WatchHistory[])
-export const getMypageWatchHistory = (): Promise<WatchHistory[]> => {
+export const getMypageWatchHistories = (): Promise<WatchHistory[]> => {
   return axiosInstance.get('/mypage/recent').then(res => res.data);
 };
 
