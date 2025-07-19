@@ -71,51 +71,52 @@ const SearchBox: React.FC = () => {
   }, [isExpanded]);
 
   return (
-    <div className="relative flex items-center">
-      {!isExpanded && (
-        <button
-          aria-label="검색"
-          onClick={() => setIsExpanded(true)}
-          className="z-20 p-2 text-white"
-        >
-          <Search size={24} />
-        </button>
-      )}
+    <div className="relative">
+      <div className="flex items-center">
+        {!isExpanded && (
+          <button
+            aria-label="검색"
+            onClick={() => setIsExpanded(true)}
+            className="z-20 p-2 text-white"
+          >
+            <Search size={24} />
+          </button>
+        )}
 
-      {/* 입력창 */}
-      <input
-        ref={inputRef}
-        type="text"
-        placeholder="제목, 사람, 장르, 리뷰"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onBlur={() => setTimeout(() => setIsExpanded(false), 100)}
-        onKeyDown={onKeyDown}
-        style={{ transformOrigin: 'right center' }}
-        className={`
-          absolute right-0 top-1/2 -translate-y-1/2 z-10
-          h-9 bg-black text-gray-300
-          placeholder:text-sm placeholder-gray-400
-          border border-white
-          py-[7px] pl-[43px] pr-[6px]
-          rounded-md
-          transition-all duration-200 ease-in-out
-          ${isExpanded ? 'w-[275px] opacity-100' : 'w-0 opacity-0 overflow-hidden'}
-        `}
-      />
-
-      {/* 아이콘 */}
-      {isExpanded && (
-        <Search
-          size={21}
-          className="absolute right-[243px] top-1/2 -translate-y-1/2 text-gray-400 z-20"
-          onClick={handleSearch}
+        {/* 입력창 */}
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder="제목, 사람, 장르, 리뷰"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onBlur={() => setTimeout(() => setIsExpanded(false), 100)}
+          onKeyDown={onKeyDown}
+          style={{ transformOrigin: 'right center' }}
+          className={`
+            h-9 bg-black text-gray-300
+            placeholder:text-sm placeholder-gray-400
+            border border-white
+            py-[7px] pl-[43px] pr-[6px]
+            rounded-md
+            transition-all duration-200 ease-in-out
+            ${isExpanded ? 'w-[275px] opacity-100' : 'w-0 opacity-0 overflow-hidden'}
+          `}
         />
-      )}
+
+        {/* 검색 아이콘 */}
+        {isExpanded && (
+          <Search
+            size={21}
+            className="absolute right-[243px] top-1/2 -translate-y-1/2 text-gray-400 z-20"
+            onClick={handleSearch}
+          />
+        )}
+      </div>
 
       {/* 자동완성 리스트 */}
       {isExpanded && suggestions.length > 0 && (
-        <ul className="absolute top-full right-0 mt-1 w-[275px] bg-black border border-white rounded-md shadow-md z-30 max-h-60 overflow-y-auto transition-opacity duration-200 ease-in-out">
+        <ul className="absolute mt-2 w-[275px] bg-black border border-white rounded-md shadow-md z-30 max-h-60 overflow-y-auto transition-opacity duration-200 ease-in-out">
           {suggestions.map((text, index) => (
             <li
               key={index}
