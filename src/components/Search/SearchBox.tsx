@@ -108,7 +108,7 @@ const SearchBox: React.FC = () => {
         {isExpanded && (
           <Search
             size={21}
-            className="absolute right-[243px] top-1/2 -translate-y-1/2 text-gray-400 z-20"
+            className="absolute right-[12px] top-1/2 -translate-y-1/2 text-gray-400 z-20"
             onClick={handleSearch}
           />
         )}
