@@ -1,70 +1,107 @@
-// src/components/common/SearchBox.tsx
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import {
+  autocompleteMovieTitles,
+  autocompletePeople,
+  autocompleteGenres,
+  autocompleteReviews,
+} from '@/services/api/SearchPage/SearchApi';
 
-const SearchBox = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+const SearchBox: React.FC = () => {
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  // 자동완성 API 호출
   useEffect(() => {
-    if (isOpen) inputRef.current?.focus();
-  }, [isOpen]);
+    const delayDebounce = setTimeout(() => {
+      if (query.trim()) {
+        Promise.all([
+          autocompleteMovieTitles(query),
+          autocompletePeople(query),
+          autocompleteGenres(query),
+          autocompleteReviews(query),
+        ])
+          .then(([movies, people, genres, reviews]) => {
+            const merged = [...movies, ...people, ...genres, ...reviews];
+            const unique = Array.from(new Set(merged));
+            setSuggestions(unique.slice(0, 8)); // 최대 8개만 표시
+          })
+          .catch((err) => {
+            console.error('Autocomplete error:', err);
+            setSuggestions([]);
+          });
+      } else {
+        setSuggestions([]);
+      }
+    }, 200); // debounce 200ms
+
+    return () => clearTimeout(delayDebounce);
+  }, [query]);
 
   const handleSearch = () => {
-    const q = inputRef.current?.value.trim();
-    if (q) navigate(`/search?q=${encodeURIComponent(q)}`);
-    setIsOpen(false);
+    if (query.trim()) {
+      navigate(`/search?query=${encodeURIComponent(query.trim())}`);
+      setSuggestions([]);
+      setIsFocused(false);
+    }
   };
 
   const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       handleSearch();
-    }
-    if (e.key === 'Escape') {
+    } else if (e.key === 'Escape') {
       e.preventDefault();
-      setIsOpen(false);
+      setIsFocused(false);
     }
+  };
+
+  const handleSuggestionClick = (text: string) => {
+    navigate(`/search?query=${encodeURIComponent(text)}`);
+    setSuggestions([]);
+    setIsFocused(false);
   };
 
   return (
     <div className="relative flex items-center">
-      {!isOpen && (
-        <button
-          aria-label="검색"
-          onClick={() => setIsOpen(true)}
-          className="z-20 p-2 text-white"
-        >
-          <Search size={24} />
-        </button>
-      )}
       <input
         ref={inputRef}
         type="text"
-        placeholder="제목, 사람, 장르"
-        onBlur={() => setIsOpen(false)}
+        placeholder="제목, 사람, 장르, 리뷰"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setTimeout(() => setIsFocused(false), 100)} // blur 전에 클릭되도록
         onKeyDown={onKeyDown}
-        style={{ transformOrigin: 'right center' }}
-        className={`
-          absolute right-0 top-1/2 -translate-y-1/2
-          h-9 bg-black text-gray-300
-          placeholder:text-sm placeholder-gray-400
-          border border-white
-          py-[7px] pl-[43px] pr-[6px]
-          transition-all duration-200 ease-in-out
-          ${isOpen
-            ? 'w-[275px] opacity-100'
-            : 'w-0 opacity-0 overflow-hidden'}
-        `}
+        className="h-9 w-[275px] bg-black text-gray-300
+                   placeholder:text-sm placeholder-gray-400
+                   border border-white
+                   py-[7px] pl-10 pr-[6px]
+                   transition-all duration-200 ease-in-out
+                   rounded-md"
       />
-      {isOpen && (
-        <Search
-          size={21.7}
-          className="absolute right-[243px] top-1/2 -translate-y-1/2 text-gray-400 z-10"
-        />
+      <Search
+        size={20}
+        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"
+        onClick={handleSearch}
+      />
+
+      {isFocused && suggestions.length > 0 && (
+        <ul className="absolute top-full left-0 mt-1 w-full bg-black border border-white rounded-md shadow-md z-30 max-h-60 overflow-y-auto">
+          {suggestions.map((text, index) => (
+            <li
+              key={index}
+              className="px-3 py-2 hover:bg-white hover:text-black cursor-pointer text-sm"
+              onMouseDown={() => handleSuggestionClick(text)}
+            >
+              {text}
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
