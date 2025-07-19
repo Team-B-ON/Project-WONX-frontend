@@ -85,7 +85,7 @@ const TopNavBar: React.FC = () => {
         <nav className="ml-8">
           <ul className="flex items-center space-x-6 text-xs md:text-sm">
             <li><Link to="/home"   className="hover:text-gray-300">홈</Link></li>
-            <li><Link to="/movies" className="hover:text-gray-300">영화</Link></li>
+            <li className="hover:text-gray-300">영화</li>
           </ul>
         </nav>
 
