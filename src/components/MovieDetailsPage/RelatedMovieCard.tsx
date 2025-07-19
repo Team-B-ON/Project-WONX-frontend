@@ -8,6 +8,7 @@ import bookmarkButton from '@/assets/MovieDetailsPage/bookmark-check-btn.svg';
 import bookmarkHoveredButton from '@/assets/MovieDetailsPage/bookmark-check-hovered.svg';
 import playButton from '@/assets/common/buttons/play-btn-on-video.svg';
 import { getAgeRatingImage } from "@/utils/getAgeRatingImage";
+import { deleteBookmark, postBookmark } from "@/services/api/MovieDetailsPage/bookmark";
 
 type RelatedMovieCardProps = {
     movie: Movie;
@@ -16,6 +17,21 @@ type RelatedMovieCardProps = {
 const RelatedMovieCard = ({movie}: RelatedMovieCardProps) => {
     const [isAddHovered, setIsAddHovered] = useState(false);
     const [isBookmarked, setIsBookmarked] = useState(movie.isBookmarked ?? false);
+
+    // API 호출 - 북마크 처리
+    const handleBookmarkClick = async () => {
+        try {
+            if (isBookmarked) {
+            const res = await deleteBookmark(movie.id);
+            setIsBookmarked(res.bookmarked);
+            } else {
+            const res = await postBookmark(movie.id);
+            setIsBookmarked(res.bookmarked);
+            }
+        } catch (e) {
+            console.error("북마크 처리 실패", e);
+        }
+    };
 
     return (
         <div className="group w-[237.48px] h-[363.6px] bg-[#2f2f2f] rounded-[4px] overflow-hidden text-white cursor-pointer">
@@ -59,7 +75,7 @@ const RelatedMovieCard = ({movie}: RelatedMovieCardProps) => {
                 className="cursor-pointer w-[40px] h-[40px] bg-[#2f2f2f]"
                 onMouseEnter={() => setIsAddHovered(true)}
                 onMouseLeave={() => setIsAddHovered(false)} 
-                onClick={() => setIsBookmarked(prev => !prev)}
+                onClick={handleBookmarkClick}
             />
         </div>
             <p className="px-[14px] pb-[14px] text-[#d2d2d2] text-[14px] whitespace-pre-wrap">
