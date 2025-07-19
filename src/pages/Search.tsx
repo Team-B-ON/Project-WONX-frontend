@@ -42,7 +42,7 @@ const SearchPage = () => {
       {/* 영화 제목으로 검색 */}
       {moviesByTitle.length > 0 && (
         <MovieList
-          title="제목으로 찾은 콘텐츠"
+          title={`"${query}"이(가) 제목에 포함된 콘텐츠`}
           movies={moviesByTitle}
           useCustomSlider
         />
@@ -51,7 +51,7 @@ const SearchPage = () => {
       {/* 장르로 검색 */}
       {moviesByGenre.length > 0 && (
         <MovieList
-          title="장르로 찾은 콘텐츠"
+          title={`"${query}" 장르와 관련된 콘텐츠`}
           movies={moviesByGenre}
           useCustomSlider
         />
@@ -60,7 +60,7 @@ const SearchPage = () => {
       {/* 감독/배우로 검색 */}
       {moviesByPerson.length > 0 && (
         <MovieList
-          title="인물로 찾은 콘텐츠"
+          title={`"${query}" 관련 인물이 참여한 콘텐츠`}
           movies={moviesByPerson}
           useCustomSlider
         />
@@ -69,7 +69,7 @@ const SearchPage = () => {
       {/* 리뷰로 검색 */}
       {reviews.length > 0 && (
         <SearchReviewsList
-          title="리뷰에서 찾은 콘텐츠"
+          title={`"${query}"이(가) 언급된 리뷰`}
           reviews={reviews}
         />
       )}
