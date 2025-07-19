@@ -40,8 +40,8 @@ const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) =
     const movieId = 'movieId' in movie ? movie.movieId : movie.id;
 
     const handleClick = () => {
+        if (!movieId) return;
         const params = new URLSearchParams(location.search);
-        const movieId = 'movieId' in movie ? movie.movieId : movie.id;
         params.set('id', movieId);
         navigate(
             {
