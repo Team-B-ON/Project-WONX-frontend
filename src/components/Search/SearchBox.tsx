@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, JSX } from 'react';
 import { Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -7,6 +7,27 @@ import {
   autocompleteGenres,
   autocompleteReviews,
 } from '@/services/api/SearchPage/SearchApi';
+
+const highlightMatch = (text: string, query: string): JSX.Element => {
+  if (!query.trim()) return <>{text}</>;
+
+  const regex = new RegExp(`(${query})`, 'gi'); // 대소문자 무시
+  const parts = text.split(regex);
+
+  return (
+    <>
+      {parts.map((part, i) =>
+        regex.test(part) ? (
+          <span key={i} className="bg-yellow-300 text-black">
+            {part}
+          </span>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </>
+  );
+};
 
 const SearchBox: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -86,7 +107,7 @@ const SearchBox: React.FC = () => {
       />
       <Search
         size={20}
-        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"
+        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10 cursor-pointer"
         onClick={handleSearch}
       />
 
@@ -98,7 +119,7 @@ const SearchBox: React.FC = () => {
               className="px-3 py-2 hover:bg-white hover:text-black cursor-pointer text-sm"
               onMouseDown={() => handleSuggestionClick(text)}
             >
-              {text}
+              {highlightMatch(text, query)}
             </li>
           ))}
         </ul>
