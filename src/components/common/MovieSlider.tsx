@@ -64,7 +64,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
               damping: 40,
               duration: 0.83,
             }}
-            className="flex gap-x-3 justify-center w-full" // ✅ absolute 제거!
+            className="flex gap-x-3"
           >
             {currentMovies.map((movie, idx) => {
               const globalIndex = currentPage * cardsPerPage + idx;
