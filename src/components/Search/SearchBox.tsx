@@ -60,7 +60,7 @@ const SearchBox: React.FC = () => {
   };
 
   const handleSuggestionClick = (text: string) => {
-    navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+    navigate(`/search?q=${encodeURIComponent(text.trim())}`);
     setSuggestions([]);
     setIsExpanded(false);
   };
@@ -81,7 +81,7 @@ const SearchBox: React.FC = () => {
         </button>
       )}
 
-      {/* 펼쳐지는 인풋 */}
+      {/* 입력창 */}
       <input
         ref={inputRef}
         type="text"
@@ -92,7 +92,7 @@ const SearchBox: React.FC = () => {
         onKeyDown={onKeyDown}
         style={{ transformOrigin: 'right center' }}
         className={`
-          absolute right-0 top-1/2 -translate-y-1/2
+          absolute right-0 top-1/2 -translate-y-1/2 z-10
           h-9 bg-black text-gray-300
           placeholder:text-sm placeholder-gray-400
           border border-white
@@ -107,12 +107,12 @@ const SearchBox: React.FC = () => {
       {isExpanded && (
         <Search
           size={21}
-          className="absolute right-[243px] top-1/2 -translate-y-1/2 text-gray-400 z-10"
+          className="absolute right-[243px] top-1/2 -translate-y-1/2 text-gray-400 z-20"
           onClick={handleSearch}
         />
       )}
 
-      {/* 자동완성 목록 */}
+      {/* 자동완성 리스트 */}
       {isExpanded && suggestions.length > 0 && (
         <ul className="absolute top-full right-0 mt-1 w-[275px] bg-black border border-white rounded-md shadow-md z-30 max-h-60 overflow-y-auto transition-opacity duration-200 ease-in-out">
           {suggestions.map((text, index) => (
