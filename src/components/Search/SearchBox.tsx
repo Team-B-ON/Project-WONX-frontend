@@ -11,7 +11,7 @@ import {
 const SearchBox: React.FC = () => {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [isFocused, setIsFocused] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -28,7 +28,7 @@ const SearchBox: React.FC = () => {
           .then(([movies, people, genres, reviews]) => {
             const merged = [...movies, ...people, ...genres, ...reviews];
             const unique = Array.from(new Set(merged));
-            setSuggestions(unique.slice(0, 8)); // 최대 8개만 표시
+            setSuggestions(unique.slice(0, 8));
           })
           .catch((err) => {
             console.error('Autocomplete error:', err);
@@ -37,8 +37,7 @@ const SearchBox: React.FC = () => {
       } else {
         setSuggestions([]);
       }
-    }, 200); // debounce 200ms
-
+    }, 200);
     return () => clearTimeout(delayDebounce);
   }, [query]);
 
@@ -46,7 +45,7 @@ const SearchBox: React.FC = () => {
     if (query.trim()) {
       navigate(`/search?query=${encodeURIComponent(query.trim())}`);
       setSuggestions([]);
-      setIsFocused(false);
+      setIsExpanded(false);
     }
   };
 
@@ -56,42 +55,66 @@ const SearchBox: React.FC = () => {
       handleSearch();
     } else if (e.key === 'Escape') {
       e.preventDefault();
-      setIsFocused(false);
+      setIsExpanded(false);
     }
   };
 
   const handleSuggestionClick = (text: string) => {
     navigate(`/search?query=${encodeURIComponent(text)}`);
     setSuggestions([]);
-    setIsFocused(false);
+    setIsExpanded(false);
   };
+
+  useEffect(() => {
+    if (isExpanded) inputRef.current?.focus();
+  }, [isExpanded]);
 
   return (
     <div className="relative flex items-center">
+      {!isExpanded && (
+        <button
+          aria-label="검색"
+          onClick={() => setIsExpanded(true)}
+          className="z-20 p-2 text-white"
+        >
+          <Search size={24} />
+        </button>
+      )}
+
+      {/* 펼쳐지는 인풋 */}
       <input
         ref={inputRef}
         type="text"
         placeholder="제목, 사람, 장르, 리뷰"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setTimeout(() => setIsFocused(false), 100)} // blur 전에 클릭되도록
+        onBlur={() => setTimeout(() => setIsExpanded(false), 100)}
         onKeyDown={onKeyDown}
-        className="h-9 w-[275px] bg-black text-gray-300
-                   placeholder:text-sm placeholder-gray-400
-                   border border-white
-                   py-[7px] pl-10 pr-[6px]
-                   transition-all duration-200 ease-in-out
-                   rounded-md"
-      />
-      <Search
-        size={20}
-        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"
-        onClick={handleSearch}
+        style={{ transformOrigin: 'right center' }}
+        className={`
+          absolute right-0 top-1/2 -translate-y-1/2
+          h-9 bg-black text-gray-300
+          placeholder:text-sm placeholder-gray-400
+          border border-white
+          py-[7px] pl-[43px] pr-[6px]
+          rounded-md
+          transition-all duration-200 ease-in-out
+          ${isExpanded ? 'w-[275px] opacity-100' : 'w-0 opacity-0 overflow-hidden'}
+        `}
       />
 
-      {isFocused && suggestions.length > 0 && (
-        <ul className="absolute top-full left-0 mt-1 w-full bg-black border border-white rounded-md shadow-md z-30 max-h-60 overflow-y-auto">
+      {/* 아이콘 */}
+      {isExpanded && (
+        <Search
+          size={21}
+          className="absolute right-[243px] top-1/2 -translate-y-1/2 text-gray-400 z-10"
+          onClick={handleSearch}
+        />
+      )}
+
+      {/* 자동완성 목록 */}
+      {isExpanded && suggestions.length > 0 && (
+        <ul className="absolute top-full right-0 mt-1 w-[275px] bg-black border border-white rounded-md shadow-md z-30 max-h-60 overflow-y-auto transition-opacity duration-200 ease-in-out">
           {suggestions.map((text, index) => (
             <li
               key={index}
