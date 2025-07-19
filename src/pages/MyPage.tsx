@@ -166,10 +166,10 @@ const MyPage: React.FC = () => {
         />
 
         {/* 각각의 섹션 */}
-        {/* 1. 최근 시청한 콘텐츠 */}
+        {/* 1. 최근 본 콘텐츠 */}
         <section>
           <MovieTag
-            title="최근 시청한 콘텐츠"
+            title="최근 본 콘텐츠"
             onClickMore={() => navigate('/mypage/recent')}
             showMore
           />
@@ -190,7 +190,7 @@ const MyPage: React.FC = () => {
         {/* 3. 내가 좋아요한 콘텐츠 */}
         <section>
           <MovieList
-            title="좋아요한 콘텐츠"
+            title="내가 좋아요한 콘텐츠"
             movies={liked}
             useCustomSlider
             onClickMore={() => navigate('/mypage/liks')}
@@ -200,11 +200,6 @@ const MyPage: React.FC = () => {
 
         {/* 4. 내가 쓴 리뷰 */}
         <section>
-          <MovieTag
-            title="내가 쓴 리뷰 모아보기"
-            onClickMore={() => navigate('/mypage/reviews')}
-            showMore
-          />
           <MypageReviewsList reviews={reviews} />
         </section>
       </main>

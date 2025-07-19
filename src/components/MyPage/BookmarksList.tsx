@@ -1,1 +1,0 @@
-// src/components/MyPage/BookmarksList.tsx
