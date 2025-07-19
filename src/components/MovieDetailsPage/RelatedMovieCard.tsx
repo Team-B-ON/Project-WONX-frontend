@@ -2,12 +2,12 @@ import { useState } from "react";
 import type { Movie } from "@/types/movie";
 import { formatDuration } from "@/utils/timeFormat";
 import { getYearFromDate } from "@/utils/getYearFromDate";
-import ageRating15 from '@/assets/MovieDetailsPage/15-age-rating.png';
 import addButton from '@/assets/common/buttons/add-button.svg';
 import addHoveredButton from '@/assets/common/buttons-hovered/add-btn.svg';
 import bookmarkButton from '@/assets/MovieDetailsPage/bookmark-check-btn.svg';
 import bookmarkHoveredButton from '@/assets/MovieDetailsPage/bookmark-check-hovered.svg';
 import playButton from '@/assets/common/buttons/play-btn-on-video.svg';
+import { getAgeRatingImage } from "@/utils/getAgeRatingImage";
 
 type RelatedMovieCardProps = {
     movie: Movie;
@@ -47,7 +47,7 @@ const RelatedMovieCard = ({movie}: RelatedMovieCardProps) => {
         {/* 영화 정보 영역 */}
         <div className="flex items-center p-[16px] justify-between">
             <div className="flex items-center space-x-[14px]">
-                <img src={ageRating15} alt="상영 등급" className="h-[32px] w-[32px]" />
+                <img src={getAgeRatingImage(movie?.ageRating ?? '')} alt="상영 등급" className="h-[32px] w-[32px]" />
                 <span className="text-[#bcbcbc]">{getYearFromDate(movie?.releaseDate)}</span>
             </div>
             <img
