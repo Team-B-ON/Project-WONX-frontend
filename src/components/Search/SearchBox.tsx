@@ -116,7 +116,7 @@ const SearchBox: React.FC = () => {
 
       {/* 자동완성 리스트 */}
       {isExpanded && suggestions.length > 0 && (
-        <ul className="absolute mt-2 w-[275px] bg-black border border-white rounded-md shadow-md z-30 max-h-60 overflow-y-auto transition-opacity duration-200 ease-in-out">
+        <ul className="absolute mt-1 w-[275px] bg-black border border-white rounded-md shadow-md z-30 max-h-60 overflow-y-auto transition-opacity duration-200 ease-in-out">
           {suggestions.map((text, index) => (
             <li
               key={index}
