@@ -30,13 +30,13 @@ function transformRawMovie(raw: RawMovie): Movie {
     durationMinutes: raw.durationMinutes,
     releaseDate: raw.releaseDate,
     posterUrl: raw.posterUrl,
-    mainImg: raw.mainImg,
+    mainImg: raw.mainImg ?? '',
     ageRating: raw.ageRating,
 
-    genres: raw.genres.map(g => ({ id: g.id.toString(), name: g.name })),
-    actors: raw.actors.map(a => ({ id: a.id.toString(), name: a.name })),
-    directors: raw.directors.map(d => ({ id: d.id.toString(), name: d.name })),
-    screenwriters: raw.screenwriters.map(s => ({
+    genres: (raw.genres ?? []).map(g => ({ id: g.id.toString(), name: g.name })),
+    actors: (raw.actors ?? []).map(a => ({ id: a.id.toString(), name: a.name })),
+    directors: (raw.directors ?? []).map(d => ({ id: d.id.toString(), name: d.name })),
+    screenwriters: (raw.screenwriters ?? []).map(s => ({
       id: s.id.toString(),
       name: s.name,
     })),
@@ -67,6 +67,7 @@ export const getRelatedMovies = async (
     const res = await axiosInstance.get(`/movies/${movieId}/related`, {
       params: { offset, limit },
     });
+    console.log("related res.data", res.data);
 
     const { total, offset: o, limit: l, results } = res.data;
 
