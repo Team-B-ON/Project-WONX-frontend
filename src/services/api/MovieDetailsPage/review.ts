@@ -62,6 +62,7 @@ export const patchMovieReview = async (
   return res.data.review;
 };
 
+// 리뷰 삭제
 export const deleteMovieReview = async (reviewId: string): Promise<void> => {
   const res = await axiosInstance.delete(`/reviews/${reviewId}`);
   console.log("리뷰 삭제 결과:", res.data);

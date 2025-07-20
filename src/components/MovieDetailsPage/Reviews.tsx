@@ -21,18 +21,18 @@ const Reviews = ({ movieId }: { movieId: string }) => {
     const [editingReviewId, setEditingReviewId] = useState<string | null>(null);
 
     // API - 리뷰 목록 조회
+    const fetchData = async () => {
+        try {
+        const res = await getMovieReviews(movieId, 0, 4, sort);
+        setReviews(res.results);
+        setDistribution(res.stats.distribution);
+        setAverage(res.stats.averageRating);
+        setTotalCount(res.stats.totalCount);
+        } catch (err) {
+        console.error("리뷰 로딩 실패", err);
+        }
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-            const res = await getMovieReviews(movieId, 0, 4, sort);
-            setReviews(res.results);
-            setDistribution(res.stats.distribution);
-            setAverage(res.stats.averageRating);
-            setTotalCount(res.stats.totalCount);
-            } catch (err) {
-            console.error("리뷰 로딩 실패", err);
-            }
-        };
         fetchData();
     }, [movieId, sort]);
 
@@ -68,6 +68,7 @@ const Reviews = ({ movieId }: { movieId: string }) => {
         }
     };
 
+    // API - 리뷰 수정
     const handleEditClick = (review: Review) => {
         setEditingReviewId(review.reviewId);
         setValue(review.content);
@@ -157,6 +158,7 @@ const Reviews = ({ movieId }: { movieId: string }) => {
                                 key={review.reviewId} 
                                 review={review} 
                                 onEditClick={() => handleEditClick(review)}
+                                onDelete={fetchData}
                             />
                         ))
                     )}

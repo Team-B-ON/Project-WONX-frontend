@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import RatingStars from '@/components/MovieDetailsPage/RatingStars';
 import { Review } from '@/types/review';
+import { deleteMovieReview } from '@/services/api/MovieDetailsPage/review';
 
 type ReviewItemProps = {
   review: Review;
   onEditClick?: () => void;
+  onDelete?: () => void; 
 };
 
-const ReviewItem = ({ review, onEditClick }: ReviewItemProps) => {
+const ReviewItem = ({ review, onEditClick, onDelete }: ReviewItemProps) => {
     const [expanded, setExpanded] = useState(false);
     const contentLimit = 100;
     const isLong = review.content.length > contentLimit;
@@ -21,6 +23,20 @@ const ReviewItem = ({ review, onEditClick }: ReviewItemProps) => {
     const hour   = String(date.getHours()).padStart(2, '0');
     const minute = String(date.getMinutes()).padStart(2, '0');
     const formattedDate = `${year}.${month}.${day}. ${hour}:${minute}`;
+
+    // API - 리뷰 삭제
+    const handleDelete = async () => {
+        const confirm = window.confirm("이 리뷰를 삭제하시겠습니까?");
+        if (!confirm) return;
+
+        try {
+            await deleteMovieReview(review.reviewId);
+            onDelete?.();
+        } catch (err) {
+            console.error("리뷰 삭제 실패", err);
+            alert("리뷰 삭제에 실패했습니다.");
+        }
+    };
 
     return (
         <div className="bg-[#2f2f2f] w-full min-h-[138px] text-white pt-[14px] pl-[30px] border-t">
@@ -65,7 +81,7 @@ const ReviewItem = ({ review, onEditClick }: ReviewItemProps) => {
                     <span className="text-[#ffffff80]"> | </span>
                     <button
                         className="hover:text-white text-[#ffffffb0] text-[15px] cursor-pointer"
-                        onClick={() => console.log('삭제 클릭')}
+                        onClick={handleDelete}
                     >
                         삭제
                     </button>
