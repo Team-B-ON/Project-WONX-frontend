@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import RatingStars from '@/components/MovieDetailsPage/RatingStars';
 import ReviewItem from './ReviewItem';
 import { Review } from '@/types/review';
-import { getMovieReviews, postMovieReview } from '@/services/api/MovieDetailsPage/review';
+import { getMovieReviews, patchMovieReview, postMovieReview } from '@/services/api/MovieDetailsPage/review';
 
 // 리뷰 평점
 const ranges = ['9-10', '7-8', '5-6', '3-4', '1-2'];
@@ -18,6 +18,7 @@ const Reviews = ({ movieId }: { movieId: string }) => {
     const [average, setAverage] = useState<number>(0);
     const [totalCount, setTotalCount] = useState<number>(0);
     const [sort, setSort] = useState<'latest' | 'ratingDesc' | 'ratingAsc'>('ratingDesc');
+    const [editingReviewId, setEditingReviewId] = useState<string | null>(null);
 
     // API - 리뷰 목록 조회
     useEffect(() => {
@@ -44,19 +45,38 @@ const Reviews = ({ movieId }: { movieId: string }) => {
         }
 
         try {
-            await postMovieReview(movieId, rating, trimmed);
-
+            if (editingReviewId) {
+                await patchMovieReview(editingReviewId, rating, trimmed);
+            } else {
+                await postMovieReview(movieId, rating, trimmed);
+            }
+            
+            // 새로고침
             const res = await getMovieReviews(movieId, 0, 4, sort);
             setReviews(res.results);
             setDistribution(res.stats.distribution);
             setAverage(res.stats.averageRating);
+            setTotalCount(res.stats.totalCount);
 
+            // 초기화
             setValue("");
             setRating(5);
+            setEditingReviewId(null);
         } catch (err) {
             console.error("리뷰 등록 실패", err);
             alert("리뷰 등록에 실패했습니다.");
         }
+    };
+
+    const handleEditClick = (review: Review) => {
+        setEditingReviewId(review.reviewId);
+        setValue(review.content);
+        setRating(review.rating);
+
+        setTimeout(() => {
+            textareaRef.current?.focus();
+            textareaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
     };
 
     // 리뷰 입력
@@ -93,7 +113,7 @@ const Reviews = ({ movieId }: { movieId: string }) => {
                             className="bg-white text-black w-[75px] text-[14px] flex items-center justify-center rounded-r-[3px] cursor-pointer"
                             onClick={handleSubmit}
                         >
-                            등록
+                            {editingReviewId ? '수정' : '등록'}
                         </div>
                     </div>
                 </div>
@@ -133,7 +153,11 @@ const Reviews = ({ movieId }: { movieId: string }) => {
                         <p className="text-center py-10 text-gray-400 mt-[40px] border-t-white-1">아직 작성된 리뷰가 없습니다.</p>
                     ) : (
                         reviews.map((review) => (
-                            <ReviewItem key={review.reviewId} review={review} />
+                            <ReviewItem 
+                                key={review.reviewId} 
+                                review={review} 
+                                onEditClick={() => handleEditClick(review)}
+                            />
                         ))
                     )}
                 </div>

@@ -4,9 +4,10 @@ import { Review } from '@/types/review';
 
 type ReviewItemProps = {
   review: Review;
+  onEditClick?: () => void;
 };
 
-const ReviewItem = ({ review }: ReviewItemProps) => {
+const ReviewItem = ({ review, onEditClick }: ReviewItemProps) => {
     const [expanded, setExpanded] = useState(false);
     const contentLimit = 100;
     const isLong = review.content.length > contentLimit;
@@ -57,7 +58,7 @@ const ReviewItem = ({ review }: ReviewItemProps) => {
                     <div className="flex justify-end gap-[8px] pb-[10px]">
                     <button
                         className="hover:text-white text-[#ffffffb0] text-[15px] cursor-pointer"
-                        onClick={() => console.log('수정 클릭')}
+                        onClick={onEditClick}
                     >
                         수정
                     </button>
