@@ -12,8 +12,6 @@ const ReviewItem = ({ review }: ReviewItemProps) => {
     const isLong = review.content.length > contentLimit;
     const previewText = review.content.slice(0, contentLimit);
 
-    console.log("리뷰 렌더링 중:", review);
-
     // 날짜 포맷
     const date = new Date(review.createdAt);
     const year   = date.getFullYear();
@@ -54,17 +52,24 @@ const ReviewItem = ({ review }: ReviewItemProps) => {
                     </p>
                 )}
             </div>
-
+            
+            {/* 수정, 삭제 버튼 */}
             {review.isMine && (
-                <>
-                    <button className="hover:underline text-white cursor-pointer" onClick={() => console.log('수정 클릭')}>
+                <div className="flex justify-end gap-[8px] pb-[10px]">
+                <button
+                    className="hover:text-white text-[#ffffffb0] text-[13px] cursor-pointer"
+                    onClick={() => console.log('수정 클릭')}
+                >
                     수정
-                    </button>
-                    <span>|</span>
-                    <button className="hover:underline text-white cursor-pointer" onClick={() => console.log('삭제 클릭')}>
+                </button>
+                <span className="text-[#ffffff80]"> | </span>
+                <button
+                    className="hover:text-white text-[#ffffffb0] text-[13px] cursor-pointer"
+                    onClick={() => console.log('삭제 클릭')}
+                >
                     삭제
-                    </button>
-                </>
+                </button>
+                </div>
             )}
         </div>                    
     );

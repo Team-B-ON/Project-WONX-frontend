@@ -8,7 +8,7 @@ import { getMovieReviews, postMovieReview } from '@/services/api/MovieDetailsPag
 const ranges = ['9-10', '7-8', '5-6', '3-4', '1-2'];
 
 const Reviews = ({ movieId }: { movieId: string }) => {
-    const [rating, setRating] = useState(10);
+    const [rating, setRating] = useState(5);
     const [value, setValue] = useState("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -16,8 +16,8 @@ const Reviews = ({ movieId }: { movieId: string }) => {
     const [reviews, setReviews] = useState<Review[]>([]);
     const [distribution, setDistribution] = useState<{ [key: string]: number }>({});
     const [average, setAverage] = useState<number>(0);
+    const [totalCount, setTotalCount] = useState<number>(0);
     const [sort, setSort] = useState<'latest' | 'ratingDesc' | 'ratingAsc'>('ratingDesc');
-
 
     // API - 리뷰 목록 조회
     useEffect(() => {
@@ -27,6 +27,7 @@ const Reviews = ({ movieId }: { movieId: string }) => {
             setReviews(res.results);
             setDistribution(res.stats.distribution);
             setAverage(res.stats.averageRating);
+            setTotalCount(res.stats.totalCount);
             } catch (err) {
             console.error("리뷰 로딩 실패", err);
             }
@@ -104,7 +105,7 @@ const Reviews = ({ movieId }: { movieId: string }) => {
                     <div className="w-[163px] h-[145px] flex flex-col justify-center items-center gap-[11px]">
                         <p className="text-[32px] font-bold">{average.toFixed(1)}/10</p>
                         <RatingStars rating={average} readOnly/>
-                        <p className="text-[11px]">평균 평점 (0000명)</p>
+                        <p className="text-[11px]">평균 평점 ({totalCount}명)</p>
                     </div>
                     {/* 평점별 수 집계 */}
                     <div className="w-[329px] h-[145px] flex flex-col justify-center pl-[18px] space-y-[3px]">
