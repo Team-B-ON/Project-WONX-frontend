@@ -105,7 +105,7 @@ const Reviews = ({ movieId }: { movieId: string }) => {
                     <div className="w-[163px] h-[145px] flex flex-col justify-center items-center gap-[11px]">
                         <p className="text-[32px] font-bold">{average.toFixed(1)}/10</p>
                         <RatingStars rating={average} readOnly/>
-                        <p className="text-[11px]">평균 평점 ({totalCount}명)</p>
+                        <p className="text-[11px]">평균 평점 ({totalCount}개)</p>
                     </div>
                     {/* 평점별 수 집계 */}
                     <div className="w-[329px] h-[145px] flex flex-col justify-center pl-[18px] space-y-[3px]">
