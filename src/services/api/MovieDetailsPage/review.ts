@@ -24,7 +24,7 @@ export const getMovieReviews = async (
   limit = 4,
   sort: 'latest' | 'ratingDesc' | 'ratingAsc' = 'ratingDesc',
 ): Promise<GetReviewsResponse> => {
-  const res = await axiosInstance.get<GetReviewsResponse>(`/api/movies/${movieId}/reviews`, {
+  const res = await axiosInstance.get<GetReviewsResponse>(`/movies/${movieId}/reviews`, {
     params: { offset, limit, sort }
   });
 
