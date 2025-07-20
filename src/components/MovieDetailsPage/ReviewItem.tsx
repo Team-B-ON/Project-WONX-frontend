@@ -54,6 +54,18 @@ const ReviewItem = ({ review }: ReviewItemProps) => {
                     </p>
                 )}
             </div>
+
+            {review.isMine && (
+                <>
+                    <button className="hover:underline text-white cursor-pointer" onClick={() => console.log('수정 클릭')}>
+                    수정
+                    </button>
+                    <span>|</span>
+                    <button className="hover:underline text-white cursor-pointer" onClick={() => console.log('삭제 클릭')}>
+                    삭제
+                    </button>
+                </>
+            )}
         </div>                    
     );
 };

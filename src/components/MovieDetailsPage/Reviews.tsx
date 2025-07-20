@@ -8,7 +8,7 @@ import { getMovieReviews, postMovieReview } from '@/services/api/MovieDetailsPag
 const ranges = ['9-10', '7-8', '5-6', '3-4', '1-2'];
 
 const Reviews = ({ movieId }: { movieId: string }) => {
-    const [rating, setRating] = useState(5);
+    const [rating, setRating] = useState(10);
     const [value, setValue] = useState("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
