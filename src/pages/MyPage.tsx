@@ -86,8 +86,8 @@ const MyPage: React.FC = () => {
       id: raw.id || raw.movieId || "", // ✅ 무조건 id 채우기
       title: raw.title,
       posterUrl: raw.posterUrl,
-      isBookmarked: raw.isBookmarked,
-      isLiked: raw.isLiked,
+      bookmarked: raw.bookmarked,
+      liked: raw.liked,
       ageRating: raw.ageRating,
       durationMinutes: raw.durationMinutes,
       genres: raw.genres,
@@ -108,8 +108,8 @@ const MyPage: React.FC = () => {
       actors: [],
       directors: [],
       screenwriters: [],
-      isBookmarked: raw.bookmarked ?? raw.isBookmarked ?? false,
-      isLiked: raw.liked ?? raw.isLiked ?? false,
+      bookmarked: raw.bookmarked ?? false,
+      liked: raw.liked ?? false,
     };
   }
 

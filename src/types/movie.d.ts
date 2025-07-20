@@ -18,6 +18,6 @@ export interface Movie {
     directors?: Person[],
     screenwriters?: Person[],
 
-    isBookmarked?: boolean;
-    isLiked?: boolean;
+    bookmarked?: boolean;
+    liked?: boolean;
 }

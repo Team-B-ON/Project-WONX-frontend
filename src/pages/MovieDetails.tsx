@@ -73,8 +73,8 @@ const MovieDetails = () => {
   // 북마크, 좋아요 상태 관리
   useEffect(() => {
     if (movie) {
-      setIsBookmarked(movie.isBookmarked ?? false);
-      setIsLiked(movie.isLiked ?? false);
+      setIsBookmarked(movie.bookmarked ?? false);
+      setIsLiked(movie.liked ?? false);
     }
   }, [movie]);
 

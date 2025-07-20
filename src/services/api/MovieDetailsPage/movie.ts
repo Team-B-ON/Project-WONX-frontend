@@ -41,8 +41,8 @@ function transformRawMovie(raw: RawMovie): Movie {
       name: s.name,
     })),
 
-    isBookmarked: raw.bookmarked,
-    isLiked: raw.liked,
+    bookmarked: raw.bookmarked,
+    liked: raw.liked,
   };
 }
 

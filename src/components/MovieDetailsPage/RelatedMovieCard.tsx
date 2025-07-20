@@ -16,7 +16,7 @@ type RelatedMovieCardProps = {
 
 const RelatedMovieCard = ({movie}: RelatedMovieCardProps) => {
     const [isAddHovered, setIsAddHovered] = useState(false);
-    const [isBookmarked, setIsBookmarked] = useState(movie.isBookmarked ?? false);
+    const [isBookmarked, setIsBookmarked] = useState(movie.bookmarked ?? false);
 
     // API 호출 - 북마크 처리
     const handleBookmarkClick = async () => {
