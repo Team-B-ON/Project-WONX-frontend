@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { Movie } from "@/types/movie";
 import { formatDuration } from "@/utils/timeFormat";
@@ -81,11 +81,6 @@ const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) =
             console.error("좋아요 처리 실패", e);
         }
     };
-
-    useEffect(() => {
-        setIsBookmarked(movie.isBookmarked ?? false);
-        setIsLiked(movie.isLiked ?? false);
-    }, [movie]);
 
     return (
         <div className="
