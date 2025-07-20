@@ -7,10 +7,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 type HotMoviesListProps = {
   title: string;
-  movies: MovieSummary[]; // ✅ 수정
+  movies: MovieSummary[];
+  onToggleBookmark?: (movieId: string, newState: boolean) => void;
+  onToggleLike?: (movieId: string, newState: boolean) => void;
 };
 
-const HotMoviesList = ({ title, movies }: HotMoviesListProps) => {
+const HotMoviesList = ({ title, movies, onToggleBookmark, onToggleLike }: HotMoviesListProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -91,6 +93,8 @@ const HotMoviesList = ({ title, movies }: HotMoviesListProps) => {
                           rank={globalIndex + 1}
                           isFirst={isFirst}
                           isLast={isLast}
+                          onToggleBookmark={onToggleBookmark}
+                          onToggleLike={onToggleLike}
                         />
                       </div>
                     </div>

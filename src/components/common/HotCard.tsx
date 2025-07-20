@@ -7,9 +7,11 @@ type HotCardProps = {
   rank: number;
   isFirst?: boolean;
   isLast?: boolean;
+  onToggleBookmark?: (movieId: string, newState: boolean) => void;
+  onToggleLike?: (movieId: string, newState: boolean) => void;
 };
 
-const HotCard = ({ movie, rank, isFirst, isLast }: HotCardProps) => {
+const HotCard = ({ movie, rank, isFirst, isLast, onToggleBookmark, onToggleLike }: HotCardProps) => {
   return (
     <div className="relative w-[217.91px]">
       {/* 랭킹 숫자 */}
@@ -22,6 +24,8 @@ const HotCard = ({ movie, rank, isFirst, isLast }: HotCardProps) => {
         movie={movie} 
         isFirst={isFirst}
         isLast={isLast}
+        onToggleBookmark={onToggleBookmark}
+        onToggleLike={onToggleLike}
       />
 
       {/* 하단 라벨 (선택) */}
