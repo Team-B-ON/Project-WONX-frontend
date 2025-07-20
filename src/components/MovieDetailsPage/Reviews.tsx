@@ -122,11 +122,11 @@ const Reviews = ({ movieId }: { movieId: string }) => {
                 {/* 리뷰 목록 보기 */}
                 <div className="w-[657px] pt-[16px]">
                     <p className="text-right pb-[6px] text-[14px]">
-                        <span onClick={() => setSort('latest')} className="cursor-pointer">최신순</span> 
+                        <span onClick={() => setSort('latest')} className="cursor-pointer hover:underline">최신순</span> 
                         <span className="text-[#636363] px-[6px] cursor-default">|</span> 
-                        <span onClick={() => setSort('ratingDesc')} className="cursor-pointer">별점 높은 순</span>
+                        <span onClick={() => setSort('ratingDesc')} className="cursor-pointer hover:underline">별점 높은 순</span>
                         <span className="text-[#636363] px-[6px] cursor-default">|</span> 
-                        <span onClick={() => setSort('ratingAsc')} className="cursor-pointer">별점 낮은 순</span>
+                        <span onClick={() => setSort('ratingAsc')} className="cursor-pointer hover:underline">별점 낮은 순</span>
                     </p>
                     {/* 리뷰 리스트 */}
                     {reviews.length === 0 ? (

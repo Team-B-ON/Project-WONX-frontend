@@ -30,7 +30,7 @@ const ReviewItem = ({ review }: ReviewItemProps) => {
 
             <RatingStars rating={review.rating} readOnly size={16} />
 
-            <div className="w-[598px] pt-[14px] pb-[19px] text-[14px] relative">
+            <div className="w-[598px] pt-[14px] pb-[9px] text-[14px] relative">
                 {expanded ? (
                     <p
                         className="cursor-pointer whitespace-pre-wrap"
@@ -56,14 +56,14 @@ const ReviewItem = ({ review }: ReviewItemProps) => {
                 {review.isMine && (
                     <div className="flex justify-end gap-[8px] pb-[10px]">
                     <button
-                        className="hover:text-white text-[#ffffffb0] text-[13px] cursor-pointer"
+                        className="hover:text-white text-[#ffffffb0] text-[15px] cursor-pointer"
                         onClick={() => console.log('수정 클릭')}
                     >
                         수정
                     </button>
                     <span className="text-[#ffffff80]"> | </span>
                     <button
-                        className="hover:text-white text-[#ffffffb0] text-[13px] cursor-pointer"
+                        className="hover:text-white text-[#ffffffb0] text-[15px] cursor-pointer"
                         onClick={() => console.log('삭제 클릭')}
                     >
                         삭제
