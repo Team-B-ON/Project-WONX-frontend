@@ -1,14 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
 import RatingStars from '@/components/MovieDetailsPage/RatingStars';
 import ReviewItem from './ReviewItem';
-import { getMovieReviews } from '@/services/api/MovieDetailsPage/review';
 import { Review } from '@/types/review';
+import { getMovieReviews, postMovieReview } from '@/services/api/MovieDetailsPage/review';
 
 // 리뷰 평점
 const ranges = ['9-10', '7-8', '5-6', '3-4', '1-2'];
 
 const Reviews = ({ movieId }: { movieId: string }) => {
-    const [rating, setRating] = useState(3.5);
+    const [rating, setRating] = useState(5);
     const [value, setValue] = useState("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -34,6 +34,29 @@ const Reviews = ({ movieId }: { movieId: string }) => {
         fetchData();
     }, [movieId, sort]);
 
+    // API - 리뷰 등록
+    const handleSubmit = async () => {
+        const trimmed = value.trim();
+        if (!trimmed) {
+            alert("리뷰 내용을 입력해주세요.");
+            return;
+        }
+
+        try {
+            await postMovieReview(movieId, rating, trimmed);
+
+            const res = await getMovieReviews(movieId, 0, 4, sort);
+            setReviews(res.results);
+            setDistribution(res.stats.distribution);
+            setAverage(res.stats.averageRating);
+
+            setValue("");
+            setRating(5);
+        } catch (err) {
+            console.error("리뷰 등록 실패", err);
+            alert("리뷰 등록에 실패했습니다.");
+        }
+    };
 
     // 리뷰 입력
     useEffect(() => {
@@ -65,7 +88,12 @@ const Reviews = ({ movieId }: { movieId: string }) => {
                                         placeholder-[#707070] placeholder:text-[14px]"
                             style={{ height: "53px" }}
                         />
-                        <div className="bg-white text-black w-[75px] text-[14px] flex items-center justify-center rounded-r-[3px] cursor-pointer">등록</div>
+                        <div 
+                            className="bg-white text-black w-[75px] text-[14px] flex items-center justify-center rounded-r-[3px] cursor-pointer"
+                            onClick={handleSubmit}
+                        >
+                            등록
+                        </div>
                     </div>
                 </div>
                 <div className="my-[30px] w-[754px] h-[1px] bg-white"></div>
@@ -101,7 +129,7 @@ const Reviews = ({ movieId }: { movieId: string }) => {
                     </p>
                     {/* 리뷰 리스트 */}
                     {reviews.length === 0 ? (
-                        <p className="text-center py-10 text-gray-400 pt-[30px] border-t-white">아직 작성된 리뷰가 없습니다.</p>
+                        <p className="text-center py-10 text-gray-400 mt-[40px] border-t-white-1">아직 작성된 리뷰가 없습니다.</p>
                     ) : (
                         reviews.map((review) => (
                             <ReviewItem key={review.reviewId} review={review} />
