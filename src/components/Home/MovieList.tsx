@@ -9,6 +9,8 @@ interface MovieListProps {
   useCustomSlider?: boolean; // true면 MovieSlider, false면 직접 슬라이드
   onClickMore?: () => void; // "모두 보기" 버튼 클릭 시 동작
   showMore?: boolean;       // 버튼 노출 여부 (기본 true)
+  onToggleBookmark?: (movieId: string, newState: boolean) => void;
+  onToggleLike?: (movieId: string, newState: boolean) => void;
 }
 
 export default function MovieList({
@@ -17,6 +19,7 @@ export default function MovieList({
   useCustomSlider,
   onClickMore,
   showMore = true,
+  onToggleBookmark, onToggleLike,
 }: MovieListProps) {
   return (
     <section className="pt-6 pb-10 space-y-4 overflow-visible">
@@ -33,7 +36,11 @@ export default function MovieList({
           <div className="flex gap-4 scroll-smooth scrollbar-hide">
             {movies.map((movie) => (
               <div key={movie.id} className="flex-shrink-0 w-[220px]">
-                <MovieCard movie={movie} />
+                <MovieCard 
+                  movie={movie}
+                  onToggleBookmark={onToggleBookmark}
+                  onToggleLike={onToggleLike} 
+                />
               </div>
             ))}
           </div>

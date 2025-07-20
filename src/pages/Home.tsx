@@ -30,6 +30,49 @@ const Home = () => {
   const [reviewCount, setReviewCount] = useState<number>(0);
   const [user, setUser] = useState<User | null>(null);
 
+  // 북마크 변경 콜백
+  const handleBookmarkUpdate = (movieId: string, newState: boolean) => {
+    setHotMovies(prev =>
+      prev.map(m =>
+        m.movieId === movieId ? { ...m, isBookmarked: newState } : m
+      )
+    );
+    setRecommendedMovies(prev =>
+      prev.map(m =>
+        m.movieId === movieId
+          ? { ...m, isBookmarked: newState }
+          : m
+      )
+    );
+    setRecentWatched(prev =>
+      prev.map(item =>
+        item.movie.id === movieId
+          ? { ...item, movie: { ...item.movie, isBookmarked: newState } }
+          : item
+      )
+    );
+  };
+
+  const handleLikeUpdate = (movieId: string, newState: boolean) => {
+    setHotMovies(prev =>
+      prev.map(m =>
+        m.movieId === movieId ? { ...m, isLiked: newState } : m
+      )
+    );
+    setRecommendedMovies(prev =>
+      prev.map(m =>
+        m.movieId === movieId ? { ...m, isLiked: newState } : m
+      )
+    );
+    setRecentWatched(prev =>
+      prev.map(item =>
+        item.movie.id === movieId
+          ? { ...item, movie: { ...item.movie, isLiked: newState } }
+          : item
+      )
+    );
+  };
+
   useEffect(() => {
     getMainBanner()
       .then((summary) => {
@@ -97,6 +140,8 @@ const Home = () => {
           title="최근 본 콘텐츠"
           movies={convertedRecentWatched}
           useCustomSlider
+          onToggleBookmark={handleBookmarkUpdate}
+          onToggleLike={handleLikeUpdate}
         />
       )}
 
@@ -104,6 +149,8 @@ const Home = () => {
       <HotMoviesList 
         title="WONX 인기 콘텐츠" 
         movies={hotMovies} 
+        onToggleBookmark={handleBookmarkUpdate}
+        onToggleLike={handleLikeUpdate}
       />
 
       {/* 4. 인기 리뷰 */}
@@ -117,6 +164,8 @@ const Home = () => {
         title={`${user?.nickname || '당신'}님이 좋아할 만한 콘텐츠`}
         movies={convertedRecommended}
         useCustomSlider
+        onToggleBookmark={handleBookmarkUpdate}
+        onToggleLike={handleLikeUpdate}
       />
 
       {/* 6. 리뷰 카운트 */}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { Movie } from "@/types/movie";
 import { formatDuration } from "@/utils/timeFormat";
@@ -23,9 +23,11 @@ type MovieCardProps = {
     movie: Movie | MovieSummary;
     isFirst?: boolean;
     isLast?: boolean;
+    onToggleBookmark?: (movieId: string, newState: boolean) => void;
+    onToggleLike?: (movieId: string, newState: boolean) => void;
 };
 
-const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) => {
+const MovieCard = ({ movie, isFirst = false, isLast = false, onToggleBookmark, onToggleLike }: MovieCardProps) => {
     const [isPlayHovered, setIsPlayHovered] = useState(false);
     const [isAddHovered, setIsAddHovered] = useState(false);
     const [isThumbHovered, setIsThumbHovered] = useState(false);
@@ -37,10 +39,14 @@ const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) =
     const navigate = useNavigate();
     const location = useLocation();
 
-    const movieId = ('movieId' in movie ? movie.movieId : movie.id)?.toString();
+    const movieId = useMemo(() => {
+        if('movieId' in movie) return movie.movieId?.toString() ?? '';
+        return movie.id?.toString() ?? '';
+    }, [movie]);
 
     const handleClick = () => {
-        if (!movieId) return;
+        if (!movieId || movieId === 'undefined') return;
+
         const params = new URLSearchParams(location.search);
         params.set('id', movieId);
         navigate(
@@ -53,32 +59,38 @@ const MovieCard = ({ movie, isFirst = false, isLast = false }: MovieCardProps) =
     };
 
     // API 호출 - 북마크 처리
-    const handleBookmarkClick = async () => {
+    const handleBookmarkClick = async (e: React.MouseEvent<HTMLImageElement>) => {
+        e.stopPropagation();
         try {
             if (isBookmarked) {
-            const res = await deleteBookmark(movieId);
-            setIsBookmarked(res.bookmarked);
+                await deleteBookmark(movieId);
+                setIsBookmarked(false);
+                onToggleBookmark?.(movieId, false);
             } else {
-            const res = await postBookmark(movieId);
-            setIsBookmarked(res.bookmarked);
+                await postBookmark(movieId);
+                setIsBookmarked(true);
+                onToggleBookmark?.(movieId, true);
             }
-        } catch (e) {
-            console.error("북마크 처리 실패", e);
+        } catch (error) {
+            console.error("북마크 처리 실패", error);
         }
     };
 
     // API 호출 - 좋아요 처리
-    const handleLikeClick = async () => {
+    const handleLikeClick = async (e: React.MouseEvent<HTMLImageElement>) => {
+        e.stopPropagation();
         try {
             if (isLiked) {
-            const res = await deleteLike(movieId);
-            setIsLiked(res.liked);
+                await deleteLike(movieId);
+                setIsLiked(false);
+                onToggleLike?.(movieId, false);
             } else {
-            const res = await postLike(movieId);
-            setIsLiked(res.liked);
+                await postLike(movieId);
+                setIsLiked(true);
+                onToggleLike?.(movieId, true);
             }
-        } catch (e) {
-            console.error("좋아요 처리 실패", e);
+        } catch (error) {
+            console.error("좋아요 처리 실패", error);
         }
     };
 
