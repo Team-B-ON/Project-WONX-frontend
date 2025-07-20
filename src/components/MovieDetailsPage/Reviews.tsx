@@ -2,42 +2,38 @@ import React, { useRef, useState, useEffect } from 'react';
 import RatingStars from '@/components/MovieDetailsPage/RatingStars';
 import ReviewItem from './ReviewItem';
 import { userReview } from '@/types/userReview';
+import { getMovieReviews } from '@/services/api/MovieDetailsPage/review';
 
-const reviews: userReview[] = [
-  {
-    id: "1",
-    reviewId: "1",
-    userId: "u1",
-    userNickname: "movieFan01",
-    movieId: "v1",
-    rating: 7.5,
-    content: "우리만의 따뜻한 불 영원한 꿈 영혼과 삶 난 난 오늘 떠날 거라고 생각했어 날 미워하지 마 no pain no where 음악이 없는 세상 no where no fear 바다 같은 색깔 no cap no cry 이미 죽은 사람 아냐 사실 태양에 맡겨뒀던 가족과 모든 분들의 사랑 물안개 짙어진 뒤 훔치려고 모인 자경단",
-    isAnonymous: false,
-    createdAt: new Date("2025-05-05T17:50:00").toISOString(),
-    nickname: "movieFan01",
-    isMine: false,
-  },
-  {
-    id: "2",
-    reviewId: "2",
-    userId: "u2",
-    userNickname: "filmLover",
-    movieId: "v1",
-    rating: 9,
-    content: "연출이 아주 훌륭했어요!",
-    isAnonymous: false,
-    createdAt: new Date("2025-05-05T17:50:00").toISOString(),
-    nickname: "filmLover",
-    isMine: false,
-  },
-];
+// 리뷰 평점
+const ranges = ['9-10', '7-8', '5-6', '3-4', '1-2'];
 
-const Reviews = () => {
+const Reviews = ({ movieId }: { movieId: string }) => {
     const [rating, setRating] = useState(3.5);
     const [value, setValue] = useState("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    // 리뷰 평점
-    const ranges = ['9-10', '7-8', '5-6', '3-4', '1-2'];
+
+    // 리뷰 목록 상태 관리
+    const [reviews, setReviews] = useState<userReview[]>([]);
+    const [distribution, setDistribution] = useState<{ [key: string]: number }>({});
+    const [average, setAverage] = useState<number>(0);
+    const [sort, setSort] = useState<'latest' | 'ratingDesc' | 'ratingAsc'>('ratingDesc');
+
+
+    // API - 리뷰 목록 조회
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+            const res = await getMovieReviews(movieId, 0, 4, sort);
+            setReviews(res.results);
+            setDistribution(res.stats.distribution);
+            setAverage(res.stats.averageRating);
+            } catch (err) {
+            console.error("리뷰 로딩 실패", err);
+            }
+        };
+        fetchData();
+    }, [movieId, sort]);
+
 
     // 리뷰 입력
     useEffect(() => {
@@ -78,8 +74,8 @@ const Reviews = () => {
                 <div className="pt-[20px] flex flex-row justify-center gap-[72px]">
                     {/* 총 평점 */}
                     <div className="w-[163px] h-[145px] flex flex-col justify-center items-center gap-[11px]">
-                        <p className="text-[32px] font-bold">{rating}/10</p>
-                        <RatingStars rating={rating} readOnly/>
+                        <p className="text-[32px] font-bold">{average.toFixed(1)}/10</p>
+                        <RatingStars rating={average} readOnly/>
                         <p className="text-[11px]">평균 평점 (0000명)</p>
                     </div>
                     {/* 평점별 수 집계 */}
@@ -88,7 +84,7 @@ const Reviews = () => {
                         <div key={index} className="flex items-center w-full">
                             <span className="text-[14px] font-medium w-[30px] text-right">{range}</span>
                             <div className="w-[230px] h-[11px] bg-[#D9D9D9] rounded-[10px] ml-[11px]"></div>
-                            <span className="text-[#636363] text-[10px] font-light pl-[6px]">00</span>
+                            <span className="text-[#636363] text-[10px] font-light pl-[6px]">{distribution[range] ?? 0}</span>
                         </div>
                     ))}
                     </div>
@@ -96,12 +92,12 @@ const Reviews = () => {
 
                 {/* 리뷰 목록 보기 */}
                 <div className="w-[657px] pt-[16px]">
-                    <p className="text-right pb-[6px] text-[14px] cursor-pointer">
-                        최신순 
+                    <p className="text-right pb-[6px] text-[14px]">
+                        <span onClick={() => setSort('latest')} className="cursor-pointer">최신순</span> 
                         <span className="text-[#636363] px-[6px] cursor-default">|</span> 
-                        별점 높은 순 
+                        <span onClick={() => setSort('ratingDesc')} className="cursor-pointer">별점 높은 순</span>
                         <span className="text-[#636363] px-[6px] cursor-default">|</span> 
-                        별점 낮은 순
+                        <span onClick={() => setSort('ratingAsc')} className="cursor-pointer">별점 낮은 순</span>
                     </p>
                     {/* 리뷰 리스트 */}
                     {reviews.map((review) => (
