@@ -257,7 +257,7 @@ const MovieDetails = () => {
           </div>
 
           {/* 리뷰란 */}
-          <Reviews />
+          <Reviews movieId={movie.id} />
 
           {/* 영화 상세 정보 */}
           <div className="pt-[92px] pb-[65px]">
