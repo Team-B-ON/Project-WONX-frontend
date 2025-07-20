@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import RatingStars from '@/components/MovieDetailsPage/RatingStars';
-import { userReview } from '@/types/userReview';
+import { Review } from '@/types/review';
 
 type ReviewItemProps = {
-  review: userReview;
+  review: Review;
 };
 
 const ReviewItem = ({ review }: ReviewItemProps) => {
@@ -24,7 +24,7 @@ const ReviewItem = ({ review }: ReviewItemProps) => {
     return (
         <div className="bg-[#2f2f2f] w-full min-h-[138px] text-white pt-[14px] pl-[30px] border-t">
             <div className="flex flex-row justify-between pb-[5px]">
-                <p className="text-[16px] font-medium">{review.nickname}</p>
+                <p className="text-[16px] font-medium">{review.userNickname}</p>
                 <p className="text-[14px] pr-[30px] text-[#636363]">{formattedDate}</p>
             </div>
 

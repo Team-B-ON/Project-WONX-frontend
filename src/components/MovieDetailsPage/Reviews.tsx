@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import RatingStars from '@/components/MovieDetailsPage/RatingStars';
 import ReviewItem from './ReviewItem';
-import { userReview } from '@/types/userReview';
 import { getMovieReviews } from '@/services/api/MovieDetailsPage/review';
+import { Review } from '@/types/review';
 
 // 리뷰 평점
 const ranges = ['9-10', '7-8', '5-6', '3-4', '1-2'];
@@ -13,7 +13,7 @@ const Reviews = ({ movieId }: { movieId: string }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     // 리뷰 목록 상태 관리
-    const [reviews, setReviews] = useState<userReview[]>([]);
+    const [reviews, setReviews] = useState<Review[]>([]);
     const [distribution, setDistribution] = useState<{ [key: string]: number }>({});
     const [average, setAverage] = useState<number>(0);
     const [sort, setSort] = useState<'latest' | 'ratingDesc' | 'ratingAsc'>('ratingDesc');
@@ -100,9 +100,13 @@ const Reviews = ({ movieId }: { movieId: string }) => {
                         <span onClick={() => setSort('ratingAsc')} className="cursor-pointer">별점 낮은 순</span>
                     </p>
                     {/* 리뷰 리스트 */}
-                    {reviews.map((review) => (
-                        <ReviewItem key={review.reviewId} review={review} />
-                    ))}
+                    {reviews.length === 0 ? (
+                        <p className="text-center py-10 text-gray-400">아직 작성된 리뷰가 없습니다.</p>
+                    ) : (
+                        reviews.map((review) => (
+                            <ReviewItem key={review.reviewId} review={review} />
+                        ))
+                    )}
                 </div>
             </div>
         </>

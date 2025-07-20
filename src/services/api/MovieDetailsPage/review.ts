@@ -1,5 +1,5 @@
 import axiosInstance from "../index";
-import { userReview } from '@/types/userReview';
+import { Review } from "@/types/review";
 
 export interface ReviewStats {
   averageRating: number;
@@ -14,7 +14,7 @@ export interface GetReviewsResponse {
   offset: number;
   limit: number;
   sort: string;
-  results: userReview[];
+  results: Review[];
 }
 
 // 리뷰 목록 조회
