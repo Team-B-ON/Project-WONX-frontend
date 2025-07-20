@@ -28,5 +28,6 @@ export const getMovieReviews = async (
     params: { offset, limit, sort }
   });
 
+  console.log("리뷰 목록:", res.data);
   return res.data;
 };

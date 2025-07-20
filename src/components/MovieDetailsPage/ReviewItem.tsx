@@ -12,6 +12,8 @@ const ReviewItem = ({ review }: ReviewItemProps) => {
     const isLong = review.content.length > contentLimit;
     const previewText = review.content.slice(0, contentLimit);
 
+    console.log("리뷰 렌더링 중:", review);
+
     // 날짜 포맷
     const date = new Date(review.createdAt);
     const year   = date.getFullYear();

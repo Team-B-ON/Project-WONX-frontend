@@ -101,7 +101,7 @@ const Reviews = ({ movieId }: { movieId: string }) => {
                     </p>
                     {/* 리뷰 리스트 */}
                     {reviews.length === 0 ? (
-                        <p className="text-center py-10 text-gray-400">아직 작성된 리뷰가 없습니다.</p>
+                        <p className="text-center py-10 text-gray-400 pt-[30px] border-t-white">아직 작성된 리뷰가 없습니다.</p>
                     ) : (
                         reviews.map((review) => (
                             <ReviewItem key={review.reviewId} review={review} />
