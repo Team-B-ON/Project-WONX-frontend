@@ -319,7 +319,7 @@ const MovieDetails = () => {
                     <Link
                       key={genre.id}
                       to={`/genre/${genre.id}`}
-                      state={{ backgroundLocation: location }}
+                      state={{ backgroundLocation: location.pathname + location.search }}
                       className="text-white pl-[4px] hover:underline cursor-pointer"
                     >
                       {genre.name}
