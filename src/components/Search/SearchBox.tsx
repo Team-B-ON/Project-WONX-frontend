@@ -77,7 +77,7 @@ const SearchBox: React.FC = () => {
           <button
             aria-label="검색"
             onClick={() => setIsExpanded(true)}
-            className="z-20 py-2 text-white"
+            className="z-20 py-2 text-white cursor-pointer"
           >
             <Search size={24} />
           </button>
