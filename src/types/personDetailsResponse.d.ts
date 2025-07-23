@@ -1,15 +1,15 @@
 export interface PersonDetailsResponse {
-  personId: number;
+  personId: string;
   name: string;
   role: ('director' | 'screenwriter' | 'actor')[];
   movies: {
     movieId: number;
     title: string;
     posterUrl: string;
-    // isBookmarked: boolean;
-    // isLiked: boolean;
+    bookmarked: boolean;
+    liked: boolean;
     ageRating: string;
-    duration: number;
+    durationMinutes: number;
     genre: string[];
   }[];
 }

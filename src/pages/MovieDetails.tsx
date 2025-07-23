@@ -135,7 +135,6 @@ const MovieDetails = () => {
   const screenwriters = movie?.screenwriters ?? [];
   const actors = movie?.actors ?? [];
   const displayedActors = actors.slice(0, 3);
-  //const genres = movie.genres;
 
   return(
     <div 

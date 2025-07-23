@@ -1,65 +1,10 @@
-import { PersonDetailsResponse } from "@/types/personDetailsResponse";
 import { UIEvent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import closeBtn from '@/assets/PersonDetailsPage/close-btn.svg';
 import backBtn from '@/assets/PersonDetailsPage/back-arrow.svg';
 import MovieCard from "@/components/common/MovieCard";
-
-const person: PersonDetailsResponse = {  // 임시 데이터
-  personId: 3,
-  name: '양자경',
-  role: ['director', 'screenwriter'],
-  movies: [
-    {
-      movieId: 1,
-      title: '에브리씽 에브리웨어 올앳원스',
-      posterUrl: 'https://occ-0-1361-1360.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABfrALyW4q-DVLqTxd1qWZIZfPhfvw6guHYjIOSvqRay5m2Il44bXxdI7UAsvyT81k9c6ICW5W4N6_HGPLxKAH_bASxaledc-szU.webp?r=e3c',
-      ageRating: '15세 이상 관람가',
-      duration: 139,
-      genre: ['긴박감 넘치는', '유쾌 발랄', 'SF 드라마 장르']
-    },
-    {
-      movieId: 2,
-      title: '선과 악의 학교',
-      posterUrl: 'https://occ-0-1361-1360.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABU7mAHY9zKvuD62MpfER3-Y9etMBbLEUyZAdeiM8suvfg6myXEpYGQmiGaOHXVOpYbPfGYlUnatltH-B1_uSXcCshgnHG_wsv3mFlKZD7eH2Fqcwbgezjvr4yB_2z2pND90DOA.jpg?r=51f',
-      ageRating: '12세 이상 관람가',
-      duration: 189,
-      genre: ['유쾌 발랄', '장대한 판타지의 세계', '상상의 나래']
-    },
-    {
-      movieId: 2,
-      title: '선과 악의 학교',
-      posterUrl: 'https://occ-0-1361-1360.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABU7mAHY9zKvuD62MpfER3-Y9etMBbLEUyZAdeiM8suvfg6myXEpYGQmiGaOHXVOpYbPfGYlUnatltH-B1_uSXcCshgnHG_wsv3mFlKZD7eH2Fqcwbgezjvr4yB_2z2pND90DOA.jpg?r=51f',
-      ageRating: '12세 이상 관람가',
-      duration: 189,
-      genre: ['유쾌 발랄', '장대한 판타지의 세계', '상상의 나래']
-    },
-    {
-      movieId: 2,
-      title: '선과 악의 학교',
-      posterUrl: 'https://occ-0-1361-1360.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABU7mAHY9zKvuD62MpfER3-Y9etMBbLEUyZAdeiM8suvfg6myXEpYGQmiGaOHXVOpYbPfGYlUnatltH-B1_uSXcCshgnHG_wsv3mFlKZD7eH2Fqcwbgezjvr4yB_2z2pND90DOA.jpg?r=51f',
-      ageRating: '12세 이상 관람가',
-      duration: 189,
-      genre: ['유쾌 발랄', '장대한 판타지의 세계', '상상의 나래']
-    },
-    {
-      movieId: 2,
-      title: '선과 악의 학교',
-      posterUrl: 'https://occ-0-1361-1360.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABU7mAHY9zKvuD62MpfER3-Y9etMBbLEUyZAdeiM8suvfg6myXEpYGQmiGaOHXVOpYbPfGYlUnatltH-B1_uSXcCshgnHG_wsv3mFlKZD7eH2Fqcwbgezjvr4yB_2z2pND90DOA.jpg?r=51f',
-      ageRating: '12세 이상 관람가',
-      duration: 189,
-      genre: ['유쾌 발랄', '장대한 판타지의 세계', '상상의 나래']
-    },
-    {
-      movieId: 2,
-      title: '선과 악의 학교',
-      posterUrl: 'https://occ-0-1361-1360.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABU7mAHY9zKvuD62MpfER3-Y9etMBbLEUyZAdeiM8suvfg6myXEpYGQmiGaOHXVOpYbPfGYlUnatltH-B1_uSXcCshgnHG_wsv3mFlKZD7eH2Fqcwbgezjvr4yB_2z2pND90DOA.jpg?r=51f',
-      ageRating: '12세 이상 관람가',
-      duration: 189,
-      genre: ['유쾌 발랄', '장대한 판타지의 세계', '상상의 나래']
-    }
-  ]
-}
+import { getMoviePeople } from "@/services/api/PersonDetailsPage/people";
+import { PersonDetailsResponse } from "@/types/personDetailsResponse";
 
 const PersonDetails = () => {
     const [showModal, setShowModal] = useState(false);
@@ -68,18 +13,32 @@ const PersonDetails = () => {
     const [atTop, setAtTop] = useState(true);
 
     const { id } = useParams();
-    const selectedId = Number(id);
+    const selectedId = id;
     const navigate = useNavigate();
-    
-    // 모달 열고 닫기 애니메이션
+
+    const [person, setPerson] = useState<PersonDetailsResponse | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    // API 호출 - 인물이 출연/제작한 영화 목록 조회
     useEffect(() => {
-        if (selectedId === person.personId) {
-            setShowModal(true);
-            setTimeout(() => setAnimateModal(true), 10);
-        } else {
-            setAnimateModal(false);
-        }
-    }, [selectedId])
+        if (!selectedId) return;
+            
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const data = await getMoviePeople(selectedId);
+                setPerson(data);
+                setShowModal(true);
+                setTimeout(() => setAnimateModal(true), 10);
+            }
+            catch (err) {
+                console.error("인물 정보 불러오기 실패: ", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, [selectedId]);
 
     const handleClose = () => {
         setAnimateModal(false);
@@ -97,7 +56,7 @@ const PersonDetails = () => {
     };
     const insetTopClass = atTop ? 'top-[24px]' : 'top-0';
 
-    if (!showModal) return null;
+    if (!showModal || loading || !person) return null;
 
     return (
         <div className="relative z-[100]">
@@ -147,7 +106,7 @@ const PersonDetails = () => {
                                         id: String(movie.movieId),
                                         title: movie.title,
                                         posterUrl: movie.posterUrl,
-                                        durationMinutes: movie.duration,
+                                        durationMinutes: movie.durationMinutes,
                                         ageRating: movie.ageRating,
                                         genres: movie.genre.map((name, idx) => ({ id: String(idx), name })), // 간단한 변환
                                         }}
