@@ -44,7 +44,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
         <button
           onClick={handlePrev}
           className="absolute left-2 top-1/2 -translate-y-1/2 z-30 text-white cursor-pointer"
-          style={{ transform: "translate(-100%, -20%)" }}
+          style={{ transform: "translate(-130%, -20%)" }}
         >
           <ChevronLeft className="w-9 h-9" />
         </button>
