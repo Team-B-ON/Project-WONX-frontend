@@ -71,18 +71,20 @@ const GenreDetails = () => {
     }
     }, [location.pathname]);
 
+    useEffect(() => {
+        if (!selectedId) return;
+        setShowModal(true);
+        setTimeout(() => setAnimateModal(true), 10);
+    }, [selectedId]);
+
     // API 호출 - 장르별 영화 목록 조회: 정렬 뷰
     useEffect(() => {
-        if (!selectedId || viewMode !== 'grid') return;
-
         const fetchSorted = async () => {
             try {
                 setLoading(true);
                 const sortParam = mapSortOptionToParam(sortOption);
                 const data = await getSortedGenres(selectedId, 0, 100, sortParam);
                 setGenreGrid(data);
-                setShowModal(true);
-                setTimeout(() => setAnimateModal(true), 10);
             }
             catch (err) {
                 console.error("정렬 목록 불러오기 실패: ", err);
@@ -95,7 +97,7 @@ const GenreDetails = () => {
 
     // API 호출 - 장르별 영화 목록 조회: 그룹 뷰
     useEffect(() => {
-        if (!selectedId || viewMode !== 'list') return;
+        if (!selectedId) return;
 
         const fetchGrouped = async () => {
             try {
