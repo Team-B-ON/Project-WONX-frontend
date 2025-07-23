@@ -6,9 +6,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type MovieSliderProps = {
   movies: Movie[];
+  backgroundLocation?: Location;
 };
 
-const MovieSlider = ({ movies }: MovieSliderProps) => {
+const MovieSlider = ({ movies, backgroundLocation }: MovieSliderProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -88,6 +89,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
                       movie={movie}
                       isFirst={isFirst}
                       isLast={isLast}
+                      backgroundLocation={backgroundLocation} 
                     />
                   </div>
                 </div>

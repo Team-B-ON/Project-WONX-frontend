@@ -18,6 +18,7 @@ import likeHoveredButton from '@/assets/MovieDetailsPage/thumbup-fill-hovered.sv
 import { MovieSummary } from '@/types/movieSummary';
 import { postBookmark, deleteBookmark } from '@/services/api/MovieDetailsPage/bookmark';
 import { postLike, deleteLike } from '@/services/api/MovieDetailsPage/like';
+import type { Location } from 'react-router-dom';
 
 type MovieCardProps = {
     movie: Movie | MovieSummary;
@@ -40,6 +41,7 @@ const MovieCard = ({ movie, isFirst = false, isLast = false, onToggleBookmark, o
 
     const navigate = useNavigate();
     const location = useLocation();
+    const fallbackLocation = backgroundLocation || location;
 
     const movieId = useMemo(() => {
         if('movieId' in movie) return movie.movieId?.toString() ?? '';
@@ -56,10 +58,10 @@ const MovieCard = ({ movie, isFirst = false, isLast = false, onToggleBookmark, o
             params.set('id', movieId);
             navigate(
                 {
-                    pathname: location.pathname,
+                    pathname: fallbackLocation.pathname,
                     search: `?${params.toString()}`
                 },
-                { state: { backgroundLocation } }
+                { state: { backgroundLocation: fallbackLocation } }
             );
         }, 200);
     };

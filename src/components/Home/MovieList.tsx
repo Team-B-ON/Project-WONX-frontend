@@ -1,7 +1,8 @@
 import { Movie } from '@/types/movie';
 import MovieCard from '../common/MovieCard';
 import MovieSlider from '../common/MovieSlider';
-import MovieTag from '../common/MovieTag'; // MovieTag 꼭 import!
+import MovieTag from '../common/MovieTag';
+import type { Location } from 'react-router-dom';
 
 interface MovieListProps {
   title: string;
@@ -11,6 +12,7 @@ interface MovieListProps {
   showMore?: boolean;       // 버튼 노출 여부 (기본 true)
   onToggleBookmark?: (movieId: string, newState: boolean) => void;
   onToggleLike?: (movieId: string, newState: boolean) => void;
+  backgroundLocation?: Location;
 }
 
 export default function MovieList({
@@ -20,6 +22,7 @@ export default function MovieList({
   onClickMore,
   showMore = true,
   onToggleBookmark, onToggleLike,
+  backgroundLocation,
 }: MovieListProps) {
   return (
     <section className="pt-6 pb-10 space-y-4 overflow-visible">
@@ -30,7 +33,7 @@ export default function MovieList({
         {/* 슬라이드 영역 */}
         {useCustomSlider ? (
           // MovieSlider 컴포넌트 사용 (좌우 버튼 등)
-          <MovieSlider movies={movies} />
+          <MovieSlider movies={movies} backgroundLocation={backgroundLocation} />
         ) : (
           // 기본 수평 스크롤 방식
           <div className="flex gap-4 scroll-smooth scrollbar-hide">
@@ -40,6 +43,7 @@ export default function MovieList({
                   movie={movie}
                   onToggleBookmark={onToggleBookmark}
                   onToggleLike={onToggleLike} 
+                  backgroundLocation={backgroundLocation} 
                 />
               </div>
             ))}

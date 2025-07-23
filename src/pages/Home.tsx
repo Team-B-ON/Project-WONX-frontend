@@ -20,6 +20,7 @@ import { WatchHistory } from '@/types/watchHistory';
 import { Review } from '@/types/review';
 import { Movie } from '@/types/movie';
 import { User } from '@/types/user';
+import { useLocation } from 'react-router-dom';
 
 const Home = () => {
   const [bannerMovie, setBannerMovie] = useState<Movie | null>(null);
@@ -29,6 +30,7 @@ const Home = () => {
   const [popularReviews, setPopularReviews] = useState<Review[]>([]);
   const [reviewCount, setReviewCount] = useState<number>(0);
   const [user, setUser] = useState<User | null>(null);
+  const location = useLocation();
 
   // 북마크 변경 콜백
   const handleBookmarkUpdate = (movieId: string, newState: boolean) => {
@@ -140,6 +142,7 @@ const Home = () => {
           title="최근 본 콘텐츠"
           movies={convertedRecentWatched}
           useCustomSlider
+          backgroundLocation={location}
           onToggleBookmark={handleBookmarkUpdate}
           onToggleLike={handleLikeUpdate}
         />
