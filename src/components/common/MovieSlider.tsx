@@ -35,7 +35,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
 
   return (
     <div
-      className="relative w-full"
+      className="relative w-full overflow-visible"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -43,14 +43,15 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       {currentPage > 0 && isHovered && (
         <button
           onClick={handlePrev}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-30 text-white p-2"
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-30 text-white"
+          style={{ transform: "translate(-100%, -50%)" }}
         >
           <ChevronLeft className="w-9 h-9" />
         </button>
       )}
 
       {/* 슬라이드 카드 영역 */}
-      <div className={`flex gap-x-3 ${shouldCenter ? 'justify-center' : 'justify-start'} h-[120px] relative overflow-visible`}>
+      <div className={`flex gap-x-3 ${shouldCenter ? 'justify-center' : 'justify-start'} h-[120px] relative overflow-visible px-[20px]`}>
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={currentPage}
@@ -100,9 +101,10 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       {currentPage < totalPages - 1 && isHovered && (
         <button
           onClick={handleNext}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-30 text-white p-2"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-30 text-white"
+          style={{ transform: "translate(100%, -50%)" }}
         >
-          <ChevronRight className="w-7 h-7" />
+          <ChevronRight className="w-9 h-9" />
         </button>
       )}
     </div>
