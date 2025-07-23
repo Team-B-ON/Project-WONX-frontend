@@ -26,7 +26,8 @@ const PersonDetails = () => {
     if (showModal && location.pathname !== `/person/${selectedId}`) {
         setAnimateModal(false);
         setTimeout(() => {
-        setShowModal(false);
+            setShowModal(false);
+            navigate(-1);
         }, 200);
     }
     }, [location.pathname]);
