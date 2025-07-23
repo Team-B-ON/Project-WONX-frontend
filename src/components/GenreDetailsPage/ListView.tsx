@@ -24,9 +24,7 @@ const ListView = ({ genre, onRequestClose, backgroundLocation }: ListViewProps) 
             onClickMore={() => 
               navigate(`/genre/${group.subgenreId}`, { 
                 state: { 
-                  backgroundLocation: {
-                    pathname: location.pathname + location.search
-                  }
+                  backgroundLocation: location.pathname + location.search
                  } 
               })}
           />
