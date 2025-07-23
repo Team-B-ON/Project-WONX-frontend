@@ -43,9 +43,9 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       {currentPage > 0 && isHovered && (
         <button
           onClick={handlePrev}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-30 bg-black/50 hover:bg-opacity-70 text-white p-2"
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-30 text-white p-2"
         >
-          <ChevronLeft className="w-7 h-7" />
+          <ChevronLeft className="w-9 h-9" />
         </button>
       )}
 
@@ -100,7 +100,7 @@ const MovieSlider = ({ movies }: MovieSliderProps) => {
       {currentPage < totalPages - 1 && isHovered && (
         <button
           onClick={handleNext}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-30 bg-black/50 hover:bg-opacity-70 text-white p-2"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-30 text-white p-2"
         >
           <ChevronRight className="w-7 h-7" />
         </button>
