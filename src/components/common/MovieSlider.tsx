@@ -3,6 +3,7 @@ import { Movie } from "@/types/movie";
 import MovieCard from "./MovieCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { Location } from 'react-router-dom';
 
 type MovieSliderProps = {
   movies: Movie[];
