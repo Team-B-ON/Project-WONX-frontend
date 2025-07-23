@@ -27,6 +27,7 @@ const PersonDetails = () => {
             try {
                 setLoading(true);
                 const data = await getMoviePeople(selectedId);
+                console.log("인물 데이터: ", data);
                 setPerson(data);
                 setShowModal(true);
                 setTimeout(() => setAnimateModal(true), 10);
@@ -99,7 +100,7 @@ const PersonDetails = () => {
                             {/* 영화 리스트 */}
                             <div className="px-[60px] flex justify-center">
                                 <div className="grid [grid-template-columns:repeat(5,217.91px)] gap-[6.4px] overflow-visible">
-                                    {person.movies.map((movie) => (
+                                    {person?.movies?.map((movie) => (
                                     <MovieCard
                                         key={movie.movieId}
                                         movie={{
@@ -108,7 +109,7 @@ const PersonDetails = () => {
                                         posterUrl: movie.posterUrl,
                                         durationMinutes: movie.durationMinutes,
                                         ageRating: movie.ageRating,
-                                        genres: movie.genre.map((name, idx) => ({ id: String(idx), name })), // 간단한 변환
+                                        genres: (movie.genre ?? []).map((name, idx) => ({ id: String(idx), name })),
                                         }}
                                     />
                                     ))}
