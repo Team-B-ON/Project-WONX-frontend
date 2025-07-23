@@ -101,17 +101,19 @@ const PersonDetails = () => {
                             <div className="px-[60px] flex justify-center">
                                 <div className="grid [grid-template-columns:repeat(5,217.91px)] gap-[6.4px] overflow-visible">
                                     {person?.movies?.map((movie) => (
-                                    <MovieCard
-                                        key={movie.movieId}
-                                        movie={{
-                                        id: String(movie.movieId),
-                                        title: movie.title,
-                                        posterUrl: movie.posterUrl,
-                                        durationMinutes: movie.durationMinutes,
-                                        ageRating: movie.ageRating,
-                                        genres: (movie.genre ?? []).map((name, idx) => ({ id: String(idx), name })),
-                                        }}
-                                    />
+                                        movie && (
+                                            <MovieCard
+                                                key={movie.movieId}
+                                                movie={{
+                                                id: String(movie.movieId),
+                                                title: movie.title,
+                                                posterUrl: movie.posterUrl,
+                                                durationMinutes: movie.durationMinutes,
+                                                ageRating: movie.ageRating,
+                                                genres: (movie.genre ?? []).map((name, idx) => ({ id: String(idx), name })),
+                                                }}
+                                            />
+                                        )
                                     ))}
                                 </div>
                             </div>

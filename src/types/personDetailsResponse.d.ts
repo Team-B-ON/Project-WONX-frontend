@@ -1,15 +1,17 @@
+import { Genre } from "./genre";
+
 export interface PersonDetailsResponse {
   personId: string;
   name: string;
   role: ('director' | 'screenwriter' | 'actor')[];
   movies: {
-    movieId: number;
+    movieId: string;
     title: string;
     posterUrl: string;
     bookmarked: boolean;
     liked: boolean;
     ageRating: string;
     durationMinutes: number;
-    genre: string[];
+    genres: Genre[];
   }[];
 }
