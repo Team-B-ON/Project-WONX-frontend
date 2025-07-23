@@ -17,12 +17,13 @@ const PopularReviewsList = ({ reviews, title = "인기 리뷰 모아보기" }: P
   }
 
   return (
-    <section className='px-[80px] pt-[80px] pb-[16px]'>
+    <section className='px-[80px] pt-[24px] flex flex-col space-y-[16px]'>
       <MovieTag
         title={title}
         onClickMore={() => navigate('/reviews/popular')}
         showMore
       />
+      <div className='pt-[16px]'></div>
       <ReviewSlider reviews={reviews} />
     </section>
   );

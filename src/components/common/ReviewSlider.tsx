@@ -48,7 +48,7 @@ const ReviewSlider = ({ reviews }: ReviewSliderProps) => {
         </button>
       )}
 
-      <div className="flex gap-x-3 justify-center min-h-[200px]">
+      <div className="flex gap-x-3 min-h-[200px]">
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={currentPage}
@@ -57,7 +57,7 @@ const ReviewSlider = ({ reviews }: ReviewSliderProps) => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: direction > 0 ? -400 : 400, opacity: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="flex gap-x-4 justify-center w-full"
+            className="flex gap-x-4 w-full"
             style={{ position: "absolute" }}
           >
             {currentReviews.map((review, idx) => (
