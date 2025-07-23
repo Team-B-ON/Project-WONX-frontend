@@ -1,5 +1,5 @@
 import { UIEvent, useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import closeBtn from '@/assets/PersonDetailsPage/close-btn.svg';
 import backBtn from '@/assets/PersonDetailsPage/back-arrow.svg';
 import MovieCard from "@/components/common/MovieCard";
@@ -19,6 +19,18 @@ const PersonDetails = () => {
 
     const [person, setPerson] = useState<PersonDetailsResponse | null>(null);
     const [loading, setLoading] = useState(true);
+
+    const location = useLocation();
+
+    useEffect(() => {
+    if (showModal && location.pathname !== `/person/${selectedId}`) {
+        setAnimateModal(false);
+        setTimeout(() => {
+        setShowModal(false);
+        }, 200);
+    }
+    }, [location.pathname]);
+
 
     // API 호출 - 인물이 출연/제작한 영화 목록 조회
     useEffect(() => {
