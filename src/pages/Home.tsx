@@ -153,19 +153,19 @@ const Home = () => {
         onToggleLike={handleLikeUpdate}
       />
 
-      {/* 4. 인기 리뷰 */}
-      <PopularReviewsList 
-        title="지금 인기 있는 리뷰" 
-        reviews={popularReviews}
-      />
-
-      {/* 5. 추천 콘텐츠 */}
+      {/* 4. 추천 콘텐츠 */}
       <MovieList
         title={`${user?.nickname || '당신'}님이 좋아할 만한 콘텐츠`}
         movies={convertedRecommended}
         useCustomSlider
         onToggleBookmark={handleBookmarkUpdate}
         onToggleLike={handleLikeUpdate}
+      />
+
+      {/* 5. 인기 리뷰 */}
+      <PopularReviewsList 
+        title="지금 인기 있는 리뷰" 
+        reviews={popularReviews}
       />
 
       {/* 6. 리뷰 카운트 */}
