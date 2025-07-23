@@ -14,7 +14,7 @@ const SearchReviewsList = ({ reviews, title = "리뷰에서 찾은 콘텐츠" }:
   }
 
   return (
-    <section>
+    <section className='flex flex-col space-y-[16px] px-[80px]'>
       <MovieTag title={title} showMore={false} />
       <ReviewSlider reviews={reviews} />
     </section>
