@@ -186,7 +186,7 @@ const MyPage: React.FC = () => {
 
         {/* 각각의 섹션 */}
         {/* 1. 최근 본 콘텐츠 */}
-        <section>
+        <section className='flex flex-col space-y-[16px] px-[80px]'>
           <MovieTag
             title="최근 본 콘텐츠"
             onClickMore={() => navigate('/mypage/recent')}
@@ -218,7 +218,7 @@ const MyPage: React.FC = () => {
         </section>
 
         {/* 4. 내가 쓴 리뷰 */}
-        <section>
+        <section className='flex flex-col space-y-[16px] px-[80px]'>
           <MypageReviewsList reviews={reviews} />
         </section>
       </main>
