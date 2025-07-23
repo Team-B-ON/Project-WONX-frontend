@@ -170,7 +170,7 @@ const MyPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black">
-      <main className="pt-[68px] px-8 pb-12 space-y-12">
+      <main className="pt-[68px] px-8 pb-12">
         {/* 프로필 헤더 */}
         <ProfileHeader
           profilePictureUrl={ previewAvatar || profile.profileImageUrl || defaultAvatar }
