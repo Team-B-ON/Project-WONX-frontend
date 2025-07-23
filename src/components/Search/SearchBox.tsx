@@ -96,11 +96,9 @@ const SearchBox: React.FC = () => {
           className={`
             h-9 bg-black text-gray-300
             placeholder:text-sm placeholder-gray-400
-            border border-white
-            py-[7px] pl-[43px] pr-[6px]
             rounded-md
             transition-all duration-200 ease-in-out
-            ${isExpanded ? 'w-[275px] opacity-100' : 'w-0 opacity-0 overflow-hidden'}
+            ${isExpanded ? 'w-[275px] opacity-100 border border-white py-[7px] pl-[43px] pr-[6px]' : 'w-0 opacity-0 border-0 p-0'}
           `}
         />
 
