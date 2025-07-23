@@ -23,7 +23,6 @@ const PopularReviewsList = ({ reviews, title = "인기 리뷰 모아보기" }: P
         onClickMore={() => navigate('/reviews/popular')}
         showMore
       />
-      <div className='pt-[16px]'></div>
       <ReviewSlider reviews={reviews} />
     </section>
   );
