@@ -4,8 +4,8 @@ export interface MovieSummary {
   movieId: string;  
   title: string;
   posterUrl: string;
-  isBookmarked: boolean;
-  isLiked: boolean;
+  bookmarked: boolean;
+  liked: boolean;
   ageRating: string;
   durationMinutes: number;
   genres: Genre[];

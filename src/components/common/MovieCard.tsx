@@ -33,8 +33,8 @@ const MovieCard = ({ movie, isFirst = false, isLast = false, onToggleBookmark, o
     const [isThumbHovered, setIsThumbHovered] = useState(false);
     const [isDetailsHovered, setIsDetailsHovered] = useState(false);
 
-    const [isBookmarked, setIsBookmarked] = useState(movie.isBookmarked ?? false);
-    const [isLiked, setIsLiked] = useState(movie.isLiked ?? false);
+    const [isBookmarked, setIsBookmarked] = useState(movie.bookmarked ?? false);
+    const [isLiked, setIsLiked] = useState(movie.liked ?? false);
 
     const navigate = useNavigate();
     const location = useLocation();

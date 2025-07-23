@@ -12,8 +12,8 @@ export interface GenreListResponse {
       movieId: number;
       title: string;
       posterUrl: string;
-      isBookmarked: boolean;
-      isLiked: boolean;
+      bookmarked: boolean;
+      liked: boolean;
       ageRating: string;
       duration: number;
       genre: string[];
@@ -32,8 +32,8 @@ export interface GenreGridResponse {
     movieId: number;
     title: string;
     posterUrl: string;
-    isBookmarked: boolean;
-    isLiked: boolean;
+    bookmarked: boolean;
+    liked: boolean;
     ageRating: string;
     duration: number;
     genre: string[];
