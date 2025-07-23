@@ -43,7 +43,7 @@ const ReviewSlider = ({ reviews }: ReviewSliderProps) => {
         <button
           onClick={handlePrev}
           className="absolute left-2 top-1/2 -translate-y-1/2 z-30 text-white cursor-pointer"
-          style={{ transform: "translate(-100%, -20%)" }}
+          style={{ transform: "translate(-140%, -20%)" }}
         >
           <ChevronLeft className="w-9 h-9" />
         </button>
@@ -81,7 +81,7 @@ const ReviewSlider = ({ reviews }: ReviewSliderProps) => {
         <button
           onClick={handleNext}
           className="absolute right-2 top-1/2 -translate-y-1/2 z-30 text-white cursor-pointer"
-          style={{ transform: "translate(120%, 0%)" }}
+          style={{ transform: "translate(230%, 0%)" }}
         >
           <ChevronRight className="w-9 h-9" />
         </button>
