@@ -110,7 +110,7 @@ const PersonDetails = () => {
                                                 posterUrl: movie.posterUrl,
                                                 durationMinutes: movie.durationMinutes,
                                                 ageRating: movie.ageRating,
-                                                genres: (movie.genre ?? []).map((name, idx) => ({ id: String(idx), name })),
+                                                genres: movie.genres ?? [],
                                                 }}
                                             />
                                         )
