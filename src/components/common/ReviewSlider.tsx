@@ -48,7 +48,7 @@ const ReviewSlider = ({ reviews }: ReviewSliderProps) => {
         </button>
       )}
 
-      <div className="flex gap-x-3">
+      <div className="flex gap-x-3 min-h-[100px]">
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={currentPage}
