@@ -115,6 +115,7 @@ const PersonDetails = () => {
                                                     bookmarked: movie.bookmarked,
                                                     liked: movie.liked
                                                 }}
+                                                onRequestClose={handleClose}
                                             />
                                         )
                                     ))}

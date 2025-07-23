@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { Movie } from "@/types/movie";
 import { formatDuration } from "@/utils/timeFormat";
@@ -25,9 +25,10 @@ type MovieCardProps = {
     isLast?: boolean;
     onToggleBookmark?: (movieId: string, newState: boolean) => void;
     onToggleLike?: (movieId: string, newState: boolean) => void;
+    onRequestClose?: () => void;
 };
 
-const MovieCard = ({ movie, isFirst = false, isLast = false, onToggleBookmark, onToggleLike }: MovieCardProps) => {
+const MovieCard = ({ movie, isFirst = false, isLast = false, onToggleBookmark, onToggleLike, onRequestClose }: MovieCardProps) => {
     const [isPlayHovered, setIsPlayHovered] = useState(false);
     const [isAddHovered, setIsAddHovered] = useState(false);
     const [isThumbHovered, setIsThumbHovered] = useState(false);
@@ -47,15 +48,19 @@ const MovieCard = ({ movie, isFirst = false, isLast = false, onToggleBookmark, o
     const handleClick = () => {
         if (!movieId || movieId === 'undefined') return;
 
-        const params = new URLSearchParams(location.search);
-        params.set('id', movieId);
-        navigate(
-            {
-                pathname: location.pathname,
-                search: `?${params.toString()}`
-            },
-            { state: { backgroundLocation: location } }
-        );
+        onRequestClose?.();
+
+        setTimeout(() => {
+            const params = new URLSearchParams(location.search);
+            params.set('id', movieId);
+            navigate(
+                {
+                    pathname: location.pathname,
+                    search: `?${params.toString()}`
+                },
+                { state: { backgroundLocation: location } }
+            );
+        }, 200);
     };
 
     // API 호출 - 북마크 처리
@@ -93,6 +98,12 @@ const MovieCard = ({ movie, isFirst = false, isLast = false, onToggleBookmark, o
             console.error("좋아요 처리 실패", error);
         }
     };
+
+    useEffect(() => {
+        setIsBookmarked(movie.bookmarked ?? false);
+        setIsLiked(movie.liked ?? false);
+    }, [movie.bookmarked, movie.liked]);
+
 
     return (
         <div className="
