@@ -118,11 +118,7 @@ const GenreDetails = () => {
         setAnimateModal(false);
         setTimeout(() => {
             setShowModal(false);
-            if (backgroundLocation && backgroundLocation !== location.pathname) {
-                navigate(backgroundLocation);
-            } else {
-                navigate(-1);
-            }
+            navigate(backgroundLocation, { replace: true }); 
         }, 200);
     };
     const handleBack = () => navigate(-1);
