@@ -21,6 +21,7 @@ const PersonDetails = () => {
     const [loading, setLoading] = useState(true);
 
     const location = useLocation();
+    const backgroundLocation = location.state?.backgroundLocation || location;
 
     useEffect(() => {
     if (showModal && location.pathname !== `/person/${selectedId}`) {
@@ -129,6 +130,7 @@ const PersonDetails = () => {
                                                     liked: movie.liked
                                                 }}
                                                 onRequestClose={handleClose}
+                                                backgroundLocation={backgroundLocation}
                                             />
                                         )
                                     ))}

@@ -26,9 +26,10 @@ type MovieCardProps = {
     onToggleBookmark?: (movieId: string, newState: boolean) => void;
     onToggleLike?: (movieId: string, newState: boolean) => void;
     onRequestClose?: () => void;
+    backgroundLocation?: Location;
 };
 
-const MovieCard = ({ movie, isFirst = false, isLast = false, onToggleBookmark, onToggleLike, onRequestClose }: MovieCardProps) => {
+const MovieCard = ({ movie, isFirst = false, isLast = false, onToggleBookmark, onToggleLike, onRequestClose, backgroundLocation }: MovieCardProps) => {
     const [isPlayHovered, setIsPlayHovered] = useState(false);
     const [isAddHovered, setIsAddHovered] = useState(false);
     const [isThumbHovered, setIsThumbHovered] = useState(false);
@@ -58,7 +59,7 @@ const MovieCard = ({ movie, isFirst = false, isLast = false, onToggleBookmark, o
                     pathname: location.pathname,
                     search: `?${params.toString()}`
                 },
-                { state: { backgroundLocation: location } }
+                { state: { backgroundLocation } }
             );
         }, 200);
     };
