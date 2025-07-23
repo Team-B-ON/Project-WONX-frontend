@@ -24,8 +24,12 @@ const ListView = ({ genre, onRequestClose, backgroundLocation }: ListViewProps) 
             onClickMore={() => 
               navigate(`/genre/${group.subgenreId}`, { 
                 state: { 
-                  backgroundLocation: location,
-                 } })}
+                  backgroundLocation: {
+                    pathname: location.pathname,
+                    search: location.search
+                  }
+                 } 
+              })}
           />
 
           {/* 서브 장르 영화 리스트 */}
