@@ -1,5 +1,3 @@
-// components/Home/PopularReviewsList.tsx
-
 import React from 'react';
 import { Review } from '@/types/review';
 import MovieTag from '@/components/common/MovieTag';

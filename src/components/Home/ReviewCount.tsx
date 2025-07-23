@@ -7,7 +7,7 @@ export default function ReviewCountBanner({ reviewCount }: ReviewCountBannerProp
   const formattedCount = reviewCount.toLocaleString();
 
   return (
-    <div className="bg-black py-6 mt-10 mb-5 flex justify-center items-center">
+    <div className="bg-black py-6 mt-10 pb-10 flex justify-center items-center">
       <p className="text-lg text-white text-center">
         지금까지{' '}
         <span className="text-[#E50914] text-500 font-bold text-xl">★{formattedCount}</span>{' '}
