@@ -22,10 +22,9 @@ const ListView = ({ genre, onRequestClose, backgroundLocation }: ListViewProps) 
           <MovieTag
             title={group.subgenre}
             onClickMore={() => 
-              navigate(`/genre/${genre.genreId}`, { 
+              navigate(`/genre/${group.subgenreId}`, { 
                 state: { 
                   backgroundLocation: location,
-                  subgenreId: group.subgenreId,
                  } })}
           />
 
