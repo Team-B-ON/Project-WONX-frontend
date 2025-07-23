@@ -218,7 +218,7 @@ const MyPage: React.FC = () => {
         </section>
 
         {/* 4. 내가 쓴 리뷰 */}
-        <section className='flex flex-col space-y-[16px] px-[80px]'>
+        <section className='px-[80px]'>
           <MypageReviewsList reviews={reviews} />
         </section>
       </main>

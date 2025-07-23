@@ -16,7 +16,7 @@ const MypageReviewsList = ({ reviews }: Props) => {
   }
 
   return (
-    <section>
+    <section className='flex flex-col space-y-[16px] '>
       <MovieTag
         title="내가 쓴 리뷰 모아보기"
         onClickMore={() => navigate('/mypage/reviews')}
