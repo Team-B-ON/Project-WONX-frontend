@@ -17,7 +17,7 @@ const PopularReviewsList = ({ reviews, title = "인기 리뷰 모아보기" }: P
   }
 
   return (
-    <section>
+    <section className='px-[80px]'>
       <MovieTag
         title={title}
         onClickMore={() => navigate('/reviews/popular')}
