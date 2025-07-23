@@ -59,7 +59,7 @@ const PersonDetails = () => {
         setAnimateModal(false);
         setTimeout(() => {
             setShowModal(false);
-            navigate(-1);
+            navigate('/home', { replace: true }); 
         }, 200);
     };
     const handleBack = () => navigate(-1);
