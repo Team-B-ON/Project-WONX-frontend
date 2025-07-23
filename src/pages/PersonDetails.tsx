@@ -5,6 +5,7 @@ import backBtn from '@/assets/PersonDetailsPage/back-arrow.svg';
 import MovieCard from "@/components/common/MovieCard";
 import { getMoviePeople } from "@/services/api/PersonDetailsPage/people";
 import { PersonDetailsResponse } from "@/types/personDetailsResponse";
+import { Genre } from "@/types/genre";
 
 const PersonDetails = () => {
     const [showModal, setShowModal] = useState(false);
@@ -110,7 +111,7 @@ const PersonDetails = () => {
                                                 posterUrl: movie.posterUrl,
                                                 durationMinutes: movie.durationMinutes,
                                                 ageRating: movie.ageRating,
-                                                genres: movie.genres ?? [],
+                                                genres: movie.genres as Genre[],
                                                 }}
                                             />
                                         )
