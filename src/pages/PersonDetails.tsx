@@ -106,12 +106,14 @@ const PersonDetails = () => {
                                             <MovieCard
                                                 key={movie.movieId}
                                                 movie={{
-                                                id: String(movie.movieId),
-                                                title: movie.title,
-                                                posterUrl: movie.posterUrl,
-                                                durationMinutes: movie.durationMinutes,
-                                                ageRating: movie.ageRating,
-                                                genres: movie.genres as Genre[],
+                                                    movieId: String(movie.movieId),
+                                                    title: movie.title,
+                                                    posterUrl: movie.posterUrl,
+                                                    durationMinutes: movie.durationMinutes,
+                                                    ageRating: movie.ageRating,
+                                                    genres: movie.genres as Genre[],
+                                                    bookmarked: movie.bookmarked,
+                                                    liked: movie.liked
                                                 }}
                                             />
                                         )
