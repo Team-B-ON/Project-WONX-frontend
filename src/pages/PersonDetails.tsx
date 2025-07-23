@@ -13,12 +13,12 @@ const PersonDetails = () => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [atTop, setAtTop] = useState(true);
 
+    const [person, setPerson] = useState<PersonDetailsResponse | null>(null);
+    const [loading, setLoading] = useState(true);
+
     const { id } = useParams();
     const selectedId = id;
     const navigate = useNavigate();
-
-    const [person, setPerson] = useState<PersonDetailsResponse | null>(null);
-    const [loading, setLoading] = useState(true);
 
     const location = useLocation();
     const backgroundLocation = location.state?.backgroundLocation || location;
@@ -42,7 +42,6 @@ const PersonDetails = () => {
             try {
                 setLoading(true);
                 const data = await getMoviePeople(selectedId);
-                console.log("인물 데이터: ", data);
                 setPerson(data);
                 setShowModal(true);
                 setTimeout(() => setAnimateModal(true), 10);

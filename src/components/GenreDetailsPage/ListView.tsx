@@ -2,12 +2,16 @@ import { useNavigate } from 'react-router-dom';
 import { GenreListResponse } from '@/types/genreDetailsResponse';
 import MovieTag from '@/components/common/MovieTag';
 import MovieCard from '@/components/common/MovieCard';
+import { Genre } from '@/types/genre';
+import type { Location } from 'react-router-dom';
 
 export type ListViewProps = {
   genre: GenreListResponse;
+  backgroundLocation: Location;
+  onRequestClose: () => void;
 };
 
-const ListView = ({ genre }: ListViewProps) => {
+const ListView = ({ genre, onRequestClose, backgroundLocation }: ListViewProps) => {
   const navigate = useNavigate();
 
   return (
@@ -26,13 +30,17 @@ const ListView = ({ genre }: ListViewProps) => {
               <MovieCard
                 key={movie.movieId}
                 movie={{
-                  id: String(movie.movieId),
+                  movieId: String(movie.movieId),
                   title: movie.title,
                   posterUrl: movie.posterUrl,
-                  durationMinutes: movie.duration,
+                  durationMinutes: movie.durationMinutes,
                   ageRating: movie.ageRating,
-                  genres: movie.genre.map((name, idx) => ({ id: String(idx), name })),
+                  genres: movie.genres as Genre[],
+                  bookmarked: movie.bookmarked,
+                  liked: movie.liked
                 }}
+                onRequestClose={onRequestClose}
+                backgroundLocation={backgroundLocation}
               />
             ))}
           </div>

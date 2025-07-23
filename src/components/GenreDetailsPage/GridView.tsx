@@ -1,11 +1,15 @@
 import { GenreGridResponse } from "@/types/genreDetailsResponse";
 import MovieCard from "../common/MovieCard";
+import { Genre } from "@/types/genre";
+import type { Location } from 'react-router-dom';
 
 export type ListViewProps = {
   genre: GenreGridResponse;
+  backgroundLocation: Location;
+  onRequestClose: () => void;
 };
 
-const GridView = ({ genre }: ListViewProps) => {
+const GridView = ({ genre, onRequestClose, backgroundLocation }: ListViewProps) => {
     const { results } = genre;
 
     return (
@@ -15,13 +19,17 @@ const GridView = ({ genre }: ListViewProps) => {
                     <MovieCard
                         key={movie.movieId}
                         movie={{
-                        id: String(movie.movieId),
-                        title: movie.title,
-                        posterUrl: movie.posterUrl,
-                        durationMinutes: movie.duration,
-                        ageRating: movie.ageRating,
-                        genres: movie.genre.map((name, idx) => ({ id: String(idx), name })),
+                            movieId: String(movie.movieId),
+                            title: movie.title,
+                            posterUrl: movie.posterUrl,
+                            durationMinutes: movie.durationMinutes,
+                            ageRating: movie.ageRating,
+                            genres: movie.genres as Genre[],
+                            bookmarked: movie.bookmarked,
+                            liked: movie.liked
                         }}
+                        onRequestClose={onRequestClose}
+                        backgroundLocation={backgroundLocation}
                     />
                 ))}
             </div>

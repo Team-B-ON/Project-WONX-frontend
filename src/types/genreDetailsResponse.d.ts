@@ -1,5 +1,7 @@
+import { Genre } from "./genre";
+
 export interface GenreListResponse {
-  genreId: number;
+  genreId: string;
   genreName: string;
   offset: number;
   limit: number;
@@ -15,14 +17,14 @@ export interface GenreListResponse {
       bookmarked: boolean;
       liked: boolean;
       ageRating: string;
-      duration: number;
-      genre: string[];
+      durationMinutes: number;
+      genres: Genre[];
     }[];
   }[];
 }
 
 export interface GenreGridResponse {
-  genreId: number;
+  genreId: string;
   genreName: string;
   offset: number;
   limit: number;
@@ -35,7 +37,7 @@ export interface GenreGridResponse {
     bookmarked: boolean;
     liked: boolean;
     ageRating: string;
-    duration: number;
-    genre: string[];
+    durationMinutes: number;
+    genres: Genre[];
   }[];
 }

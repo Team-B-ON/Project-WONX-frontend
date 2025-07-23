@@ -1,5 +1,5 @@
 import { UIEvent, useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import closeBtn from '@/assets/PersonDetailsPage/close-btn.svg';
 import backBtn from '@/assets/PersonDetailsPage/back-arrow.svg';
 import listBtn from '@/assets/GenreDetailsPage/list-not-hovered.svg';
@@ -9,10 +9,8 @@ import gridBtnHovered from '@/assets/GenreDetailsPage/grid-hovered.svg';
 import gridIcon from '@/assets/GenreDetailsPage/grid-icon.svg';
 import GridView from "@/components/GenreDetailsPage/GridView";
 import ListView from "@/components/GenreDetailsPage/ListView";
-import { mockGenreGrid, mockGenreList } from "@/mocks/genreMovies";
-
-const genre = mockGenreList;
-const genreGrid = mockGenreGrid;
+import { getGenresGroupedBy, getSortedGenres } from "@/services/api/GenreDetailsPage/genres";
+import { GenreGridResponse, GenreListResponse } from "@/types/genreDetailsResponse";
 
 const GenreDetails = () => {
     const [showModal, setShowModal] = useState(false);
@@ -27,6 +25,10 @@ const GenreDetails = () => {
     const [sortOption, setSortOption] = useState('추천 콘텐츠');
     const sortOptions = ['추천 콘텐츠', '출시일순', '오름차순(ㄱ~Z)', '내림차순(Z~ㄱ)'];
 
+    const [genreGrid, setGenreGrid] = useState<GenreGridResponse | null>(null);
+    const [genreList, setGenreList] = useState<GenreListResponse | null>(null);
+    const [loading, setLoading] = useState(true);
+
     // 뷰 버튼 호버링
     useEffect(() => {
         if (viewMode === 'list') {
@@ -36,19 +38,79 @@ const GenreDetails = () => {
         }
     }, [viewMode]);
 
-    const { id } = useParams();
-    const selectedId = Number(id);
-    const navigate = useNavigate();
-    
-    // 모달 열고 닫기 애니메이션
-    useEffect(() => {
-        if (selectedId === genre.genreId) {
-            setShowModal(true);
-            setTimeout(() => setAnimateModal(true), 10);
-        } else {
-            setAnimateModal(false);
+    // sortOpiton -> API 파라미터 변환
+    const mapSortOptionToParam = (option: string): 'default' | 'releaseDateDesc' | 'releaseDateAsc' | 'titleAsc' | 'titleDesc' => {
+        switch (option) {
+            case '추천 콘텐츠':
+                return 'default';
+            case '출시일순':
+                return 'releaseDateDesc';
+            case '오름차순(ㄱ~Z)':
+                return 'titleAsc';
+            case '내림차순(Z~ㄱ)':
+                return 'titleDesc';
+            default:
+                return 'default';
         }
-    }, [selectedId])
+    };
+
+    const { id } = useParams();
+    const selectedId = id;
+    const navigate = useNavigate();
+
+    const location = useLocation();
+    const backgroundLocation = location.state?.backgroundLocation || location;
+
+    useEffect(() => {
+    if (showModal && location.pathname !== `/genre/${selectedId}`) {
+        setAnimateModal(false);
+        setTimeout(() => {
+            setShowModal(false);
+            navigate(-1);
+        }, 200);
+    }
+    }, [location.pathname]);
+
+    // API 호출 - 장르별 영화 목록 조회: 정렬 뷰
+    useEffect(() => {
+        if (!selectedId || viewMode !== 'grid') return;
+
+        const fetchSorted = async () => {
+            try {
+                setLoading(true);
+                const sortParam = mapSortOptionToParam(sortOption);
+                const data = await getSortedGenres(selectedId, 0, 100, sortParam);
+                setGenreGrid(data);
+                setShowModal(true);
+                setTimeout(() => setAnimateModal(true), 10);
+            }
+            catch (err) {
+                console.error("정렬 목록 불러오기 실패: ", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchSorted();
+    }, [selectedId, sortOption, viewMode]);
+
+    // API 호출 - 장르별 영화 목록 조회: 그룹 뷰
+    useEffect(() => {
+        if (!selectedId || viewMode !== 'list') return;
+
+        const fetchGrouped = async () => {
+            try {
+                setLoading(true);
+                const data = await getGenresGroupedBy(selectedId);
+                setGenreList(data);
+            } catch (err) {
+                console.error("그룹 목록 불러오기 실패: ", err);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchGrouped();
+    }, [selectedId, viewMode]);
 
     const handleClose = () => {
         setAnimateModal(false);
@@ -66,7 +128,7 @@ const GenreDetails = () => {
     };
     const insetTopClass = atTop ? 'top-[24px]' : 'top-0';
 
-    if (!showModal) return null;
+    if (!showModal || loading) return null;
 
     return (
         <div className="relative z-[100]">
@@ -104,7 +166,9 @@ const GenreDetails = () => {
                             </div>
 
                             {/* 장르 이름 */}
-                            <p className="flex justify-center text-[48px] font-black pt-[26px] pb-[113.6px]">{genre.genreName}</p>
+                            <p className="flex justify-center text-[48px] font-black pt-[26px] pb-[113.6px]">
+                                {viewMode === 'list' ? genreList?.genreName : genreGrid?.genreName}
+                            </p>
 
                             {/* 뷰 모드 선택 버튼 */}
                             <div className="flex flex-row justify-end pr-[64.5px]">
@@ -113,7 +177,9 @@ const GenreDetails = () => {
                                     src={viewMode === 'list' || isListHovered ? listBtnHovered : listBtn}
                                     onMouseEnter={() => setIsListHovered(true)}
                                     onMouseLeave={() => setIsListHovered(false)}
-                                    onClick={() => setViewMode('list')}
+                                    onClick={() => {
+                                        if (viewMode !== 'list') setViewMode('list');
+                                    }}
                                     className="cursor-pointer transition-all duration-100"
                                 />
 
@@ -164,9 +230,9 @@ const GenreDetails = () => {
 
                             {/* 영화 리스트 */}
                             {viewMode === 'list' ? (
-                                <ListView genre={genre} />
+                                genreList && <ListView genre={genreList} backgroundLocation={backgroundLocation} onRequestClose={handleClose} />
                             ) : (
-                                <GridView genre={genreGrid} />
+                                genreGrid && <GridView genre={genreGrid} backgroundLocation={backgroundLocation} onRequestClose={handleClose} />
                             )}                            
                         </div>
                     </div>
