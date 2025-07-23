@@ -71,7 +71,7 @@ const TopNavBar: React.FC = () => {
         {isAuth ? (
           <>
             <SearchBox />
-            <button aria-label="알림">
+            <button aria-label="알림" className='cursor-pointer'>
               <Bell size={24} />
             </button>
             <Link to="/mypage">
