@@ -170,7 +170,7 @@ const MyPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black">
-      <main className="pt-[68px] px-8 pb-12">
+      <main className="pt-[68px] px-8 pb-30">
         {/* 프로필 헤더 */}
         <ProfileHeader
           profilePictureUrl={ previewAvatar || profile.profileImageUrl || defaultAvatar }
@@ -186,7 +186,7 @@ const MyPage: React.FC = () => {
 
         {/* 각각의 섹션 */}
         {/* 1. 최근 본 콘텐츠 */}
-        <section className='flex flex-col space-y-[16px] px-[80px]'>
+        <section className='flex flex-col space-y-[16px] px-[80px] pb-[40px]'>
           <MovieTag
             title="최근 본 콘텐츠"
             onClickMore={() => navigate('/mypage/recent')}
@@ -218,7 +218,7 @@ const MyPage: React.FC = () => {
         </section>
 
         {/* 4. 내가 쓴 리뷰 */}
-        <section className='px-[80px]'>
+        <section className='px-[80px] pt-[24px]'>
           <MypageReviewsList reviews={reviews} />
         </section>
       </main>
