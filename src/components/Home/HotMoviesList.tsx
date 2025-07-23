@@ -50,9 +50,9 @@ const HotMoviesList = ({ title, movies, onToggleBookmark, onToggleLike }: HotMov
           {currentPage > 0 && isHovered && (
             <button
               onClick={handlePrev}
-              className="absolute left-0 top-0 bottom-0 z-[20] bg-black/50 hover:bg-opacity-70 text-white p-2"
+              className="absolute left-0 top-0 bottom-0 z-[20] text-white p-2 cursor-pointer"
             >
-              <ChevronLeft className="w-7 h-7" />
+              <ChevronLeft className="w-9 h-9" />
             </button>
           )}
 
@@ -108,9 +108,9 @@ const HotMoviesList = ({ title, movies, onToggleBookmark, onToggleLike }: HotMov
           {currentPage < totalPages - 1 && isHovered && (
             <button
               onClick={handleNext}
-              className="absolute right-0 top-0 bottom-0 z-[20] bg-black/50 hover:bg-opacity-70 text-white p-2"
+              className="absolute right-0 top-0 bottom-0 z-[20] text-white p-2 cursor-pointer"
             >
-              <ChevronRight className="w-7 h-7" />
+              <ChevronRight className="w-9 h-9" />
             </button>
           )}
         </div>
